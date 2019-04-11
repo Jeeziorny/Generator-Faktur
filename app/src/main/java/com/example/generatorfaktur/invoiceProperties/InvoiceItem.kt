@@ -12,4 +12,15 @@ class InvoiceItem (
     val value: Double,
     val vatValue: Double,
     val grossValue: Double
-) : Parcelable
+) : Parcelable {
+
+    fun calculateVatValue() {
+        //TODO: na podstawie wczesniejszych danych;
+    }
+
+    fun calculateGrossValue() {
+        //TODO: j/w
+    }
+
+    //TODO: Na fakturze zakladam, ze dodawane elementy maja opisana wartosc NETTO
+}
