@@ -5,9 +5,11 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class Entity (
-    val name: String,
-    val adress: String,
-    val postal: String,
-    val nip: String,
-    val phoneNumber: String
-) : Parcelable
+    var name: String,
+    var adress: String,
+    var postal: String,
+    var nip: String,
+    var phoneNumber: String
+) : Parcelable{
+    constructor() : this("","","","","")
+}
