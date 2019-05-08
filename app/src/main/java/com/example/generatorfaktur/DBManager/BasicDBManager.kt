@@ -7,19 +7,19 @@ import android.database.sqlite.SQLiteOpenHelper
 import com.example.generatorfaktur.invoiceProperties.Entity
 
 
-class BasicDBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) :
-    SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION), DBManager {
+class BasicDBManager(context: Context) :
+    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION), DBManager {
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(CREATE_ENTITY_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENTITY)
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_ENTITY")
         onCreate(db)
     }
 
-    fun addEntity(entity: Entity) {
+    override fun addEntity(entity: Entity) {
         val values = ContentValues()
         values.put(COLUMN_NAME, entity.name)
         values.put(COLUMN_ADRESS, entity.adress)
@@ -32,7 +32,7 @@ class BasicDBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.close()
     }
 
-    fun getAllEntity(): ArrayList<Entity> {
+    override fun getAllEntity(): ArrayList<Entity> {
         val list = ArrayList<Entity>()
         val db = this.readableDatabase
         val c = db.rawQuery("SELECT * FROM $TABLE_ENTITY ORDER BY $COLUMN_NAME", null)
@@ -51,13 +51,13 @@ class BasicDBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         return list
     }
 
-    fun deleteEntity(entity: Entity) {
+    override fun deleteEntity(entity: Entity) {
         val db = writableDatabase
         db.delete(TABLE_ENTITY, "id=?", arrayOf(entity.name))
         db.close()
     }
 
-    fun updateEntity(entity: Entity) {
+    override fun updateEntity(entity: Entity) {
         val db = writableDatabase
         val values = ContentValues()
         values.put(COLUMN_NAME, entity.name)
@@ -71,7 +71,7 @@ class BasicDBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
     companion object {
         private val DATABASE_VERSION = 1
-        private val DATABASE_NAME = "DataDatabase.db"
+        private val DATABASE_NAME = "Database.db"
 
         // TABLE NAMES
         val TABLE_ENTITY = "Entity"
@@ -90,7 +90,7 @@ class BasicDBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                 + COLUMN_ADRESS + " TEXT,"
                 + COLUMN_POSTAL + " TEXT,"
                 + COLUMN_NIP + " TEXT,"
-                + COLUMN_PHONE + " TEXT," + ")")
+                + COLUMN_PHONE + " TEXT )")
 
     }
 }
