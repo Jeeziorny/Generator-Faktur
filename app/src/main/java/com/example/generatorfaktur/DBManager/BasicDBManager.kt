@@ -35,7 +35,7 @@ class BasicDBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     fun getAllEntity(): ArrayList<Entity> {
         val list = ArrayList<Entity>()
         val db = this.readableDatabase
-        val c = db.rawQuery("SELECT * FROM $TABLE_ENTITY", null)
+        val c = db.rawQuery("SELECT * FROM $TABLE_ENTITY ORDER BY $COLUMN_NAME", null)
         if (c.moveToFirst()) {
             do {
                 val entity = Entity()
