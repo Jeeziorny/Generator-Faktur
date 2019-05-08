@@ -5,9 +5,15 @@ import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 @Parcelize
-class PaymentProperty (
-    val paymentForm: String,
-    val paymentDate: Date,
-    val bank: String,
-    val accountNumber: String
-) : Parcelable
+class PaymentProperty : Parcelable {
+    var paymentForm = ""
+    var paymentDate = Date()
+    var bank = ""
+    var accountNumber = ""
+
+    fun toArrayOfString() : ArrayList<String> {
+        val result = ArrayList<String>()
+        result.addAll(listOf(paymentForm, paymentDate.toString(), bank, accountNumber))
+        return result
+    }
+}
