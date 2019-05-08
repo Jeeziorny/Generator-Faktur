@@ -7,7 +7,6 @@ import java.util.*
 
 abstract class AbstractInvcBuilder(
     val HTMLExporter: HTMLExportStrategy
-
 ) {
     //builder interface
     abstract fun setPaymentProperty(paymentForm: String,

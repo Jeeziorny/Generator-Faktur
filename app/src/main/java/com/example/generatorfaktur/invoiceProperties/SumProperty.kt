@@ -5,7 +5,12 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class SumProperty (
-    val total: Double,
-    val advance: Double,
-    val toPay: Double
-) : Parcelable
+    var netSum: Double,
+    var taxSum: Double,
+    var pSum: Double
+) : Parcelable {
+
+    fun getAsString() : String {
+        return "$netSum;$taxSum;$pSum"
+    }
+}

@@ -5,7 +5,25 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class Summation (
-    val totalNetto: Double,
-    val totalVat: Double,
-    val totalGros: Double
-) : Parcelable
+    var totalNetto: Double,
+    var totalVat: Double,
+    var totalGros: Double,
+    var vat: Double
+) : Parcelable {
+
+    fun getAsString() : String {
+        return "$totalNetto;$vat;$totalVat;$totalGros"
+    }
+
+    fun addTotalNetto(d: Double) {
+        totalNetto += d
+    }
+
+    fun addTotalVat(v: Double) {
+        totalVat += v
+    }
+
+    fun addTotalGros(g: Double) {
+        totalGros += g
+    }
+}

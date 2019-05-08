@@ -6,21 +6,23 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 class InvoiceItem (
     val name: String,
-    val unit: String,
     val quantity: Double,
+    val baseValue: Double,
+    var value: Double,
     val vat: Double,
-    val value: Double,
-    val vatValue: Double,
-    val grossValue: Double
+    var grossValue: Double
 ) : Parcelable {
 
-    fun calculateVatValue() {
-        //TODO: na podstawie wczesniejszych danych;
+    fun setValue() {
+        value = quantity * baseValue
     }
 
-    fun calculateGrossValue() {
-        //TODO: j/w
+    fun setGrossValue() {
+        grossValue = value*(1+vat)
     }
 
-    //TODO: Na fakturze zakladam, ze dodawane elementy maja opisana wartosc NETTO
+    fun getAsString() : String {
+        val newName = name.replace(Regex("(.{10})"), "<br>")
+        return "$newName;$quantity;$baseValue;$value;$vat;$grossValue"
+    }
 }
