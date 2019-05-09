@@ -1,10 +1,11 @@
 package com.example.generatorfaktur
 
-import android.content.Entity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.example.generatorfaktur.DBManager.BasicDBManager
+import com.example.generatorfaktur.invoiceProperties.Entity
 import kotlinx.android.synthetic.main.entity_activity.*
 
 class EntityActivity : AppCompatActivity() {
@@ -15,7 +16,7 @@ class EntityActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.entity_activity)
         supportActionBar!!.hide()
-
+        entityList = BasicDBManager(this).getAllEntity()
         val entityArrayAdapter = EntityArrayAdapter(this, entityList)
 
         entityListView.adapter = entityArrayAdapter
