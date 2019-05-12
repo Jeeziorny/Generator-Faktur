@@ -48,8 +48,8 @@ class BasicDBManager(private val context: Context) : DBManager {
                         "Wysypisko Sp. z o.o.",
                         "ul. Wyspiańskiego 10/1",
                         "00-001 Warszawa",
-                        "0123456789",
-                        "+48 111 222 333"
+                        "+48 111 222 333",
+                        "0123456789"
                     )
                 )
                 database.entityDao().insertEntity(
@@ -57,8 +57,8 @@ class BasicDBManager(private val context: Context) : DBManager {
                         "Wściekłe Krowy Sp.K.",
                         "ul. Nowowiejska 99",
                         "99-666 Bytom",
-                        "6910293847",
-                        "+48 666 777 888"
+                        "+48 666 777 888",
+                        "6910293847"
                     )
                 )
                 database.entityDao().insertEntity(
@@ -66,8 +66,8 @@ class BasicDBManager(private val context: Context) : DBManager {
                         "Rozlewnia BIMBEREK 93%",
                         "ul. Spirytusowa 40",
                         "40-500 Chmieleń",
-                        "1020304050",
-                        "+48 098 321 567"
+                        "+48 098 321 567",
+                        "1020304050"
                     )
                 )
                 database.entityDao().insertEntity(
@@ -75,8 +75,8 @@ class BasicDBManager(private val context: Context) : DBManager {
                         "Twoja Idealna Trumienka",
                         "ul. Cmentarna",
                         "11-777 Kosteczki",
-                        "0368521893",
-                        "+48 936 741 154"
+                        "+48 936 741 154",
+                        "0368521893"
                     )
                 )
             }

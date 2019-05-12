@@ -1,6 +1,5 @@
 package com.example.generatorfaktur.DBManager
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import com.example.generatorfaktur.invoiceProperties.Entity
 

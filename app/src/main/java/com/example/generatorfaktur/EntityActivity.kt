@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.SearchView
 import com.example.generatorfaktur.DBManager.BasicDBManager
 import com.example.generatorfaktur.DBManager.DBManager
 import com.example.generatorfaktur.invoiceProperties.Entity
 import kotlinx.android.synthetic.main.entity_activity.*
+import java.util.*
 
 class EntityActivity : AppCompatActivity() {
 
@@ -25,6 +27,18 @@ class EntityActivity : AppCompatActivity() {
         entityArrayAdapter = EntityArrayAdapter(this, entityList)
         entityListView.adapter = entityArrayAdapter
         syncListViewWithDb()
+
+        searchView.setIconifiedByDefault(false)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String): Boolean {
+                entityArrayAdapter.filter(newText)
+                return true
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return true
+            }
+        })
 
         //TODO : Obsługa long clicka
         entityListView.setOnItemLongClickListener { parent, view, position, id ->
