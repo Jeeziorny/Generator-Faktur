@@ -43,7 +43,7 @@ class EntityArrayAdapter(context: Context, var data: ArrayList<Entity>) :
         val item = data[position]
         viewHolder.name?.text = item.name
         viewHolder.phone?.text = item.phoneNumber
-        viewHolder.adress?.text = item.adress
+        viewHolder.adress?.text = item.address
         viewHolder.postal?.text = item.postal
         viewHolder.nip?.text = item.nip
         return view

@@ -6,7 +6,7 @@ interface DBManager {
     fun addEntity(entity: Entity)
     fun deleteEntity(entity: Entity)
     fun updateEntity(entity: Entity)
-    fun getAllEntity(): ArrayList<Entity>
+    fun getAllEntity(): List<Entity>
 
     //TODO: Wypelnia swietlon xD
 }
