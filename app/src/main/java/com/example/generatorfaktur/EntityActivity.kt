@@ -3,7 +3,9 @@ package com.example.generatorfaktur
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.SearchView
 import com.example.generatorfaktur.DBManager.BasicDBManager
@@ -42,6 +44,17 @@ class EntityActivity : AppCompatActivity() {
 
         //TODO : Obsługa long clicka
         entityListView.setOnItemLongClickListener { parent, view, position, id ->
+            val li = LayoutInflater.from(this)
+            val dialog = li.inflate(R.layout.dialog_long_click, null)
+
+            val alertDialogBuilder = AlertDialog.Builder(this)
+
+            alertDialogBuilder.setView(dialog)
+
+            alertDialogBuilder.setCancelable(true)
+
+            val alertDialog = alertDialogBuilder.create()
+            alertDialog.show()
             true
         }
 
@@ -61,10 +74,34 @@ class EntityActivity : AppCompatActivity() {
 
     fun fabOnClick(view: View) {
 
+
+
         //TODO: Obsługa FAB
-        addEntity()
-        Snackbar.make(view, "Item added to list", Snackbar.LENGTH_SHORT)
-            .setAction("Action", null).show()
+        val li = LayoutInflater.from(this)
+        val dialog = li.inflate(R.layout.fab_dialog, null)
+
+        val alertDialogBuilder = AlertDialog.Builder(this)
+
+        alertDialogBuilder.setView(dialog)
+
+        alertDialogBuilder
+            .setCancelable(true)
+            .setPositiveButton("DODAJ") {  _, _ ->
+
+                addEntity()
+
+                Snackbar.make(view, "Dodano klienta.", Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null).show()
+
+                entityArrayAdapter.notifyDataSetChanged()
+        }
+            .setNegativeButton("ANULUJ") { _, _ ->
+
+            }
+
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
+
 
     }
 
@@ -72,5 +109,4 @@ class EntityActivity : AppCompatActivity() {
 
     }
 
-    //TODO : Gdy już będzie jakaś lista, poprawić entity.xml
 }
