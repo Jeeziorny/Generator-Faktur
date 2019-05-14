@@ -12,13 +12,14 @@ import com.example.generatorfaktur.DBManager.BasicDBManager
 import com.example.generatorfaktur.DBManager.DBManager
 import com.example.generatorfaktur.invoiceProperties.Entity
 import kotlinx.android.synthetic.main.entity_activity.*
+import kotlinx.android.synthetic.main.fab_dialog.view.*
 import java.util.*
 
 class EntityActivity : AppCompatActivity() {
 
     private var entityList = ArrayList<Entity>()
     private lateinit var entityArrayAdapter: EntityArrayAdapter
-    private lateinit var database : DBManager
+    private lateinit var database: DBManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,13 +68,15 @@ class EntityActivity : AppCompatActivity() {
 
     fun syncListViewWithDb() {
         AsyncTask.execute {
+            entityList.clear()
             entityList.addAll(database.getAllEntity())
-            entityArrayAdapter.notifyDataSetChanged()
+            runOnUiThread {
+                entityArrayAdapter.notifyDataSetChanged()
+            }
         }
     }
 
     fun fabOnClick(view: View) {
-
 
 
         //TODO: Obsługa FAB
@@ -86,27 +89,41 @@ class EntityActivity : AppCompatActivity() {
 
         alertDialogBuilder
             .setCancelable(true)
-            .setPositiveButton("DODAJ") {  _, _ ->
+            .setPositiveButton("DODAJ") { _, _ ->
 
-                addEntity()
+                val entity = Entity()
+                entity.name = dialog.entityName.text.toString()
+                entity.address = dialog.entityAddress.text.toString()
+                entity.nip = dialog.entityNIP.text.toString()
+                entity.phoneNumber = dialog.entityPhone.text.toString()
+                entity.postal = dialog.entityPostal.text.toString()
+                addEntity(entity)
 
                 Snackbar.make(view, "Dodano klienta.", Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show()
 
                 entityArrayAdapter.notifyDataSetChanged()
-        }
+            }
             .setNegativeButton("ANULUJ") { _, _ ->
 
             }
 
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
-
-
     }
 
-    private fun addEntity() {
-
+    private fun addEntity(entity: Entity) {
+        database.addEntity(entity)
+        syncListViewWithDb()
     }
 
+    private fun deleteEntity(entity: Entity) {
+        database.deleteEntity(entity)
+        syncListViewWithDb()
+    }
+
+    private fun updateEntity(entity: Entity) {
+        database.updateEntity(entity)
+        syncListViewWithDb()
+    }
 }
