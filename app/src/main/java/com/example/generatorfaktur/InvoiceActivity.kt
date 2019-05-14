@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 class InvoiceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.invoice_activity_dealer)
+        setContentView(R.layout.invoice_activity_buyer)
         supportActionBar!!.hide()
     }
 }

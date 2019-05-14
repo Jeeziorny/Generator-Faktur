@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:gravity="center_horizontal"
+              android:layout_height="match_parent">
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Nazwa :"/>
+    <com.beardedhen.androidbootstrap.BootstrapEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"/>
+
+    <TextView android:layout_width="match_parent"
+              android:gravity="center_horizontal"
+              android:layout_height="wrap_content"
+              android:text="NIP :"/>
+    <com.beardedhen.androidbootstrap.BootstrapEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bootstrapSize="md"
+            android:id="@+id/entityNIP"
+            android:layout_gravity="top|start"
+            android:inputType="phone"
+            app:bootstrapBrand="danger"/>
+
+
+    <TextView android:layout_width="match_parent"
+              android:gravity="center_horizontal"
+              android:layout_height="wrap_content"
+              android:text="Adres :"/>
+    <com.beardedhen.androidbootstrap.BootstrapEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bootstrapSize="md"
+            android:id="@+id/entityAddress"
+            android:layout_gravity="top|start"
+            android:inputType="text"
+            app:bootstrapBrand="danger"/>
+
+
+    <TextView android:layout_width="match_parent"
+              android:gravity="center_horizontal"
+              android:layout_height="wrap_content"
+              android:text="Kod Pocztowy :"/>
+    <com.beardedhen.androidbootstrap.BootstrapEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bootstrapSize="md"
+            android:layout_gravity="top|start"
+            android:inputType="phone"
+            app:bootstrapBrand="danger"/>
+
+
+    <TextView android:layout_width="match_parent"
+              android:gravity="center_horizontal"
+              android:layout_height="wrap_content"
+              android:text="Telefon :"/>
+
+    <com.beardedhen.androidbootstrap.BootstrapEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bootstrapSize="md"
+            android:layout_gravity="top|start"
+            android:inputType="phone"
+            app:bootstrapBrand="danger"/>
+
+</LinearLayout>
