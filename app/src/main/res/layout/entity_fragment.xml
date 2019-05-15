@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+             tools:context=".EntityFragment">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -19,6 +20,7 @@
                   android:textStyle="bold"
                   android:textSize="20sp"
                   android:layout_weight="2"
+                  android:id="@+id/topText"
                   android:text="Kupujący :"/>
 
 
@@ -34,7 +36,7 @@
                 android:layout_gravity="top|start"
                 android:inputType="text"
                 android:id="@+id/entityName"
-                android:layout_weight="1"
+                android:layout_weight="0.3"
                 app:bootstrapBrand="danger"/>
 
 
@@ -50,7 +52,7 @@
                 android:id="@+id/entityNIP"
                 android:layout_gravity="top|start"
                 android:inputType="numberDecimal"
-                android:layout_weight="1"
+                android:layout_weight="0.3"
                 app:bootstrapBrand="danger"/>
 
 
@@ -66,7 +68,7 @@
                 android:id="@+id/entityAddress"
                 android:layout_gravity="top|start"
                 android:inputType="text"
-                android:layout_weight="1"
+                android:layout_weight="0.3"
                 app:bootstrapBrand="danger"/>
 
 
@@ -81,7 +83,7 @@
                 app:bootstrapSize="md"
                 android:layout_gravity="top|start"
                 android:inputType="textPostalAddress"
-                android:layout_weight="1"
+                android:layout_weight="0.3"
                 app:bootstrapBrand="danger"/>
 
 
@@ -96,7 +98,7 @@
                 app:bootstrapSize="md"
                 android:layout_gravity="top|start"
                 android:inputType="phone"
-                android:layout_weight="1"
+                android:layout_weight="0.3"
                 app:bootstrapBrand="danger"/>
 
         <TextView android:layout_width="match_parent"
@@ -108,12 +110,14 @@
         <com.beardedhen.androidbootstrap.BootstrapButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="0.4"
                 android:layout_gravity="end"
+                android:id="@+id/next"
                 android:text="DALEJ"
         />
 
 
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+
+</FrameLayout>
