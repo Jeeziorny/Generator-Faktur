@@ -10,14 +10,11 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
-        <activity android:name=".InvoiceActivity">
-        </activity>
+        <activity android:name=".InvoiceActivity"/>
 
-        <activity android:name=".ItemActivity">
-        </activity>
+        <activity android:name=".PreviewActivity"/>
 
-        <activity android:name=".EntityActivity">
-        </activity>
+        <activity android:name=".EntityActivity"/>
 
         <activity android:name=".MainActivity">
             <intent-filter>
