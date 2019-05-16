@@ -6,100 +6,65 @@
               android:gravity="center_horizontal"
               android:layout_height="match_parent">
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
 
-        <TextView
+    <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="Nazwa :"/>
 
-        <com.beardedhen.androidbootstrap.BootstrapEditText
+    <com.beardedhen.androidbootstrap.BootstrapEditText
                 android:layout_width="match_parent"
                 android:id="@+id/itemName"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:inputType="text"/>
 
-    </LinearLayout>
-
-    <LinearLayout
+    <TextView
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:text="Cena :"/>
 
-
-
-        <TextView android:layout_width="match_parent"
-                  android:gravity="center_horizontal"
-                  android:layout_weight="1"
-                  android:layout_height="wrap_content"
-                  android:text="Cena :"/>
-
-        <com.beardedhen.androidbootstrap.BootstrapEditText
+    <com.beardedhen.androidbootstrap.BootstrapEditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 app:bootstrapSize="md"
                 android:id="@+id/itemPrice"
                 android:layout_gravity="top|start"
                 android:inputType="numberDecimal"
                 app:bootstrapBrand="danger"/>
 
-    </LinearLayout>
 
-    <LinearLayout
+    <TextView
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:text="Ilość :"/>
 
-
-
-        <TextView android:layout_width="match_parent"
-                  android:gravity="center_horizontal"
-                  android:layout_weight="1"
-                  android:layout_height="wrap_content"
-                  android:text="Ilość :"/>
-
-        <com.beardedhen.androidbootstrap.BootstrapEditText
+    <com.beardedhen.androidbootstrap.BootstrapEditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 app:bootstrapSize="md"
                 android:id="@+id/itemQuantity"
                 android:layout_gravity="top|start"
                 android:inputType="numberDecimal"
                 app:bootstrapBrand="danger"/>
 
-    </LinearLayout>
 
-    <LinearLayout
+    <TextView
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:text="VAT(%) :"/>
 
-
-
-        <TextView android:layout_width="match_parent"
-                  android:gravity="center_horizontal"
-                  android:layout_weight="1"
-                  android:layout_height="wrap_content"
-                  android:text="VAT(%) :"/>
-
-        <com.beardedhen.androidbootstrap.BootstrapEditText
+    <com.beardedhen.androidbootstrap.BootstrapEditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 app:bootstrapSize="md"
                 android:id="@+id/itemVAT"
                 android:layout_gravity="top|start"
                 android:inputType="numberDecimal"
                 app:bootstrapBrand="danger"/>
 
-    </LinearLayout>
 
 </LinearLayout>
