@@ -16,6 +16,8 @@
         </activity>
         <activity android:name=".EntityActivity">
         </activity>
+        <activity android:name=".PreviewActivity">
+        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

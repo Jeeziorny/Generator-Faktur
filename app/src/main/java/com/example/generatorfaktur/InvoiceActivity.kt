@@ -31,10 +31,10 @@ class InvoiceActivity : AppCompatActivity() {
         itemArrayAdapter = ItemArrayAdapter(this, itemList)
         itemListView.adapter = itemArrayAdapter
 
-        itemList.add(InvoiceItem("name","unit", 1.2, 40.0, 100.0, 40.0, 140.0))
-        itemList.add(InvoiceItem("name1","unit1", 1.2, 40.0, 100.0, 40.0, 140.0))
-        itemList.add(InvoiceItem("name2","unit2", 1.2, 40.0, 100.0, 40.0, 140.0))
-        itemList.add(InvoiceItem("name3","unit3", 1.2, 40.0, 100.0, 40.0, 140.0))
+        //itemList.add(InvoiceItem("name","unit", 1.2, 40.0, 100.0, 40.0, 140))
+        //itemList.add(InvoiceItem("name1","unit1", 1.2, 40.0, 100.0, 40.0, 140))
+        //itemList.add(InvoiceItem("name2","unit2", 1.2, 40.0, 100.0, 40.0, 140))
+        //itemList.add(InvoiceItem("name3","unit3", 1.2, 40.0, 100.0, 40.0, 140))
     }
 
     fun buyerOnClick(view: View) {
@@ -107,7 +107,7 @@ class InvoiceActivity : AppCompatActivity() {
         //TODO : TWORZENIE FAKTURY Z ZEBRANYCH DANYCH
 
         val myIntent = Intent(this, PreviewActivity::class.java)
-        startActivityForResult(myIntent, 996)
+        startActivity(myIntent)
     }
 
 

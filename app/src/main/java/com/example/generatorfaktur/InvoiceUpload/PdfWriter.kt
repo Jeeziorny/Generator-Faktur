@@ -13,6 +13,7 @@ import java.io.FileOutputStream
 import android.content.Intent
 import android.net.Uri
 import android.support.v4.content.FileProvider
+import android.util.Log
 import com.example.generatorfaktur.R
 
 
@@ -23,6 +24,7 @@ class PdfWriter (val context: Context, val fileName: String, val webView: WebVie
     fun writeAsTemporaryFile() {
         context.deleteFile(fileName)
         createWebPrintJob(webView)
+
     }
 
 
