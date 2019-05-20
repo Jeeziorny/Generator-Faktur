@@ -12,8 +12,6 @@ import android.util.Log
 import android.view.View
 import com.beardedhen.androidbootstrap.TypefaceProvider
 import com.example.generatorfaktur.DBManager.AppDatabase
-import com.example.generatorfaktur.invoiceProperties.Entity
-import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
