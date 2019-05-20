@@ -1,72 +1,67 @@
 package com.example.generatorfaktur
 
-import android.annotation.SuppressLint
-import android.os.Parcelable
 import com.example.generatorfaktur.invoiceProperties.*
-import kotlinx.android.parcel.Parcelize
 import java.util.*
 
-@Parcelize
-class Invoice : Parcelable {
-    var currDate: Date = Date()
-    var id: String = ""
-    var sellDate: Date? = Date()
+class Invoice {
+    var currentDate: String = ""
+    var invoiceId: String = ""
+
     var dealer: Entity? = null
     var buyer: Entity? = null
     var recipient: Entity? = null
-    var items: ArrayList<InvoiceItem> = ArrayList()
-    var paymentProperty: PaymentProperty = PaymentProperty()
-    var sumTable: ArrayList<Summation> = ArrayList()
-    var sumProperty: SumProperty = SumProperty(0.0,0.0,0.0)
 
-    fun getPropertiesKeywords() : ArrayList<String> {
+    var items: ArrayList<InvoiceItem> = ArrayList()
+
+    var paymentForm = ""
+    var paymentDate = ""
+    var bank = ""
+    var accountNumber = ""
+
+    var totalNetto = 0.0
+    var totalTax = 0.0
+    var totalGross = 0.0
+
+    var posIdIterator = 0
+
+    fun getProperties() : ArrayList<String> {
         val result = ArrayList<String>()
         result.addAll(dealer!!.getKeywords())
-        result.addAll(listOf(id, currDate.toString(), sellDate.toString()))
+        result.addAll(listOf(invoiceId, currentDate))
         result.addAll(buyer!!.getKeywords())
         result.addAll(recipient!!.getKeywords())
+        result.addAll(listOf(paymentForm, paymentDate, bank, accountNumber))
+        result.addAll(listOf("%.2f".format(totalNetto), "%.2f".format(totalTax), "%.2f".format(totalGross)))
         return result
     }
 
-    fun getItemsAsArrayList() : ArrayList<String> {
-        val result = ArrayList<String>()
+    fun getItemsAsArrayList() : ArrayList<Pair<String, Int>> {
+        val result = ArrayList<Pair<String, Int>>()
         for (i in items)
             result.add(i.getAsString())
         return result
     }
 
-    fun generateSummation() {
-        val partSum = HashMap<Double, Summation>()
-        var totalNetto = 0.0
-        var totalGros = 0.0
-        var totalTax = 0.0
-        for (i in items) {
-            if (!partSum.contains(i.vat)) {
-                partSum.put(i.vat, Summation(i.baseValue,
-                    i.vat*i.value,
-                    i.grossValue,
-                    i.vat))
-            } else {
-                val s = partSum.get(i.vat)
-                s!!.addTotalGros(i.grossValue)
-                s.addTotalNetto(i.value)
-                s.addTotalVat(i.vat*i.baseValue)
-            }
-            totalNetto += i.value
-            totalGros += i.grossValue
-            totalTax += i.value*i.vat
-        }
-        sumTable.addAll(partSum.values)
-        sumProperty!!.netSum = totalNetto
-        sumProperty!!.pSum = totalGros
-        sumProperty!!.taxSum = totalTax
+    fun addInvoiceItem(itm: InvoiceItem) {
+        itm.setItemId(posIdIterator++)
+        totalNetto += itm.value
+        totalTax += itm.value * itm.vat
+        totalGross += itm.value*(1+itm.vat)
+        items.add(itm)
     }
 
-    fun getSumProperties() : ArrayList<String> {
-        //TODO: Wywolaj generateSummation() przed ta metoda!
-        val result = ArrayList<String>()
-        result.addAll(paymentProperty.toArrayOfString())
-        result.add(sumProperty.pSum.toString())
-        return result
+    fun removeInvoiceItem(id: Int) {
+        var index = -1
+        for (i in 0..items.size) {
+            if (id == items[i].id)
+                index = i
+        }
+        if (index != -1) {
+            val temp = items.removeAt(index)
+            totalNetto -= temp.value
+            totalTax -= temp.value * temp.vat
+            totalGross -= temp.value*(1+temp.vat)
+
+        }
     }
 }

@@ -1,154 +1,139 @@
 package com.example.generatorfaktur.strategies.templates
 
 import android.content.Context
+import android.util.Log
 import com.example.generatorfaktur.Invoice
 import com.example.generatorfaktur.R
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
+import java.io.*
+
+
+
 
 class HTMLSimpleTemplate (
-    val context: Context,
-    val invoice: Invoice
+    val invoice: Invoice,
+    val context: Context
 ) : HTMLTemplate{
+    var base = StringBuilder()
+    var items = ArrayList<Pair<StringBuilder, Int>>()
+    var table = StringBuilder()
     var result = String()
-    var properties = StringBuilder()
-    var items = StringBuilder()
-    var summation = StringBuilder()
-    var sumItems = StringBuilder()
 
+    //Przerwa pomiedzy stronami PDF w przypadku, gdy nie miesci sie na jednej
+    var pageGap = 2
+
+
+    //TODO: zamien na big decimal
     override fun generate() {
-        invoice.generateSummation()
         setProperties()
         setIvnoiceItems()
-        setSumItems()
-        setSummation()
+        setTable()
         assembly()
+        export()
     }
 
-    fun assembly() {
-        result = properties.toString()
-        result.replaceFirst("<!--ItemListBegin -->", items.toString())
-        result.replaceFirst("<!--SummationBegin-->", )
-    }
-
-/*
-    TODO:
-    properties zawiera items i summation.
-    Summation zawiera sumItems.
-
-    Calosc sklada sie na gotowy plik html.
-
-    Sklej go poprawnie i zacznij poprawiac bledy.
-    W celu testowania calego bubla musisz zadbac
-    o klase AbstractItmBuilder i ConcreteItemBuilder.
-
-    Nastepnie w mainie ustawiasz builderem wszystkie
-    komponenty Invoice korzystajac z buildera.
-    Klikasz builder.generate() i powinienes otrzymac gotowy plik HTML.
-
-    Zwroc uwage, ze trzeba zajac sie eksportem gotowego pliku do
-    folderu assets.
-
-    Testy, Testy, Testy
-
-    - Zamien Double na BigDecimal,
-
-    Zastanow sie nad sytuacja, w ktorej tabela z pozycjami
-    bedzie miala wiecej rekordow i wyjedzie poza strone.
-
-    - zbadaj graniczna liczbe rekordow,
-    - Wyodrebnienie tabeli z pozycjami pozwoli
-      odtworzyc taka sama na kolejnej stronie
-    - wystaw odpowiedni interfejs do budowania faktury
-*/
-
-    fun setSumItems() {
-        val positions = invoice.sumTable
-        val inputStream =
-            context.resources.openRawResource(R.raw.sumTableItem)
-        val inputReader = InputStreamReader(inputStream)
-        val br = BufferedReader(inputReader)
-        val rowTemplate = br.use {it.readText()}
-        var row = rowTemplate
-        for (p in positions) {
-            row.replaceFirst("!ns!", p.totalNetto.toString(), false)
-            row.replaceFirst("!t!", p.vat.toString(), false)
-            row.replaceFirst("!ts!", p.totalVat.toString(), false)
-            row.replaceFirst("!pS!", p.totalGros.toString(), false)
-            sumItems.append(row)
-            row = rowTemplate
+    fun export() {
+        //TODO: enkodowanie
+        val file = File(context.filesDir, "myFile.html")
+        file.createNewFile()
+        file.bufferedWriter().use { out ->
+            out.write(result)
         }
     }
 
+    fun assembly() {
+        result = base.toString()
+        result = result.replaceFirst("<!-- Table -->", table.toString())
+    }
 
-    fun setSummation() {
-        val sumProperties = invoice.getSumProperties()
-        val inputStream =
-            context.resources.openRawResource(R.raw.summation)
-        val inputReader = InputStreamReader(inputStream)
-        val br = BufferedReader(inputReader)
-        var lastPos = 0
-        var begOfKeyword = 0
-        var endOfKeyword = 0
-        br.useLines { lines -> {
-            lines.forEach {
-                begOfKeyword = it.indexOf("!!", 0, false)
-                if (begOfKeyword != -1) {
-                    endOfKeyword = it.indexOf("!!", begOfKeyword + 1, false)
-                    it.replaceRange(begOfKeyword, endOfKeyword, sumProperties[lastPos])
-                    lastPos++
-                }
-                summation.append(it)
+    fun setTable() {
+        var prefix = ""
+        var counter = 0
+        //TODO: boundValue to liczba wierszy, ktora miesci sie na pierwszej stronie
+        //Po pierwszej iteracji petli zewnetrznej ustawiana jest na inna wartosc,
+        //ktora jest dopasowana do calej strony.
+        var boundValue = 18
+        val acc = StringBuilder()
+        //val tableFile = "E:\\git\\studies\\TS\\testy\\resources\\table.txt"
+        //var tableTemplate = File(tableFile).readText()
+        val inputStream = context.resources.openRawResource(R.raw.tablecontent)
+        val inputreader = InputStreamReader(inputStream)
+        val buffreader = BufferedReader(inputreader)
+        var tableTemplate = buffreader.readText()
+        var i = 0
+        while (i < items.size) {
+            while (counter < boundValue && i < items.size) {
+                acc.append(items[i].first)
+                counter += items[i].second
+                i++
             }
-        }}
+            table.append(tableTemplate.replaceFirst("<!-- Items -->", acc.toString()))
+            tableTemplate = insertGap(tableTemplate)
+            acc.clear()
+            acc.append(prefix)
+            counter = 0
+            boundValue = 39
+        }
+    }
+
+    fun insertGap(template: String) : String {
+        val inputStream = context.resources.openRawResource(R.raw.tablecontent)
+        val inputreader = InputStreamReader(inputStream)
+        val buffreader = BufferedReader(inputreader)
+        var separator = buffreader.readText()
+        var sepContent = ""
+        for (i in 0..pageGap)
+            sepContent += "<br>"
+        separator = separator.replaceFirst("!!Sep!!", sepContent)
+        return template.replaceFirst("<!-- Separator -->", separator)
     }
 
     fun setIvnoiceItems() {
+        //itemki. Drugi parametr to wysokosc, jezeli nie miesci sie w jednym wierszu np.
+        //sprawdz czy dziala tak jak chcesz.
         val positions = invoice.getItemsAsArrayList()
-        val inputStream =
-            context.resources.openRawResource(R.raw.tableItemRow)
-        val inputReader = InputStreamReader(inputStream)
-        val br = BufferedReader(inputReader)
-        val rowTemplate = br.use {it.readText()}
+        val inputStream = context.resources.openRawResource(R.raw.tablecontent)
+        val inputreader = InputStreamReader(inputStream)
+        val buffreader = BufferedReader(inputreader)
+        val rowTemplate = buffreader.readText()
         var row = rowTemplate
         var cells: ArrayList<String>
-        var rowIterator = 0
+        var rowIterator = 1
         for (p in positions) {
-            cells = ArrayList(p.split(";"))
-            row.replaceFirst("!i!", rowIterator.toString(), false)
-            row.replaceFirst("!s/p!", cells[0], false)
-            row.replaceFirst("!c!", cells[1], false)
-            row.replaceFirst("!n!", cells[2], false)
-            row.replaceFirst("!nv!", cells[3], false)
-            row.replaceFirst("!tv!", cells[4], false)
-            row.replaceFirst("!gv!", cells[5], false)
-            items.append(row)
+            cells = ArrayList(p.first.split(";"))
+            row = row.replaceFirst("!i!", rowIterator.toString(), false)
+            row = row.replaceFirst("!s/p!", cells[0], false)
+            row = row.replaceFirst("!c!", cells[1], false)
+            row = row.replaceFirst("!n!", cells[2], false)
+            row = row.replaceFirst("!nv!", cells[3], false)
+            row = row.replaceFirst("!tv!", cells[4], false)
+            row = row.replaceFirst("!gv!", cells[5], false)
+            items.add(Pair(StringBuilder(row), p.second))
             row = rowTemplate
             rowIterator++
         }
     }
 
     fun setProperties() {
-        val invoiceProperties
-                = invoice.getPropertiesKeywords()
-        val inputStream =
-            context.resources.openRawResource(R.raw.result)
-        val inputReader = InputStreamReader(inputStream)
-        val br = BufferedReader(inputReader)
-        var lastPos = 0
+    //ta funkcja jest przetestowana i dziala ok.
+        val invoiceProperties = invoice.getProperties()
+        invoiceProperties.add("12312312")
+        val inputStream = context.resources.openRawResource(R.raw.base)
+        val inputreader = InputStreamReader(inputStream)
+        val buffreader = BufferedReader(inputreader)
+        var lines = buffreader.readLines()
         var begOfKeyword = 0
         var endOfKeyword = 0
-        br.useLines { lines -> {
-            lines.forEach {
-                begOfKeyword = it.indexOf("!!", 0, false)
-                if (begOfKeyword != -1) {
-                    endOfKeyword = it.indexOf("!!", begOfKeyword + 1, false)
-                    it.replaceRange(begOfKeyword, endOfKeyword, invoiceProperties[lastPos])
-                    lastPos++
-                }
-                properties.append(it)
+        var lastPos = 0
+        var temp = ""
+        lines.forEach {
+            begOfKeyword = it.indexOf("!!", 0, false)
+            temp = it
+            if (begOfKeyword != -1) {
+                endOfKeyword = it.indexOf("!!", begOfKeyword + 1, false) + 2
+                temp = it.replaceRange(begOfKeyword, endOfKeyword, invoiceProperties[lastPos])
+                lastPos++
             }
-        }}
+            base.append(temp)
+        }
     }
 }
