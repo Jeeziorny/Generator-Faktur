@@ -1,50 +1,53 @@
 package com.example.generatorfaktur.invBuilder
 
+import android.content.Context
 import com.example.generatorfaktur.invoiceProperties.Entity
 import com.example.generatorfaktur.invoiceProperties.InvoiceItem
-import com.example.generatorfaktur.strategies.HTMLExportStrategy
-import java.util.*
 
-class InvcBuilder(e: HTMLExportStrategy) : AbstractInvcBuilder(e) {
+class InvcBuilder(context: Context) : AbstractInvcBuilder(context) {
+
+    override fun removeItem(posId: Int): AbstractInvcBuilder {
+        invoice.removeInvoiceItem(posId)
+        return this
+    }
+
+    override fun addInvoiceItem(name: String, q: Double, netto: Double, vat: Double): AbstractInvcBuilder {
+        val invoiceItem = InvoiceItem(name, q, netto, netto*q, vat, (netto*q)*(1+vat), 0)
+        invoice.addInvoiceItem(invoiceItem)
+        return this
+    }
 
     override fun setPaymentProperty(
         paymentForm: String,
-        paymentDate: Date,
+        paymentDate: String,
         bank: String,
         accountNumber: String
     ): AbstractInvcBuilder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun addInvoiceItem(item: InvoiceItem): AbstractInvcBuilder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        invoice.paymentForm = paymentForm
+        invoice.paymentDate = paymentDate
+        invoice.bank = bank
+        invoice.accountNumber = accountNumber
+        return this
     }
 
     override fun setDealer(dealer: Entity): AbstractInvcBuilder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        invoice.dealer = dealer
+        return this
     }
 
     override fun setBuyer(buyer: Entity): AbstractInvcBuilder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        invoice.buyer = buyer
+        return this
     }
 
     override fun setReicipient(recipient: Entity): AbstractInvcBuilder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        invoice.recipient = recipient
+        return this
     }
 
-    override fun setProperties(currentDate: Date, id: String, issuePlace: String): AbstractInvcBuilder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun removeItem(itm: InvoiceItem): AbstractInvcBuilder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun createSumTable() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun createSumProperty() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun setProperties(currentDate: String, id: String): AbstractInvcBuilder {
+        invoice.currentDate = currentDate
+        invoice.invoiceId = id
+        return this
     }
 }

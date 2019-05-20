@@ -1,0 +1,8 @@
+ <tr style='mso-yfti-irow:3;height:3.7pt'>
+  <td width=625 colspan=2 valign=top style='width:468.7pt;padding:0cm 5.4pt 0cm 5.4pt;
+  height:3.7pt'>
+  <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:center;line-height:normal'><span lang=PL style='color:windowtext;
+  mso-ansi-language:PL'>!!Sep!!<o:p></o:p></span></p>
+  </td>
+ </tr>
