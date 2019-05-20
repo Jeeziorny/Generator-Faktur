@@ -32,6 +32,10 @@ class PreviewActivity : AppCompatActivity() {
             Toast.makeText(this, "Zapisz", Toast.LENGTH_LONG).show()
             true
         }
+        R.id.action_print ->{
+            Toast.makeText(this, "Drukuj", Toast.LENGTH_SHORT).show()
+            true
+        }
 
         else -> {
             // If we got here, the user's action was not recognized.

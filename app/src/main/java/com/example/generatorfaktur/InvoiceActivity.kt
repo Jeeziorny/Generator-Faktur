@@ -57,9 +57,6 @@ class InvoiceActivity : AppCompatActivity() {
 
         alertDialogBuilder
             .setCancelable(true)
-            .setNegativeButton("ANULUJ") { _, _ ->
-
-            }
             .setPositiveButton("DODAJ") { _, _ ->
                 result.add(dialog.findViewById<BootstrapEditText>(R.id.entityName).text.toString())
                 result.add(dialog.findViewById<BootstrapEditText>(R.id.entityNIP).text.toString())
@@ -130,9 +127,6 @@ class InvoiceActivity : AppCompatActivity() {
                     .setAction("Action", null).show()
 
                 itemArrayAdapter.notifyDataSetChanged()
-            }
-            .setNegativeButton("ANULUJ") { _, _ ->
-
             }
 
         val alertDialog = alertDialogBuilder.create()
