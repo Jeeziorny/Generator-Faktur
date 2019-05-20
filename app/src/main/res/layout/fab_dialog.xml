@@ -15,7 +15,6 @@
             android:layout_width="match_parent"
             android:id="@+id/entityName"
             android:layout_height="wrap_content"
-            android:id="@+id/entityName"
             android:inputType="text"/>
 
     <TextView android:layout_width="match_parent"
