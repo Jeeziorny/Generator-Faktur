@@ -30,11 +30,11 @@ abstract class AbstractInvcBuilder(
                                id: String) : AbstractInvcBuilder
     abstract fun removeItem(posId: Int) : AbstractInvcBuilder
 
-    fun generate() {
-        HTMLExporter.generateHTML(invoice, HTMLTemplateType.BASIC, context)
-        /*
+    fun generate() : String {
+        return HTMLExporter.generateHTML(invoice, HTMLTemplateType.BASIC, context)
+/*
         in future there could be also e.g.
         XMLExporter.generateXML(inovice, XMLTemplateType.BASIC)
-         */
+*/
     }
 }

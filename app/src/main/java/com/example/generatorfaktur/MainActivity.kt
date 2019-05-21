@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         builder.setPaymentProperty("a", "22-33-4444", "c", "d")
         builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
 
-        builder.generate()
+        var result = builder.generate()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

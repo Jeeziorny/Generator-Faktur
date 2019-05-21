@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import com.beardedhen.androidbootstrap.BootstrapEditText
+import com.example.generatorfaktur.invBuilder.AbstractInvcBuilder
+import com.example.generatorfaktur.invBuilder.InvcBuilder
+import com.example.generatorfaktur.invoiceProperties.Entity
 import com.example.generatorfaktur.invoiceProperties.InvoiceItem
 import kotlinx.android.synthetic.main.invoice_activity.*
 import kotlinx.android.synthetic.main.invoice_activity.itemListView
@@ -21,6 +24,8 @@ class InvoiceActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        /*
         setContentView(R.layout.invoice_activity)
         supportActionBar!!.hide()
 
@@ -35,6 +40,27 @@ class InvoiceActivity : AppCompatActivity() {
         //itemList.add(InvoiceItem("name1","unit1", 1.2, 40.0, 100.0, 40.0, 140))
         //itemList.add(InvoiceItem("name2","unit2", 1.2, 40.0, 100.0, 40.0, 140))
         //itemList.add(InvoiceItem("name3","unit3", 1.2, 40.0, 100.0, 40.0, 140))
+        */
+
+        val builder: AbstractInvcBuilder = InvcBuilder(applicationContext)
+
+        val buyer = Entity("Tomek", "Stodola", "64-600", "432432423", "")
+        val seller = Entity("Tomek", "Stodola", "64-600", "432432423", "")
+        val reicipient = Entity("Tomek", "Stodola", "64-600", "432432423", "")
+
+        builder.setBuyer(buyer)
+               .setDealer(seller)
+               .setReicipient(reicipient)
+
+        builder.setProperties("23-04-1004", "siema")
+        builder.setPaymentProperty("a", "22-33-4444", "c", "d")
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+
+        builder.generate()
+
+        val myIntent = Intent(this, PreviewActivity::class.java)
+        startActivity(myIntent)
+
     }
 
     fun buyerOnClick(view: View) {

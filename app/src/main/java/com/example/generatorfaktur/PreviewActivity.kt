@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.preview_activity.*
 class PreviewActivity : AppCompatActivity() {
 
     val URL = "file:///android_asset/FakturaVAT.htm"
+    lateinit var Url1 : String
     lateinit var pdfWriter : PdfWriter
     lateinit var printingManager : PrintingManager
 
@@ -31,7 +32,10 @@ class PreviewActivity : AppCompatActivity() {
             }
         }
 
-        webView.loadUrl(URL)
+        Url1 = applicationContext.filesDir.absolutePath.plus("/myFile.html")
+        webView.loadUrl(Url1)
+
+
 
         printingManager = PrintingManager(this)
         pdfWriter = PdfWriter( this, "invoice.PDF", webView)
@@ -51,7 +55,7 @@ class PreviewActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_share -> {
             Log.d("running", "lolo")
-            printingManager.doWebViewPrint(URL)
+            printingManager.doWebViewPrint(Url1)
             Toast.makeText(this, "Udostępnij", Toast.LENGTH_LONG).show()
             true
         }

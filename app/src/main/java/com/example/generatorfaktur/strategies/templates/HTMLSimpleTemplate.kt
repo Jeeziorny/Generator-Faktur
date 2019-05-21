@@ -23,12 +23,13 @@ class HTMLSimpleTemplate (
 
 
     //TODO: zamien na big decimal
-    override fun generate() {
+    override fun generate() : String {
         setProperties()
         setIvnoiceItems()
         setTable()
         assembly()
         export()
+        return result
     }
 
     fun export() {
