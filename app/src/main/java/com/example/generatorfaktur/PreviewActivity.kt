@@ -71,10 +71,7 @@ class PreviewActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_share -> {
-            val html = HTML
-            if(html != null) {
-                printingManager.doWebViewPrint(html)
-            }
+            pdfWriter.uploadFile()
             //Toast.makeText(this, "Udostępnij", Toast.LENGTH_LONG).show()
             true
         }
@@ -84,7 +81,11 @@ class PreviewActivity : AppCompatActivity() {
             true
         }
         R.id.action_print ->{
-            Toast.makeText(this, "Drukuj", Toast.LENGTH_SHORT).show()
+            val html = HTML
+            if(html != null) {
+                printingManager.doWebViewPrint(html)
+            }
+            //Toast.makeText(this, "Drukuj", Toast.LENGTH_SHORT).show()
             true
         }
 
