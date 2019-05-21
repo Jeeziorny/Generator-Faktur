@@ -1,22 +1,18 @@
 package com.example.generatorfaktur
 
 import android.Manifest
-import android.arch.persistence.room.Room
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
-import android.util.Log
 import android.view.View
 import com.beardedhen.androidbootstrap.TypefaceProvider
 import com.example.generatorfaktur.DBManager.AppDatabase
 import com.example.generatorfaktur.invBuilder.AbstractInvcBuilder
 import com.example.generatorfaktur.invBuilder.InvcBuilder
 import com.example.generatorfaktur.invoiceProperties.Entity
-import com.example.generatorfaktur.invoiceProperties.InvoiceItem
-import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -50,21 +46,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun invoiceOnClick(view: View) {
+
+
         val myIntent = Intent(this, InvoiceActivity::class.java)
         startActivityForResult(myIntent, 998)
-        val builder: AbstractInvcBuilder = InvcBuilder(applicationContext)
 
-        val buyer = Entity("Tomek", "Stodola", "64-600", "432432423", "")
-        val seller = Entity("Tomek", "Stodola", "64-600", "432432423", "")
-        val reicipient = Entity("Tomek", "Stodola", "64-600", "432432423", "")
 
-        builder.setBuyer(buyer).setDealer(seller).setReicipient(reicipient)
-
-        builder.setProperties("23-04-1004", "siema")
-        builder.setPaymentProperty("a", "22-33-4444", "c", "d")
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-
-        builder.generate()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

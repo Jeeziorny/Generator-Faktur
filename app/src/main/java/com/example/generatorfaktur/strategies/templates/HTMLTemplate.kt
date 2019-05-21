@@ -2,5 +2,6 @@ package com.example.generatorfaktur.strategies.templates
 
 
 interface HTMLTemplate {
-    fun generate()
+    //TODO ZAMIENIONE NA RETURN STRING - MATEUSZ
+    fun generate() : String
 }

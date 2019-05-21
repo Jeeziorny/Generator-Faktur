@@ -1,5 +1,6 @@
 package com.example.generatorfaktur
 
+import android.net.Uri
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
@@ -13,10 +14,12 @@ import com.beardedhen.androidbootstrap.TypefaceProvider
 import com.example.generatorfaktur.InvoiceUpload.PdfWriter
 import com.example.generatorfaktur.InvoiceUpload.PrintingManager
 import kotlinx.android.synthetic.main.preview_activity.*
+import java.net.URL
 
 class PreviewActivity : AppCompatActivity() {
 
     val URL = "file:///android_asset/FakturaVAT.htm"
+    lateinit var URL1 : String
     lateinit var pdfWriter : PdfWriter
     lateinit var printingManager : PrintingManager
 
@@ -30,6 +33,8 @@ class PreviewActivity : AppCompatActivity() {
                 pdfWriter.writeAsTemporaryFile()
             }
         }
+        URL1 = applicationContext.filesDir.absolutePath.plus("/myFile.html")
+        Log.d("URL" , URL1)
 
         webView.loadUrl(URL)
 
@@ -50,9 +55,8 @@ class PreviewActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_share -> {
-            Log.d("running", "lolo")
             printingManager.doWebViewPrint(URL)
-            Toast.makeText(this, "Udostępnij", Toast.LENGTH_LONG).show()
+            //Toast.makeText(this, "Udostępnij", Toast.LENGTH_LONG).show()
             true
         }
         R.id.action_save-> {

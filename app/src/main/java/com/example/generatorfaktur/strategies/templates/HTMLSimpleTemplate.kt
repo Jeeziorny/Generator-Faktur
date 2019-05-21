@@ -23,21 +23,26 @@ class HTMLSimpleTemplate (
 
 
     //TODO: zamien na big decimal
-    override fun generate() {
+    //TODO ZAMIENIONE NA RETURN STRING
+    override fun generate() : String {
         setProperties()
         setIvnoiceItems()
         setTable()
         assembly()
         export()
+        return result
     }
 
-    fun export() {
+    fun export(){
         //TODO: enkodowanie
+
         val file = File(context.filesDir, "myFile.html")
         file.createNewFile()
         file.bufferedWriter().use { out ->
             out.write(result)
         }
+        Log.d("URL", "$file.absolutePath")
+
     }
 
     fun assembly() {
