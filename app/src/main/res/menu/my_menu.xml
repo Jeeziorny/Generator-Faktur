@@ -13,4 +13,10 @@
             app:showAsAction="always"
     />
 
+    <item
+        android:id="@+id/action_print"
+        android:icon="@drawable/outline_print_24"
+        android:title="print"
+        app:showAsAction="always" />
+
 </menu>
