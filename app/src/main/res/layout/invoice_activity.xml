@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        android:layout_width="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_height="match_parent" android:layout_marginTop="8dp"
+        app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="8dp" android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="8dp" xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1.5"
+            android:onClick="buyerOnClick"
+            android:layout_height="wrap_content">
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center"
+                  android:textStyle="bold"
+                  android:textSize="20sp"
+                  android:layout_weight="5"
+                  android:text="Kupujący :"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="2"
+                  android:id="@+id/buyerNameText"
+                  android:textSize="15sp"
+                  android:text="Nazwa :"/>
+
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="2"
+                  android:textSize="15sp"
+                  android:id="@+id/buyerNIPText"
+                  android:text="NIP :"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="2"
+                  android:id="@+id/buyerAdressText"
+                  android:textSize="15sp"
+                  android:text="Adres :"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/buyerPostalText"
+                  android:layout_weight="2"
+                  android:textSize="15sp"
+                  android:text="Kod Pocztowy :"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/buyerPhoneText"
+                  android:layout_weight="2"
+                  android:textSize="15sp"
+                  android:text="Telefon :"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1.5"
+            android:onClick="dealerOnClick"
+            android:layout_height="wrap_content">
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center"
+                  android:textStyle="bold"
+                  android:textSize="20sp"
+                  android:layout_weight="5"
+                  android:text="Sprzedający :"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="2"
+                  android:id="@+id/dealerNameText"
+                  android:textSize="15sp"
+
+                  android:text="Nazwa :"/>
+
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/dealerNIPText"
+                  android:layout_weight="2"
+                  android:textSize="15sp"
+                  android:text="NIP :"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/dealerAdressText"
+                  android:layout_weight="2"
+                  android:textSize="15sp"
+                  android:text="Adres :"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/dealerPostalText"
+                  android:layout_weight="2"
+                  android:textSize="15sp"
+                  android:text="Kod Pocztowy :"/>
+
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/dealerPhoneText"
+                  android:layout_weight="2"
+                  android:textSize="15sp"
+                  android:text="Telefon :"/>
+    </LinearLayout>
+
+
+
+    <android.support.constraint.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+
+        <ListView android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:id="@+id/itemListView"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintHorizontal_bias="0.0"
+                  app:layout_constraintTop_toBottomOf="parent"/>
+
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/floatingActionBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:backgroundTint="#ffffff"
+                android:clickable="true"
+                app:borderWidth="0dp"
+                app:fabSize="normal"
+                android:scaleType="center"
+                android:onClick="itemFABOnClick"
+                app:maxImageSize="62dp"
+                android:background="#ffffff"
+                android:src="@drawable/round_add_circle_black_48"
+                app:elevation="4dp" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintVertical_bias="1.0"
+                android:focusable="true"/>
+
+
+    </android.support.constraint.ConstraintLayout>
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:layout_gravity="end"
+            android:onClick="generateOnClick"
+            android:id="@+id/generate"
+            android:text="GENERUJ"
+    />
+
+
+
+</LinearLayout>

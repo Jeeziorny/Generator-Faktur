@@ -23,4 +23,10 @@ class Entity (
     @ColumnInfo(name = "nip") var nip: String
 ) : Parcelable{
     constructor() : this("","","","","")
+
+    fun getKeywords() : ArrayList<String> {
+        val result = ArrayList<String>()
+        result.addAll(listOf(name, address, postal, nip))
+        return result
+    }
 }
