@@ -10,13 +10,13 @@ class CHTMLExportStrategy : HTMLExportStrategy  {
     override fun generateHTML(invoice: Invoice,
                               type: HTMLTemplateType,
                               context: Context
-    ) {
+    ) : String {
         /*
         generates invoice by template type.
          */
         when (type) {
             HTMLTemplateType.BASIC ->
-                HTMLSimpleTemplate(invoice, context).generate()
+                return HTMLSimpleTemplate(invoice, context).generate()
         }
     }
 }

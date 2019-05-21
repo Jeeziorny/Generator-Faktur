@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import com.beardedhen.androidbootstrap.BootstrapEditText
@@ -24,6 +25,8 @@ class InvoiceActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         setContentView(R.layout.invoice_activity)
         supportActionBar!!.hide()
 
@@ -38,6 +41,9 @@ class InvoiceActivity : AppCompatActivity() {
         //itemList.add(InvoiceItem("name1","unit1", 1.2, 40.0, 100.0, 40.0, 140))
         //itemList.add(InvoiceItem("name2","unit2", 1.2, 40.0, 100.0, 40.0, 140))
         //itemList.add(InvoiceItem("name3","unit3", 1.2, 40.0, 100.0, 40.0, 140))
+
+
+
     }
 
     fun buyerOnClick(view: View) {
@@ -120,10 +126,43 @@ class InvoiceActivity : AppCompatActivity() {
         builder.setProperties("23-04-1004", "siema")
         builder.setPaymentProperty("a", "22-33-4444", "c", "d")
         builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.generate()
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+
+
+
+
+
+        val result = builder.generate()
 
 
         val myIntent = Intent(this, PreviewActivity::class.java)
+        myIntent.putExtra("HTML", result)
         startActivity(myIntent)
     }
 

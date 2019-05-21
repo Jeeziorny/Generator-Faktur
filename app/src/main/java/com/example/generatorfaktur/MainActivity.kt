@@ -1,18 +1,22 @@
 package com.example.generatorfaktur
 
 import android.Manifest
+import android.arch.persistence.room.Room
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
+import android.util.Log
 import android.view.View
 import com.beardedhen.androidbootstrap.TypefaceProvider
 import com.example.generatorfaktur.DBManager.AppDatabase
 import com.example.generatorfaktur.invBuilder.AbstractInvcBuilder
 import com.example.generatorfaktur.invBuilder.InvcBuilder
 import com.example.generatorfaktur.invoiceProperties.Entity
-
+import com.example.generatorfaktur.invoiceProperties.InvoiceItem
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,11 +50,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun invoiceOnClick(view: View) {
-
-
         val myIntent = Intent(this, InvoiceActivity::class.java)
         startActivityForResult(myIntent, 998)
-
 
     }
 

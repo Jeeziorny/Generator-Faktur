@@ -23,7 +23,6 @@ class HTMLSimpleTemplate (
 
 
     //TODO: zamien na big decimal
-    //TODO ZAMIENIONE NA RETURN STRING
     override fun generate() : String {
         setProperties()
         setIvnoiceItems()
@@ -33,16 +32,13 @@ class HTMLSimpleTemplate (
         return result
     }
 
-    fun export(){
+    fun export() {
         //TODO: enkodowanie
-
         val file = File(context.filesDir, "myFile.html")
         file.createNewFile()
         file.bufferedWriter().use { out ->
             out.write(result)
         }
-        Log.d("URL", "$file.absolutePath")
-
     }
 
     fun assembly() {
@@ -60,7 +56,7 @@ class HTMLSimpleTemplate (
         val acc = StringBuilder()
         //val tableFile = "E:\\git\\studies\\TS\\testy\\resources\\table.txt"
         //var tableTemplate = File(tableFile).readText()
-        val inputStream = context.resources.openRawResource(R.raw.tablecontent)
+        val inputStream = context.resources.openRawResource(R.raw.table)
         val inputreader = InputStreamReader(inputStream)
         val buffreader = BufferedReader(inputreader)
         var tableTemplate = buffreader.readText()
@@ -81,7 +77,7 @@ class HTMLSimpleTemplate (
     }
 
     fun insertGap(template: String) : String {
-        val inputStream = context.resources.openRawResource(R.raw.tablecontent)
+        val inputStream = context.resources.openRawResource(R.raw.pageseparator)
         val inputreader = InputStreamReader(inputStream)
         val buffreader = BufferedReader(inputreader)
         var separator = buffreader.readText()

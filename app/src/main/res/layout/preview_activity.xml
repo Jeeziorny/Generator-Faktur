@@ -8,21 +8,10 @@
         android:background="#000"
         tools:context=".MainActivity" android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toolbar"
-            app:title="Generator faktur"
-            app:titleTextColor="@color/barText"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_width="match_parent"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:minHeight="?attr/actionBarSize"
-            android:background="@color/barBackground"
-            tools:ignore="MissingConstraints"/>
 
     <WebView
             android:layout_width="match_parent"
-            android:layout_height="fill_parent" android:id="@+id/webView">
+            android:layout_height="match_parent" android:id="@+id/webView">
 
     </WebView>
 
