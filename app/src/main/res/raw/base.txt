@@ -5,8 +5,8 @@ xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
 xmlns="http://www.w3.org/TR/REC-html40">
 
 <head>
-<meta http-equiv=Content-Type content="text/html; charset=utf-8">
 <meta name="viewport" content='width=device-width, initial-scale=1.0,text/html,charset=utf-8' >
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
 <meta name=ProgId content=Word.Document>
 <meta name=Generator content="Microsoft Word 15">
 <meta name=Originator content="Microsoft Word 15">
@@ -1129,10 +1129,10 @@ rel="colorSchemeMappinghref=&quot;FakturaPoprawiona3_pliki/colorschememapping.xm
   height:106.35pt'>
   <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
   normal'><span lang=PL style='font-size:9.0pt;color:windowtext;mso-ansi-language:
-  PL'>Spos�b p�atno�ci: !!paymentType!!<o:p></o:p></span></p>
+  PL'>Sposób płatności: !!paymentType!!<o:p></o:p></span></p>
   <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
   normal'><span lang=PL style='font-size:9.0pt;color:windowtext;mso-ansi-language:
-  PL'>Termin p�atno�ci: !!paymentDate!!<o:p></o:p></span></p>
+  PL'>Termin płatności: !!paymentDate!!<o:p></o:p></span></p>
   <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
   normal'><span lang=PL style='font-size:9.0pt;color:windowtext;mso-ansi-language:
   PL'>Nazwa banku: !!bankName!!<o:p></o:p></span></p>
@@ -1268,9 +1268,9 @@ rel="colorSchemeMappinghref=&quot;FakturaPoprawiona3_pliki/colorschememapping.xm
   text-align:center;line-height:normal'><span lang=PL style='color:windowtext;
   mso-ansi-language:PL'><o:p>&nbsp;</o:p></span></p>
   <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span lang=PL style='color:windowtext;mso-ansi-language:PL'>Razem do zap�aty:
+  normal'><span lang=PL style='color:windowtext;mso-ansi-language:PL'>Razem do zapłaty:
   </span><span lang=PL style='font-size:18.0pt;color:windowtext;mso-ansi-language:
-  PL'>!!Sum!! z�</span><span lang=PL style='color:windowtext;mso-ansi-language:
+  PL'>!!Sum!! zł</span><span lang=PL style='color:windowtext;mso-ansi-language:
   PL'><o:p></o:p></span></p>
   </td>
  </tr>

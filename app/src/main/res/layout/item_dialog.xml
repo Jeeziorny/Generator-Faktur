@@ -7,64 +7,36 @@
               android:layout_height="match_parent">
 
 
-    <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="Nazwa :"/>
-
-    <com.beardedhen.androidbootstrap.BootstrapEditText
-                android:layout_width="match_parent"
-                android:id="@+id/itemName"
-                android:layout_height="wrap_content"
-                android:inputType="text"/>
-
-    <TextView
+    <EditText
             android:layout_width="match_parent"
-            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
-            android:text="Cena :"/>
-
-    <com.beardedhen.androidbootstrap.BootstrapEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:bootstrapSize="md"
-                android:id="@+id/itemPrice"
-                android:layout_gravity="top|start"
-                android:inputType="numberDecimal"
-                app:bootstrapBrand="danger"/>
-
-
-    <TextView
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/itemName" android:hint="Nazwa"
+            style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense"
+            android:textAlignment="center"/>
+    <EditText
             android:layout_width="match_parent"
-            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
-            android:text="Ilość :"/>
-
-    <com.beardedhen.androidbootstrap.BootstrapEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:bootstrapSize="md"
-                android:id="@+id/itemQuantity"
-                android:layout_gravity="top|start"
-                android:inputType="numberDecimal"
-                app:bootstrapBrand="danger"/>
-
-
-    <TextView
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/itemPrice" style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense"
+            android:hint="Cena netto" android:textAlignment="center"/>
+    <EditText
             android:layout_width="match_parent"
-            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
-            android:text="VAT(%) :"/>
-
-    <com.beardedhen.androidbootstrap.BootstrapEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:bootstrapSize="md"
-                android:id="@+id/itemVAT"
-                android:layout_gravity="top|start"
-                android:inputType="numberDecimal"
-                app:bootstrapBrand="danger"/>
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/itemQuantity" style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense"
+            android:hint="Ilość" android:textAlignment="center"/>
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/itemVAT" android:hint="VAT (%)"
+            style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense"
+            android:textAlignment="center"/>
 
 
 </LinearLayout>

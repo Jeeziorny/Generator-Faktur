@@ -2,6 +2,7 @@ package com.example.generatorfaktur
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
@@ -10,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import com.beardedhen.androidbootstrap.BootstrapEditText
 import com.beardedhen.androidbootstrap.TypefaceProvider
 import com.example.generatorfaktur.DBManager.BasicDBManager
@@ -18,15 +18,15 @@ import com.example.generatorfaktur.invBuilder.AbstractInvcBuilder
 import com.example.generatorfaktur.invBuilder.InvcBuilder
 import com.example.generatorfaktur.invoiceProperties.Entity
 import com.example.generatorfaktur.invoiceProperties.InvoiceItem
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_invoice1.*
+import kotlinx.android.synthetic.main.item_dialog.*
 
 class InvoiceActivity : AppCompatActivity() {
 
 
     var itemList = ArrayList<InvoiceItem>()
     private lateinit var itemArrayAdapter: ItemArrayAdapter
-
+    lateinit var builder: AbstractInvcBuilder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,23 +34,15 @@ class InvoiceActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_invoice)
         TypefaceProvider.registerDefaultIconSets()
-        //setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        //Itemki dodane na sztywno, żeby zobaczyć czy bangla
 
         itemArrayAdapter = ItemArrayAdapter(this, itemList)
 
         itemArrayAdapter = ItemArrayAdapter(this, itemList)
         itemListView.adapter = itemArrayAdapter
 
-        itemList.add(InvoiceItem("name",8.0, 1.2, 40.0, 100.0, 40.0, 140))
-        itemList.add(InvoiceItem("name1",8.0, 1.2, 40.0, 100.0, 40.0, 140))
-        itemList.add(InvoiceItem("name2",0.0, 1.2, 40.0, 100.0, 40.0, 140))
-        itemList.add(InvoiceItem("name3",1.1, 1.2, 40.0, 100.0, 40.0, 140))
-        itemList.add(InvoiceItem("name4",0.0, 1.2, 40.0, 100.0, 40.0, 140))
-        itemList.add(InvoiceItem("name5",1.1, 1.2, 40.0, 100.0, 40.0, 140))
-        itemList.add(InvoiceItem("name6",1.1, 1.2, 40.0, 100.0, 40.0, 140))
+        builder = InvcBuilder(applicationContext)
+
 
 
     }
@@ -64,7 +56,7 @@ class InvoiceActivity : AppCompatActivity() {
         R.id.action_create -> {
             //TODO : TWORZENIE FAKTURY Z ZEBRANYCH DANYCH
 
-            val builder: AbstractInvcBuilder = InvcBuilder(applicationContext)
+
 
             val buyer = Entity("Tomek", "Stodola", "64-600", "432432423", "")
             val seller = Entity("Tomek", "Stodola", "64-600", "432432423", "")
@@ -136,13 +128,19 @@ class InvoiceActivity : AppCompatActivity() {
 
         val dataBase = BasicDBManager(this)
         val entityList = ArrayList<Entity>()
-        entityList.clear()
-        entityList.addAll(dataBase.getAllEntity())
+        val entityArrayAdapter = EntityArrayAdapter(this, entityList)
 
 
+        AsyncTask.execute {
+            entityList.clear()
+            entityList.addAll(dataBase.getAllEntity())
+            runOnUiThread {
+                entityArrayAdapter.notifyDataSetChanged()
+            }
+        }
 
         builder
-            .setSingleChoiceItems(EntityArrayAdapter(this, entityList), -1, object : DialogInterface.OnClickListener {
+            .setSingleChoiceItems(entityArrayAdapter, -1, object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface?, which: Int) {
                 val result = ArrayList<String>()
                 result.add(entityList[which].name)
@@ -151,12 +149,15 @@ class InvoiceActivity : AppCompatActivity() {
                 result.add(entityList[which].postal)
                 result.add(entityList[which].phoneNumber)
                 setTexts(result, who)
+                dialog?.dismiss()
             }
         })
             .setCancelable(true)
             .setPositiveButton("NOWY") { _, _ ->
                 doDialog(who)
             }
+        val alertDialog = builder.create()
+        alertDialog.show()
 
     }
 
@@ -198,18 +199,18 @@ class InvoiceActivity : AppCompatActivity() {
     fun setTexts(data: ArrayList<String>, who: String) {
         when (who) {
             "recipient" -> {
-                recipientNameText.text = "Nazwa : ${data[0]}"
-                recipientNIPText.text = "NIP : ${data[1]}"
-                recipientAdressText.text = "Adres : ${data[2]}"
-                recipientPostalText.text = "Kod pocztowy : ${data[3]}"
-                recipientPhoneText.text = "Telefon : ${data[4]}"
+                recipientNameText.text = data[0]
+                recipientNIPText.text = data[1]
+                recipientAdressText.text = data[2]
+                recipientPostalText.text = data[3]
+                recipientPhoneText.text = data[4]
             }
             "buyer" -> {
-                buyerNameText.text = "Nazwa : ${data[0]}"
-                buyerNIPText.text = "NIP : ${data[1]}"
-                buyerAdressText.text = "Adres : ${data[2]}"
-                buyerPostalText.text = "Kod pocztowy : ${data[3]}"
-                buyerPhoneText.text = "Telefon : ${data[4]}"
+                buyerNameText.text = data[0]
+                buyerNIPText.text = data[1]
+                buyerAdressText.text = data[2]
+                buyerPostalText.text = data[3]
+                buyerPhoneText.text =data[4]
             }
         }
     }
@@ -233,6 +234,7 @@ class InvoiceActivity : AppCompatActivity() {
 
                 addItem()
 
+
                 Snackbar.make(view, "Dodano przedmiot.", Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show()
 
@@ -245,6 +247,6 @@ class InvoiceActivity : AppCompatActivity() {
     }
 
     fun addItem() {
-        //TODO : dodawanie itemu do listy, tworzenie go
+        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
     }
 }

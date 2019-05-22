@@ -24,6 +24,7 @@ class ItemArrayAdapter(context : Context, var data : ArrayList<InvoiceItem>) :
         view!!.findViewById<TextView>(R.id.itemNameText).text = item.name
         view.findViewById<TextView>(R.id.quantityText).text = item.quantity.toString()
         view.findViewById<TextView>(R.id.vatText).text = item.vat.toString()
+        view.findViewById<TextView>(R.id.priceText).text = item.grossValue.toString()
 
         return view
     }
