@@ -19,7 +19,7 @@ class HTMLSimpleTemplate (
     var result = String()
 
     //Przerwa pomiedzy stronami PDF w przypadku, gdy nie miesci sie na jednej
-    var pageGap = 2
+    var pageGap = 15
 
 
     //TODO: zamien na big decimal
@@ -52,7 +52,7 @@ class HTMLSimpleTemplate (
         //TODO: boundValue to liczba wierszy, ktora miesci sie na pierwszej stronie
         //Po pierwszej iteracji petli zewnetrznej ustawiana jest na inna wartosc,
         //ktora jest dopasowana do calej strony.
-        var boundValue = 18
+        var boundValue = 21
         val acc = StringBuilder()
         //val tableFile = "E:\\git\\studies\\TS\\testy\\resources\\table.txt"
         //var tableTemplate = File(tableFile).readText()
@@ -103,7 +103,7 @@ class HTMLSimpleTemplate (
             cells = ArrayList(p.first.split(";"))
             row = row.replaceFirst("!i!", rowIterator.toString(), false)
             row = row.replaceFirst("!s/p!", cells[0], false)
-            row = row.replaceFirst("!c!", cells[1], false)
+            row = row.replaceFirst("!c!",  cells[1], false)
             row = row.replaceFirst("!n!", cells[2], false)
             row = row.replaceFirst("!nv!", cells[3], false)
             row = row.replaceFirst("!tv!", cells[4], false)
