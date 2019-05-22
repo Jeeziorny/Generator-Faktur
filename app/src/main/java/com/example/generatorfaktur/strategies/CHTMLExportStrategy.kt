@@ -1,5 +1,22 @@
 package com.example.generatorfaktur.strategies
 
-class CHTMLExportStrategy : HTMLExportStrategy  {
+import android.content.Context
+import com.example.generatorfaktur.Invoice
+import com.example.generatorfaktur.strategies.templates.HTMLSimpleTemplate
+import com.example.generatorfaktur.strategies.templates.HTMLTemplateType
 
+class CHTMLExportStrategy : HTMLExportStrategy  {
+    //Concrete HTML Export Strategy
+    override fun generateHTML(invoice: Invoice,
+                              type: HTMLTemplateType,
+                              context: Context
+    ) : String {
+        /*
+        generates invoice by template type.
+         */
+        when (type) {
+            HTMLTemplateType.BASIC ->
+                return HTMLSimpleTemplate(invoice, context).generate()
+        }
+    }
 }
