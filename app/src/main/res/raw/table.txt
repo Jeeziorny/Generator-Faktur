@@ -26,7 +26,7 @@
     height:24.05pt'>
     <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:
     .0001pt;text-align:center;line-height:normal'><span lang=PL
-    style='mso-ansi-language:PL'>Us�uga/Towar<o:p></o:p></span></p>
+    style='mso-ansi-language:PL'>Usługa/Towar<o:p></o:p></span></p>
     </td>
     <td width=72 valign=top style='width:53.8pt;border:solid #BFBFBF 1.0pt;
     mso-border-themecolor:background1;mso-border-themeshade:191;border-left:
@@ -37,7 +37,7 @@
     height:24.05pt'>
     <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:
     .0001pt;text-align:center;line-height:normal'><span lang=PL
-    style='mso-ansi-language:PL'>Ilo��<o:p></o:p></span></p>
+    style='mso-ansi-language:PL'>Ilość<o:p></o:p></span></p>
     </td>
     <td width=64 valign=top style='width:47.95pt;border:solid #BFBFBF 1.0pt;
     mso-border-themecolor:background1;mso-border-themeshade:191;border-left:
@@ -59,7 +59,7 @@
     height:24.05pt'>
     <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:
     .0001pt;text-align:center;line-height:normal'><span lang=PL
-    style='mso-ansi-language:PL'>Warto�� netto<o:p></o:p></span></p>
+    style='mso-ansi-language:PL'>Wartość netto<o:p></o:p></span></p>
     </td>
     <td width=59 valign=top style='width:44.15pt;border:solid #BFBFBF 1.0pt;
     mso-border-themecolor:background1;mso-border-themeshade:191;border-left:
@@ -81,7 +81,7 @@
     height:24.05pt'>
     <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:
     .0001pt;text-align:center;line-height:normal'><span lang=PL
-    style='mso-ansi-language:PL'>Warto�� Brutto<o:p></o:p></span></p>
+    style='mso-ansi-language:PL'>Wartość Brutto<o:p></o:p></span></p>
     </td>
    </tr>
    

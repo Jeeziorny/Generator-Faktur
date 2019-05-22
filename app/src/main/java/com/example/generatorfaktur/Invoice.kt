@@ -32,6 +32,7 @@ class Invoice {
         result.addAll(recipient!!.getKeywords())
         result.addAll(listOf(paymentForm, paymentDate, bank, accountNumber))
         result.addAll(listOf("%.2f".format(totalNetto), "%.2f".format(totalTax), "%.2f".format(totalGross)))
+        result.add("%.2f".format(totalGross))
         return result
     }
 
