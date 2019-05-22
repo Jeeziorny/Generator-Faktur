@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
-              android:layout_width="match_parent"
+              android:layout_width="wrap_content"
               android:gravity="center_horizontal"
-              android:layout_height="match_parent">
+              android:background="#00FFFFFF"
+              android:layout_height="wrap_content">
 
-    <com.beardedhen.androidbootstrap.BootstrapButton
+    <Button
             android:layout_width="match_parent"
-            app:showOutline="true"
             android:text="EDYTUJ"
+            android:textColor="@color/pink"
+            android:id="@+id/edit_button"
+            android:textSize="20sp"
+            android:background="@color/blue"
+            android:layout_marginBottom="4dp"
+            android:paddingEnd="75dp"
+            android:paddingStart="75dp"
             android:layout_height="wrap_content"/>
-    <com.beardedhen.androidbootstrap.BootstrapButton
+
+    <Button
             android:layout_width="match_parent"
-            app:showOutline="true"
             android:text="USUŃ"
-            android:layout_height="wrap_content"/>
-    <com.beardedhen.androidbootstrap.BootstrapButton
-            android:layout_width="match_parent"
-            app:showOutline="true"
-            android:text="WYSTAW FAKTURĘ"
-            android:layout_height="wrap_content"/>
+            android:background="@color/blue"
+            android:textColor="@color/pink"
+            android:id="@+id/delete_button"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:layout_marginTop="4dp"
+            android:layout_height="0dp"/>
 
 </LinearLayout>
