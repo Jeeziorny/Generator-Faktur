@@ -1,20 +1,25 @@
 package com.example.generatorfaktur
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import com.beardedhen.androidbootstrap.BootstrapEditText
+import com.beardedhen.androidbootstrap.TypefaceProvider
+import com.example.generatorfaktur.DBManager.BasicDBManager
 import com.example.generatorfaktur.invBuilder.AbstractInvcBuilder
 import com.example.generatorfaktur.invBuilder.InvcBuilder
 import com.example.generatorfaktur.invoiceProperties.Entity
 import com.example.generatorfaktur.invoiceProperties.InvoiceItem
-import kotlinx.android.synthetic.main.invoice_activity.*
-import kotlinx.android.synthetic.main.invoice_activity.itemListView
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_invoice1.*
 
 class InvoiceActivity : AppCompatActivity() {
 
@@ -27,8 +32,10 @@ class InvoiceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
 
-        setContentView(R.layout.invoice_activity)
-        supportActionBar!!.hide()
+        setContentView(R.layout.activity_invoice)
+        TypefaceProvider.registerDefaultIconSets()
+        //setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         //Itemki dodane na sztywno, żeby zobaczyć czy bangla
 
@@ -37,21 +44,120 @@ class InvoiceActivity : AppCompatActivity() {
         itemArrayAdapter = ItemArrayAdapter(this, itemList)
         itemListView.adapter = itemArrayAdapter
 
-        //itemList.add(InvoiceItem("name","unit", 1.2, 40.0, 100.0, 40.0, 140))
-        //itemList.add(InvoiceItem("name1","unit1", 1.2, 40.0, 100.0, 40.0, 140))
-        //itemList.add(InvoiceItem("name2","unit2", 1.2, 40.0, 100.0, 40.0, 140))
-        //itemList.add(InvoiceItem("name3","unit3", 1.2, 40.0, 100.0, 40.0, 140))
+        itemList.add(InvoiceItem("name",8.0, 1.2, 40.0, 100.0, 40.0, 140))
+        itemList.add(InvoiceItem("name1",8.0, 1.2, 40.0, 100.0, 40.0, 140))
+        itemList.add(InvoiceItem("name2",0.0, 1.2, 40.0, 100.0, 40.0, 140))
+        itemList.add(InvoiceItem("name3",1.1, 1.2, 40.0, 100.0, 40.0, 140))
+        itemList.add(InvoiceItem("name4",0.0, 1.2, 40.0, 100.0, 40.0, 140))
+        itemList.add(InvoiceItem("name5",1.1, 1.2, 40.0, 100.0, 40.0, 140))
+        itemList.add(InvoiceItem("name6",1.1, 1.2, 40.0, 100.0, 40.0, 140))
 
 
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.invoice_create_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_create -> {
+            //TODO : TWORZENIE FAKTURY Z ZEBRANYCH DANYCH
+
+            val builder: AbstractInvcBuilder = InvcBuilder(applicationContext)
+
+            val buyer = Entity("Tomek", "Stodola", "64-600", "432432423", "")
+            val seller = Entity("Tomek", "Stodola", "64-600", "432432423", "")
+            val reicipient = Entity("Tomek", "Stodola", "64-600", "432432423", "")
+
+            builder.setBuyer(buyer).setDealer(seller).setReicipient(reicipient)
+            builder.setProperties("23-04-1004", "siema")
+            builder.setPaymentProperty("a", "22-33-4444", "c", "d")
+
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+            builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+
+            val result = builder.generate()
+
+            val myIntent = Intent(this, PreviewActivity::class.java)
+            myIntent.putExtra("HTML", result)
+            myIntent.putExtra("ID", builder.invoice.invoiceId)
+            startActivity(myIntent)
+            true
+        }
+
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
+        }
     }
 
     fun buyerOnClick(view: View) {
-        doDialog("buyer")
+        choosePersonDialog("buyer")
     }
 
-    fun dealerOnClick(view: View) {
-        doDialog("dealer")
+    fun recipientOnClick(view: View) {
+        choosePersonDialog("recipient")
+    }
+
+
+
+    fun choosePersonDialog(who: String) {
+        val builder = AlertDialog.Builder(this)
+        if(who == "buyer") {
+            builder.setTitle("Wybierz nabywcę")
+        } else {
+            builder.setTitle("Wybuerz odbiorcę")
+        }
+
+        val dataBase = BasicDBManager(this)
+        val entityList = ArrayList<Entity>()
+        entityList.clear()
+        entityList.addAll(dataBase.getAllEntity())
+
+
+
+        builder
+            .setSingleChoiceItems(EntityArrayAdapter(this, entityList), -1, object : DialogInterface.OnClickListener {
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+                val result = ArrayList<String>()
+                result.add(entityList[which].name)
+                result.add(entityList[which].nip)
+                result.add(entityList[which].address)
+                result.add(entityList[which].postal)
+                result.add(entityList[which].phoneNumber)
+                setTexts(result, who)
+            }
+        })
+            .setCancelable(true)
+            .setPositiveButton("NOWY") { _, _ ->
+                doDialog(who)
+            }
+
     }
 
     //Uruchamia dialog do wypełnienia danych klienta/sprzedającego
@@ -91,12 +197,12 @@ class InvoiceActivity : AppCompatActivity() {
     //Można wypełniać dane sprzedającego automatycznie, wczytując liste stringów z danymi dla Dealera, np. z shared preferences
     fun setTexts(data: ArrayList<String>, who: String) {
         when (who) {
-            "dealer" -> {
-                dealerNameText.text = "Nazwa : ${data[0]}"
-                dealerNIPText.text = "NIP : ${data[1]}"
-                dealerAdressText.text = "Adres : ${data[2]}"
-                dealerPostalText.text = "Kod pocztowy : ${data[3]}"
-                dealerPhoneText.text = "Telefon : ${data[4]}"
+            "recipient" -> {
+                recipientNameText.text = "Nazwa : ${data[0]}"
+                recipientNIPText.text = "NIP : ${data[1]}"
+                recipientAdressText.text = "Adres : ${data[2]}"
+                recipientPostalText.text = "Kod pocztowy : ${data[3]}"
+                recipientPhoneText.text = "Telefon : ${data[4]}"
             }
             "buyer" -> {
                 buyerNameText.text = "Nazwa : ${data[0]}"
@@ -109,59 +215,7 @@ class InvoiceActivity : AppCompatActivity() {
     }
 
     //Odpowiada za przycisk generuj, powinna zbierać dane i tworzyć fakturę oraz uruchamiać widok PDF/do druku
-    fun generateOnClick(view: View) {
-        //TODO : TWORZENIE FAKTURY Z ZEBRANYCH DANYCH
 
-        val builder: AbstractInvcBuilder = InvcBuilder(applicationContext)
-
-        val buyer = Entity("Tomek", "Stodola", "64-600", "432432423", "")
-        val seller = Entity("Tomek", "Stodola", "64-600", "432432423", "")
-        val reicipient = Entity("Tomek", "Stodola", "64-600", "432432423", "")
-
-        builder.setBuyer(buyer).setDealer(seller).setReicipient(reicipient)
-
-        builder.setProperties("23-04-1004", "siema")
-        builder.setPaymentProperty("a", "22-33-4444", "c", "d")
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-
-
-
-
-
-        val result = builder.generate()
-
-
-        val myIntent = Intent(this, PreviewActivity::class.java)
-        myIntent.putExtra("HTML", result)
-        startActivity(myIntent)
-    }
 
 
     //Odpowiada za FAB na liście itemów
