@@ -1,20 +1,17 @@
 package com.example.generatorfaktur
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.beardedhen.androidbootstrap.TypefaceProvider
-import kotlinx.android.synthetic.main.preview_activity.*
 
 class PreviewActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.preview_activity)
         TypefaceProvider.registerDefaultIconSets()
-        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

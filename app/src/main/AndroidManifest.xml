@@ -12,6 +12,8 @@
 
         <activity android:name=".InvoiceActivity"/>
 
+        <activity android:name=".PrefsActivity" />
+
         <activity android:name=".PreviewActivity"/>
 
         <activity android:name=".EntityActivity"/>

@@ -10,8 +10,7 @@
             android:id="@+id/action_share"
             android:icon="@drawable/outline_share_24"
             android:title="share"
-            app:showAsAction="always"
-    />
+            app:showAsAction="always"/>
 
     <item
         android:id="@+id/action_print"

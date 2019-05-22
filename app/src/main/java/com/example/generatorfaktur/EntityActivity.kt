@@ -95,9 +95,6 @@ class EntityActivity : AppCompatActivity() {
 
                 entityArrayAdapter.notifyDataSetChanged()
         }
-            .setNegativeButton("ANULUJ") { _, _ ->
-
-            }
 
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
