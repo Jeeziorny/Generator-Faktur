@@ -56,7 +56,7 @@ class HTMLSimpleTemplate (
         val acc = StringBuilder()
         //val tableFile = "E:\\git\\studies\\TS\\testy\\resources\\table.txt"
         //var tableTemplate = File(tableFile).readText()
-        val inputStream = context.resources.openRawResource(R.raw.tablecontent)
+        val inputStream = context.resources.openRawResource(R.raw.table)
         val inputreader = InputStreamReader(inputStream)
         val buffreader = BufferedReader(inputreader)
         var tableTemplate = buffreader.readText()
@@ -77,7 +77,7 @@ class HTMLSimpleTemplate (
     }
 
     fun insertGap(template: String) : String {
-        val inputStream = context.resources.openRawResource(R.raw.tablecontent)
+        val inputStream = context.resources.openRawResource(R.raw.pageseparator)
         val inputreader = InputStreamReader(inputStream)
         val buffreader = BufferedReader(inputreader)
         var separator = buffreader.readText()

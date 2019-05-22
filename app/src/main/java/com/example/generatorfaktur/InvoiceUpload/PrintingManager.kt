@@ -27,8 +27,8 @@ class PrintingManager (private val context: Context){
         }
     }
 
-    fun doWebViewPrint(url: String) {
-        webView.loadUrl(url)
+    fun doWebViewPrint(html: String) {
+        webView.loadData(html, "text/html", "UTF-8")
     }
 
     private fun createWebPrintJob(webView: WebView) {

@@ -17,13 +17,24 @@ import kotlinx.android.synthetic.main.preview_activity.*
 class PreviewActivity : AppCompatActivity() {
 
     val URL = "file:///android_asset/FakturaVAT.htm"
-    lateinit var Url1 : String
+    var HTML : String? = null
     lateinit var pdfWriter : PdfWriter
     lateinit var printingManager : PrintingManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.preview_activity)
+
+        webView.setInitialScale(1)
+
+        webView.settings.builtInZoomControls = true
+        webView.settings.setSupportZoom(true)
+        webView.settings.builtInZoomControls = true
+        webView.settings.displayZoomControls = false
+        webView.settings.loadWithOverviewMode = true
+        webView.settings.useWideViewPort = true
+        //webView.scrollBarStyle = WebView.SCROLLBARS_OUTSIDE_OVERLAY
+        //webView.isScrollbarFadingEnabled = true
 
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
@@ -32,10 +43,16 @@ class PreviewActivity : AppCompatActivity() {
             }
         }
 
-        Url1 = applicationContext.filesDir.absolutePath.plus("/myFile.html")
-        webView.loadUrl(Url1)
+        if (intent != null) {
+            HTML = intent.getStringExtra("HTML")
+            Log.d("bbb", "olaboga")
+        }
 
+        if(HTML == null) {
+            finish()
+        }
 
+        webView.loadData(HTML, "text/html", "UTF-8")
 
         printingManager = PrintingManager(this)
         pdfWriter = PdfWriter( this, "invoice.PDF", webView)
@@ -54,14 +71,21 @@ class PreviewActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_share -> {
-            Log.d("running", "lolo")
-            printingManager.doWebViewPrint(Url1)
-            Toast.makeText(this, "Udostępnij", Toast.LENGTH_LONG).show()
+            pdfWriter.uploadFile()
+            //Toast.makeText(this, "Udostępnij", Toast.LENGTH_LONG).show()
             true
         }
         R.id.action_save-> {
             pdfWriter.copyToExternal("Invoice ${System.currentTimeMillis()}")
             Toast.makeText(this, "Zapisz", Toast.LENGTH_LONG).show()
+            true
+        }
+        R.id.action_print ->{
+            val html = HTML
+            if(html != null) {
+                printingManager.doWebViewPrint(html)
+            }
+            //Toast.makeText(this, "Drukuj", Toast.LENGTH_SHORT).show()
             true
         }
 
