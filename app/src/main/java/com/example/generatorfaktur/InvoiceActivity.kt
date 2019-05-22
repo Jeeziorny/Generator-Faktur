@@ -238,7 +238,7 @@ class InvoiceActivity : AppCompatActivity() {
                 Snackbar.make(view, "Dodano przedmiot.", Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show()
 
-                itemArrayAdapter.notifyDataSetChanged()
+
             }
 
         val alertDialog = alertDialogBuilder.create()
@@ -247,6 +247,7 @@ class InvoiceActivity : AppCompatActivity() {
     }
 
     fun addItem() {
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
+        itemList.add(builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23))
+        itemArrayAdapter.notifyDataSetChanged()
     }
 }

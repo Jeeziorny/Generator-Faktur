@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".InvoiceActivity">
+
+    <include layout="@layout/content_invoice1" android:id="@+id/include" app:layout_anchorGravity="top|center"
+             app:layout_anchor="@+id/fab"/>
+
+    <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:backgroundTint="#ffffff"
+            android:clickable="true"
+            app:borderWidth="0dp"
+            app:fabSize="normal"
+            android:scaleType="center"
+            app:maxImageSize="62dp"
+            android:background="#ffffff"
+            android:src="@drawable/round_add_circle_black_48"
+            app:elevation="4dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintVertical_bias="1.0"
+            android:focusable="true" app:layout_anchorGravity="end|bottom" app:layout_anchor="@+id/include"
+            android:onClick="itemFABOnClick"/>
+
+</android.support.design.widget.CoordinatorLayout>
