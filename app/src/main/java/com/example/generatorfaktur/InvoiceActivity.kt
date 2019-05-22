@@ -114,9 +114,9 @@ class InvoiceActivity : AppCompatActivity() {
 
         val builder: AbstractInvcBuilder = InvcBuilder(applicationContext)
 
-        val buyer = Entity("Tomek", "Stodola", "64-600", "432432423", "")
-        val seller = Entity("Tomek", "Stodola", "64-600", "432432423", "")
-        val reicipient = Entity("Tomek", "Stodola", "64-600", "432432423", "")
+        val buyer = Entity("Tomek", "Stodola", "64-600", "432432423", "234234234")
+        val seller = Entity("Tomek", "Stodola", "64-600", "432432423", "234234234")
+        val reicipient = Entity("Tomek", "Stodola", "64-600", "432432423", "234234234")
 
         builder.setBuyer(buyer).setDealer(seller).setReicipient(reicipient)
 
@@ -124,9 +124,6 @@ class InvoiceActivity : AppCompatActivity() {
         builder.setPaymentProperty("a", "22-33-4444", "c", "d")
         builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
         builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-
         builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
         builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
         builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
@@ -138,7 +135,6 @@ class InvoiceActivity : AppCompatActivity() {
         builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
         builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
         builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-
         builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
         builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
         builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
@@ -147,12 +143,6 @@ class InvoiceActivity : AppCompatActivity() {
         builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
         builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
         builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-        builder.addInvoiceItem("cebula", 2.0, 4.0, 0.23)
-
-
-
 
 
         val result = builder.generate()
