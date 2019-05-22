@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.invoice_activity.itemListView
 
 class InvoiceActivity : AppCompatActivity() {
 
-
+    var id = 0
     var itemList = ArrayList<InvoiceItem>()
     private lateinit var itemArrayAdapter: ItemArrayAdapter
 
@@ -28,7 +28,6 @@ class InvoiceActivity : AppCompatActivity() {
 
 
         setContentView(R.layout.invoice_activity)
-        supportActionBar!!.hide()
 
         //Itemki dodane na sztywno, żeby zobaczyć czy bangla
 

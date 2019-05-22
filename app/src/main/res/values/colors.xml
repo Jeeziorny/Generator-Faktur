@@ -5,4 +5,7 @@
     <color name="colorAccent">#D81B60</color>
     <color name="barBackground">#ffffff</color>
     <color name="barText">#000000</color>
+    <color name="blue">#2f3c7e</color>
+    <color name="pink">#f9eaeb</color>
+    <color name="more_blue">#3f4d8f</color>
 </resources>

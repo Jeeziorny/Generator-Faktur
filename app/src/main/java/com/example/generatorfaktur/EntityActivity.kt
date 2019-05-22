@@ -1,13 +1,18 @@
 package com.example.generatorfaktur
 
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.SearchView
+import com.beardedhen.androidbootstrap.BootstrapEditText
 import com.example.generatorfaktur.DBManager.BasicDBManager
 import com.example.generatorfaktur.DBManager.DBManager
 import com.example.generatorfaktur.invoiceProperties.Entity
@@ -24,7 +29,6 @@ class EntityActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.entity_activity)
-        supportActionBar!!.hide()
 
         database = BasicDBManager(this)
         entityArrayAdapter = EntityArrayAdapter(this, entityList)
@@ -43,28 +47,72 @@ class EntityActivity : AppCompatActivity() {
             }
         })
 
-        //TODO : Obsługa long clicka
+
         entityListView.setOnItemLongClickListener { parent, view, position, id ->
             val li = LayoutInflater.from(this)
             val dialog = li.inflate(R.layout.dialog_long_click, null)
 
-            val alertDialogBuilder = AlertDialog.Builder(this)
+
+
+            val alertDialogBuilder = AlertDialog.Builder(this, R.style.CustomDialog)
+
 
             alertDialogBuilder.setView(dialog)
 
             alertDialogBuilder.setCancelable(true)
 
             val alertDialog = alertDialogBuilder.create()
+
             alertDialog.show()
+
+            dialog.findViewById<Button>(R.id.delete_button).setOnClickListener {
+                deleteEntity(entityArrayAdapter.displayData[position])
+                alertDialog.hide()
+            }
+
+            dialog.findViewById<Button>(R.id.edit_button).setOnClickListener {
+
+
+                val secLi = LayoutInflater.from(this)
+
+                val secDialog = secLi.inflate(R.layout.fab_dialog, null)
+
+                secDialog.findViewById<BootstrapEditText>(R.id.entityNIP).setText(entityArrayAdapter.displayData[position].nip)
+                secDialog.findViewById<BootstrapEditText>(R.id.entityAddress).setText(entityArrayAdapter.displayData[position].address)
+                secDialog.findViewById<BootstrapEditText>(R.id.entityName).setText(entityArrayAdapter.displayData[position].name)
+                secDialog.findViewById<BootstrapEditText>(R.id.entityPostal).setText(entityArrayAdapter.displayData[position].postal)
+                secDialog.findViewById<BootstrapEditText>(R.id.entityPhone).setText(entityArrayAdapter.displayData[position].phoneNumber)
+                secDialog.findViewById<BootstrapEditText>(R.id.entityNIP).isEnabled = false
+
+                val secAlertDialogBuilder = AlertDialog.Builder(this, R.style.FABDialog)
+                secAlertDialogBuilder.setView(secDialog)
+                secAlertDialogBuilder.setCancelable(true)
+
+
+                secAlertDialogBuilder.setPositiveButton("EDYTUJ") { _, _ ->
+                    val entity = Entity()
+                    entity.name = secDialog.entityName.text.toString()
+                    entity.address = secDialog.entityAddress.text.toString()
+                    entity.nip = secDialog.entityNIP.text.toString()
+                    entity.phoneNumber = secDialog.entityPhone.text.toString()
+                    entity.postal = secDialog.entityPostal.text.toString()
+                    updateEntity(entity)
+                }
+
+
+
+
+                val secAlertDialog = secAlertDialogBuilder.create()
+                secAlertDialog.show()
+                alertDialog.hide()
+
+            }
             true
         }
 
-
-        //TODO : Obsługa clicka
-        entityListView.setOnItemClickListener { parent, view, position, id ->
-
-        }
     }
+
+
 
     fun syncListViewWithDb() {
         AsyncTask.execute {
@@ -77,14 +125,10 @@ class EntityActivity : AppCompatActivity() {
     }
 
     fun fabOnClick(view: View) {
-
-
-
-        //TODO: Obsługa FAB
         val li = LayoutInflater.from(this)
         val dialog = li.inflate(R.layout.fab_dialog, null)
 
-        val alertDialogBuilder = AlertDialog.Builder(this)
+        val alertDialogBuilder = AlertDialog.Builder(this, R.style.FABDialog)
 
         alertDialogBuilder.setView(dialog)
 
@@ -99,9 +143,6 @@ class EntityActivity : AppCompatActivity() {
                 entity.phoneNumber = dialog.entityPhone.text.toString()
                 entity.postal = dialog.entityPostal.text.toString()
                 addEntity(entity)
-
-                Snackbar.make(view, "Dodano klienta.", Snackbar.LENGTH_SHORT)
-                    .setAction("Action", null).show()
 
                 entityArrayAdapter.notifyDataSetChanged()
         }

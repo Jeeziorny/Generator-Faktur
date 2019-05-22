@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="wrap_content"
               android:gravity="center_horizontal"
+              android:background="#00FFFFFF"
               android:layout_height="wrap_content">
 
-    <com.beardedhen.androidbootstrap.BootstrapButton
+    <Button
             android:layout_width="match_parent"
             android:text="EDYTUJ"
-            android:textSize="50sp"
-            android:layout_height="60dp"/>
-    <com.beardedhen.androidbootstrap.BootstrapButton
+            android:textColor="@color/pink"
+            android:id="@+id/edit_button"
+            android:textSize="20sp"
+            android:background="@color/blue"
+            android:layout_marginBottom="4dp"
+            android:paddingEnd="75dp"
+            android:paddingStart="75dp"
+            android:layout_height="wrap_content"/>
+
+    <Button
             android:layout_width="match_parent"
             android:text="USUŃ"
-            android:textSize="50sp"
+            android:background="@color/blue"
+            android:textColor="@color/pink"
+            android:id="@+id/delete_button"
+            android:textSize="20sp"
             android:layout_weight="1"
-            android:layout_height="60dp"/>
+            android:layout_marginTop="4dp"
+            android:layout_height="0dp"/>
 
 </LinearLayout>
