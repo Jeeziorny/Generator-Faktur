@@ -13,15 +13,20 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
-        <activity android:name=".InvoiceActivity"/>
+        <activity android:name=".InvoiceActivity"
+                  android:screenOrientation="portrait"/>
 
-        <activity android:name=".PrefsActivity" />
+        <activity android:name=".PrefsActivity"
+                  android:screenOrientation="portrait"/>
 
-        <activity android:name=".PreviewActivity"/>
+        <activity android:name=".PreviewActivity"
+                  android:screenOrientation="portrait"/>
 
-        <activity android:name=".EntityActivity"/>
+        <activity android:name=".EntityActivity"
+                  android:screenOrientation="portrait"/>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -35,7 +40,7 @@
                 android:grantUriPermissions="true">
             <meta-data
                     android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/provider_paths" />
+                    android:resource="@xml/provider_paths"/>
         </provider>
     </application>
 

@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.SearchView
 import com.beardedhen.androidbootstrap.BootstrapEditText
@@ -109,6 +110,8 @@ class EntityActivity : AppCompatActivity() {
             }
             true
         }
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
     }
 
