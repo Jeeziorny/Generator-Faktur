@@ -62,7 +62,6 @@ class Invoice {
             totalNetto -= temp.value
             totalTax -= temp.value * temp.vat
             totalGross -= temp.value*(1+temp.vat)
-
         }
     }
 }

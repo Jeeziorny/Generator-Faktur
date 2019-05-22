@@ -1,6 +1,8 @@
 package com.example.generatorfaktur
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Paint
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
@@ -100,7 +102,7 @@ class InvoiceActivity : AppCompatActivity() {
             }
             "buyer" -> {
                 buyerNameText.text = "Nazwa : ${data[0]}"
-                buyerNIPText.text = "NIP : ${data[1]}"
+                buyerNIPText.text =  "NIP : ${data[1]}"
                 buyerAdressText.text = "Adres : ${data[2]}"
                 buyerPostalText.text = "Kod pocztowy : ${data[3]}"
                 buyerPhoneText.text = "Telefon : ${data[4]}"
@@ -113,7 +115,6 @@ class InvoiceActivity : AppCompatActivity() {
         //TODO : TWORZENIE FAKTURY Z ZEBRANYCH DANYCH
 
         val builder: AbstractInvcBuilder = InvcBuilder(applicationContext)
-
         val buyer = Entity("Tomek", "Stodola", "64-600", "432432423", "234234234")
         val seller = Entity("Tomek", "Stodola", "64-600", "432432423", "234234234")
         val reicipient = Entity("Tomek", "Stodola", "64-600", "432432423", "234234234")

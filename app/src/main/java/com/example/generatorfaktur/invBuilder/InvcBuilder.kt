@@ -11,10 +11,10 @@ class InvcBuilder(context: Context) : AbstractInvcBuilder(context) {
         return this
     }
 
-    override fun addInvoiceItem(name: String, q: Double, netto: Double, vat: Double): AbstractInvcBuilder {
+    override fun addInvoiceItem(name: String, q: Double, netto: Double, vat: Double): InvoiceItem {
         val invoiceItem = InvoiceItem(name, q, netto, netto*q, vat, (netto*q)*(1+vat), 0)
         invoice.addInvoiceItem(invoiceItem)
-        return this
+        return invoiceItem
     }
 
     override fun setPaymentProperty(
