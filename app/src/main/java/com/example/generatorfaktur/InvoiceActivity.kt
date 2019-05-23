@@ -2,6 +2,8 @@ package com.example.generatorfaktur
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -12,6 +14,8 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.OnFocusChangeListener
+import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -44,7 +48,6 @@ class InvoiceActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_invoice)
         TypefaceProvider.registerDefaultIconSets()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         itemArrayAdapter = ItemArrayAdapter(this, itemList)
 
@@ -90,7 +93,6 @@ class InvoiceActivity : AppCompatActivity() {
 
             builder.setBuyer(buyer).setDealer(seller).setReicipient(reicipient)
 
-            //TODO currentdate
             val invoiceID = InvoiceNumber(this)
             val sdf = SimpleDateFormat("dd-MM-yyyy")
             val date = sdf.format(Calendar.getInstance().time)
@@ -117,8 +119,6 @@ class InvoiceActivity : AppCompatActivity() {
     fun recipientOnClick(view: View) {
         choosePersonDialog("recipient")
     }
-
-
 
     //Dialog wyświetlający listę posiadanych w bazie klientów
     //Pozwala przejść do dialogu dodającego nowego klienta
@@ -227,20 +227,86 @@ class InvoiceActivity : AppCompatActivity() {
 
         alertDialogBuilder.setView(dialog)
 
-        alertDialogBuilder
-            .setCancelable(true)
-            .setPositiveButton("DODAJ") { _, _ ->
-                result.add(dialog.findViewById<BootstrapEditText>(R.id.entityName).text.toString())
-                result.add(dialog.findViewById<BootstrapEditText>(R.id.entityNIP).text.toString())
-                result.add(dialog.findViewById<BootstrapEditText>(R.id.entityAddress).text.toString())
-                result.add(dialog.findViewById<BootstrapEditText>(R.id.entityPostal).text.toString())
-                result.add(dialog.findViewById<BootstrapEditText>(R.id.entityPhone).text.toString())
+        val entityNameEditText = dialog.findViewById<BootstrapEditText>(R.id.entityName)
+        val entityNIPEditText = dialog.findViewById<BootstrapEditText>(R.id.entityNIP)
+        val entityPhoneEditText = dialog.findViewById<BootstrapEditText>(R.id.entityPhone)
+        val entityPostalEditText = dialog.findViewById<BootstrapEditText>(R.id.entityPostal)
+        val entityAddressEditText = dialog.findViewById<BootstrapEditText>(R.id.entityAddress)
 
-                setTexts(result, who)
-
+        entityNameEditText.onFocusChangeListener =
+            OnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    if (entityNameEditText.text.toString().isBlank() ||
+                            entityNameEditText.text.toString().isEmpty())
+                        entityNameEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
+                    else
+                        entityNameEditText.background = ColorDrawable(Color.WHITE)
+                }
             }
 
+        entityNIPEditText.onFocusChangeListener =
+            OnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    if (!Validator.checkNip(entityNIPEditText.text.toString()))
+                        entityNIPEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
+                    else
+                        entityNIPEditText.background = ColorDrawable(Color.WHITE)
+                }
+            }
+
+        entityPhoneEditText.onFocusChangeListener =
+            OnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    if (!Validator.isNumeric(entityPhoneEditText.text.toString()))
+                        entityPhoneEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
+                    else
+                        entityPhoneEditText.background = ColorDrawable(Color.WHITE)
+
+                }
+            }
+
+        entityPostalEditText.onFocusChangeListener =
+            OnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    if (!Validator.checkPostal(entityPostalEditText.text.toString()))
+                        entityPostalEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
+                    else
+                        entityPostalEditText.background = ColorDrawable(Color.WHITE)
+
+                }
+            }
+
+        entityAddressEditText.onFocusChangeListener =
+            OnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    if (entityAddressEditText.text.toString().isBlank() ||
+                        entityAddressEditText.text.toString().isEmpty())
+                        entityAddressEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
+                    else
+                        entityAddressEditText.background = ColorDrawable(Color.WHITE)
+
+                }
+            }
+
+
+
+        alertDialogBuilder
+            .setCancelable(true)
+
         val alertDialog = alertDialogBuilder.create()
+
+
+        dialog.findViewById<Button>(R.id.addFAB).setOnClickListener {
+            result.add(entityNameEditText.text.toString())
+            result.add(entityNIPEditText.text.toString())
+            result.add(entityAddressEditText.text.toString())
+            result.add(entityPostalEditText.text.toString())
+            result.add(entityPhoneEditText.text.toString())
+
+            setTexts(result, who)
+
+            alertDialog.hide()
+        }
         alertDialog.show()
     }
 
@@ -266,9 +332,6 @@ class InvoiceActivity : AppCompatActivity() {
         }
     }
 
-
-
-
     //Odpowiada za FAB na liście itemów
     fun itemFABOnClick(view: View) {
         val li = LayoutInflater.from(this)
@@ -280,22 +343,23 @@ class InvoiceActivity : AppCompatActivity() {
 
         alertDialogBuilder
             .setCancelable(true)
-            .setPositiveButton("DODAJ") {  _, _ ->
-
-                itemList.add( builder.addInvoiceItem(
-                    dialog.findViewById<EditText>(R.id.itemName).text.toString(),
-                    dialog.findViewById<EditText>(R.id.itemPrice).text.toString().toDouble(),
-                    dialog.findViewById<EditText>(R.id.itemQuantity).text.toString().toDouble(),
-                    dialog.findViewById<EditText>(R.id.itemVAT).text.toString().toDouble()/100))
-                itemArrayAdapter.notifyDataSetChanged()
-
-                Snackbar.make(view, "Dodano przedmiot.", Snackbar.LENGTH_SHORT)
-                    .setAction("Action", null).show()
-
-            }
 
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
+        dialog.findViewById<Button>(R.id.addBDI).setOnClickListener {
+
+            //TODO add validator
+
+            itemList.add( builder.addInvoiceItem(
+                dialog.findViewById<EditText>(R.id.itemName).text.toString(),
+                dialog.findViewById<EditText>(R.id.itemQuantity).text.toString().toDouble(),
+                dialog.findViewById<EditText>(R.id.itemPrice).text.toString().toDouble(),
+                dialog.findViewById<EditText>(R.id.itemVAT).text.toString().toDouble()/100))
+            itemArrayAdapter.notifyDataSetChanged()
+
+            alertDialog.hide()
+
+        }
 
     }
 

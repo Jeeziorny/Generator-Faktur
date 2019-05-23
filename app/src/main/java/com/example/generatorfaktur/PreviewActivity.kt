@@ -59,8 +59,6 @@ class PreviewActivity : AppCompatActivity() {
         pdfWriter = PdfWriter( this, "invoice.PDF", webView)
 
         TypefaceProvider.registerDefaultIconSets()
-//        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
     }
 

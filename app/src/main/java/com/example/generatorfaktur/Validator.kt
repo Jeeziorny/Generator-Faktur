@@ -51,7 +51,7 @@ class Validator {
         }
 
         //nazwa krotsza niz 4 linijki na fakturze
-        fun checkName(n: String): Boolean {
+        fun checkProductName(n: String): Boolean {
             if (n.isEmpty() || n.length > 27 * 4)
                 return false
             return true
