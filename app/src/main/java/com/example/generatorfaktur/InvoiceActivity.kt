@@ -6,17 +6,15 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.widget.Button
 import android.widget.EditText
-import android.widget.RadioButton
 import android.widget.RadioGroup
 import com.beardedhen.androidbootstrap.BootstrapEditText
 import com.beardedhen.androidbootstrap.TypefaceProvider
@@ -26,10 +24,6 @@ import com.example.generatorfaktur.invBuilder.InvcBuilder
 import com.example.generatorfaktur.invoiceProperties.Entity
 import com.example.generatorfaktur.invoiceProperties.InvoiceItem
 import kotlinx.android.synthetic.main.content_invoice1.*
-import kotlinx.android.synthetic.main.invoice_parametrs_dialog.*
-import kotlinx.android.synthetic.main.item_dialog.*
-import android.view.View.OnFocusChangeListener
-import kotlinx.android.synthetic.main.entity.*
 
 
 class InvoiceActivity : AppCompatActivity() {
