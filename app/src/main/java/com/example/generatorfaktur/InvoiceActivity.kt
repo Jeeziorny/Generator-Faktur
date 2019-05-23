@@ -176,11 +176,12 @@ class InvoiceActivity : AppCompatActivity() {
             .setPositiveButton("Zatwierdź") { _, _ ->
                 //TODO date + ID + sprzedawca
                 val sdf = SimpleDateFormat("dd-MM-yyyy")
+                val seller = SellerData(this)
 
                 when (dialog.findViewById<RadioGroup>(R.id.paymentGroup).checkedRadioButtonId) {
                     R.id.paymentCashButton -> {
                         val date = sdf.format(Calendar.getInstance().time)
-                        builder.setPaymentProperty("Gotówka", date, "a", "d")
+                        builder.setPaymentProperty("Gotówka", date, seller.getBankName(), seller.getBankNumber())
                     }
                     else -> {
                         val paymentDuration = dialog.findViewById<EditText>(R.id.paymentDurationText).text.toString()
@@ -189,7 +190,7 @@ class InvoiceActivity : AppCompatActivity() {
                             calendar.add(Calendar.DATE, paymentDuration.toInt())
                         }
                         val date = sdf.format(calendar.time)
-                        builder.setPaymentProperty("Przelew", date, "a", "d")
+                        builder.setPaymentProperty("Przelew", date, seller.getBankName(), seller.getBankNumber())
                     }
                 }
 
@@ -332,7 +333,7 @@ class InvoiceActivity : AppCompatActivity() {
         }
     }
 
-    //Odpowiada za FAB na liście itemów
+    //Odpowiada za dodawanie na liście itemów
     fun itemFABOnClick(view: View) {
         val li = LayoutInflater.from(this)
         val dialog = li.inflate(R.layout.item_dialog, null)
@@ -348,14 +349,22 @@ class InvoiceActivity : AppCompatActivity() {
         alertDialog.show()
         dialog.findViewById<Button>(R.id.addBDI).setOnClickListener {
 
-            //TODO add validator
+            val itemName = dialog.findViewById<EditText>(R.id.itemName).text.toString()
+            val itemQuantity = dialog.findViewById<EditText>(R.id.itemQuantity).text.toString()
+            val itemPrice = dialog.findViewById<EditText>(R.id.itemPrice).text.toString()
+            val itemVAT = dialog.findViewById<EditText>(R.id.itemVAT).text.toString()
+            if(itemName != "" && itemQuantity != "" && itemPrice !="" && itemVAT != "") {
 
-            itemList.add( builder.addInvoiceItem(
-                dialog.findViewById<EditText>(R.id.itemName).text.toString(),
-                dialog.findViewById<EditText>(R.id.itemQuantity).text.toString().toDouble(),
-                dialog.findViewById<EditText>(R.id.itemPrice).text.toString().toDouble(),
-                dialog.findViewById<EditText>(R.id.itemVAT).text.toString().toDouble()/100))
-            itemArrayAdapter.notifyDataSetChanged()
+                itemList.add(
+                    builder.addInvoiceItem(
+                        itemName,
+                        itemQuantity.toDouble(),
+                        itemPrice.toDouble(),
+                        itemVAT.toDouble() / 100
+                    )
+                )
+                itemArrayAdapter.notifyDataSetChanged()
+            }
 
             alertDialog.hide()
 

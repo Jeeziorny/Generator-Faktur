@@ -50,11 +50,12 @@ class PdfWriter (val context: Context, val fileName: String, val webView: WebVie
 
     //CREATE FILE IN DCIM/InvoicePDF FOLDER
     private fun makeOutputFile(fileName: String) : File {
-        val path =  Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM.plus("/InvoicePDF/"))
+        val path =  Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS.plus("/Invoices/"))
         if (!path.exists()) {
             path.mkdirs()
         }
         val file = File(path, fileName.plus(".PDF"))
+        Log.d("path", file.absolutePath)
         file.createNewFile()
 
         return file
