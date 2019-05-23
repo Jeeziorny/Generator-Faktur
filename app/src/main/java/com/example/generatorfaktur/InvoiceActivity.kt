@@ -253,19 +253,25 @@ class InvoiceActivity : AppCompatActivity() {
                 }
             }
 
+
+
         alertDialogBuilder
             .setCancelable(true)
-            .setPositiveButton("DODAJ") { _, _ ->
-                result.add(entityNameEditText.text.toString())
-                result.add(entityNIPEditText.text.toString())
-                result.add(entityAddressEditText.text.toString())
-                result.add(entityPostalEditText.text.toString())
-                result.add(entityPhoneEditText.text.toString())
-
-                setTexts(result, who)
-            }
 
         val alertDialog = alertDialogBuilder.create()
+
+
+        dialog.findViewById<Button>(R.id.addFAB).setOnClickListener {
+            result.add(entityNameEditText.text.toString())
+            result.add(entityNIPEditText.text.toString())
+            result.add(entityAddressEditText.text.toString())
+            result.add(entityPostalEditText.text.toString())
+            result.add(entityPhoneEditText.text.toString())
+
+            setTexts(result, who)
+
+            alertDialog.hide()
+        }
         alertDialog.show()
     }
 
