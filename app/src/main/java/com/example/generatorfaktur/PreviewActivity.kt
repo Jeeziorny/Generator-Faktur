@@ -74,7 +74,7 @@ class PreviewActivity : AppCompatActivity() {
             true
         }
         R.id.action_save-> {
-            pdfWriter.copyToExternal("Invoice $ID")
+            pdfWriter.copyToExternal("Invoice ${ID!!.replace('/','_',true)}")
             Toast.makeText(this, "Zapisz", Toast.LENGTH_LONG).show()
             true
         }
