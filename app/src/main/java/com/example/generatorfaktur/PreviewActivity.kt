@@ -66,14 +66,13 @@ class PreviewActivity : AppCompatActivity() {
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.my_menu, menu)
+        menuInflater.inflate(R.menu.my_preview_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_share -> {
             pdfWriter.uploadFile()
-            //Toast.makeText(this, "Udostępnij", Toast.LENGTH_LONG).show()
             true
         }
         R.id.action_save-> {

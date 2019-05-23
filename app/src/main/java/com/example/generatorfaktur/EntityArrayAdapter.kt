@@ -16,7 +16,7 @@ class EntityArrayAdapter(context: Context, var data: ArrayList<Entity>) :
     BaseAdapter() {
 
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    private var displayData : ArrayList<Entity> = data.clone() as ArrayList<Entity>
+    var displayData : ArrayList<Entity> = data.clone() as ArrayList<Entity>
     private var filterCharSequence = ""
 
     private class ViewHolder(row: View?) {

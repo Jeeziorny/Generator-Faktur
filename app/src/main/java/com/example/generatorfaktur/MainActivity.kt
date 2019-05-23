@@ -1,22 +1,18 @@
 package com.example.generatorfaktur
 
 import android.Manifest
-import android.arch.persistence.room.Room
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.AsyncTask
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v4.app.ActivityCompat
-import android.util.Log
+import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import com.beardedhen.androidbootstrap.TypefaceProvider
 import com.example.generatorfaktur.DBManager.AppDatabase
-import com.example.generatorfaktur.invBuilder.AbstractInvcBuilder
-import com.example.generatorfaktur.invBuilder.InvcBuilder
-import com.example.generatorfaktur.invoiceProperties.Entity
-import com.example.generatorfaktur.invoiceProperties.InvoiceItem
-import java.util.*
+import com.example.generatorfaktur.DBManager.SellerData
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         TypefaceProvider.registerDefaultIconSets()
-        supportActionBar!!.hide()
+
 
         //APLICATION ASK FOR PERMISSION TO WORK WITH FILES IN EXTERNAS
         //TODO rozwiazanie w razie gdy uzytkownik sie nie zgodzi
@@ -42,29 +38,48 @@ class MainActivity : AppCompatActivity() {
                 REQUEST_EXTERNAL_STORAGE
             )
         }
+        checkIfSellerIsSet()
+    }
+
+    private fun checkIfSellerIsSet(): Boolean {
+        val seller = SellerData(this)
+        if (!seller.isSellerSet()) {
+            val myIntent = Intent(this, PrefsActivity::class.java)
+            startActivity(myIntent)
+        }
+        return seller.isSellerSet()
     }
 
     fun customerOnClick(view: View) {
         val myIntent = Intent(this, EntityActivity::class.java)
-        startActivityForResult(myIntent, 997)
+        startActivity(myIntent)
     }
 
     fun invoiceOnClick(view: View) {
+        if(!checkIfSellerIsSet())
+            return
         val myIntent = Intent(this, InvoiceActivity::class.java)
-        startActivityForResult(myIntent, 998)
+        startActivity(myIntent)
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.my_main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
 
-        when (requestCode) {
-            997 -> {
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
 
-            }
-            998 -> {
+        R.id.action_options ->{
+            val myIntent = Intent(this, PrefsActivity::class.java)
+            startActivity(myIntent)
+            true
+        }
 
-            }
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
         }
     }
 

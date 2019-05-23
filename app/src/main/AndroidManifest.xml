@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.generatorfaktur">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
             android:allowBackup="true"
@@ -12,25 +12,27 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity
-                android:name=".InvoiceActivity1"
-                android:label="@string/title_activity_invoice1"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity android:name=".InvoiceActivity">
-        </activity>
-        <activity android:name=".EntityActivity">
-        </activity>
-        <activity android:name=".PreviewActivity">
-        </activity>
-        <activity android:name=".MainActivity">
+
+        <activity android:name=".InvoiceActivity"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".PrefsActivity"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".PreviewActivity"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".EntityActivity"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".MainActivity"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <provider
                 android:name="android.support.v4.content.FileProvider"
                 android:authorities="@string/file_provider_authority"

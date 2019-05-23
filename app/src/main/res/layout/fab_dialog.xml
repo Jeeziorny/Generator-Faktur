@@ -2,29 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
-              android:layout_width="match_parent"
+              android:layout_width="wrap_content"
+              android:background="@color/pink"
               android:gravity="center_horizontal"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content">
 
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingEnd="100dp"
+            android:paddingStart="100dp"
+            android:textColor="@color/blue"
             android:gravity="center_horizontal"
             android:text="Nazwa :"/>
     <com.beardedhen.androidbootstrap.BootstrapEditText
             android:layout_width="match_parent"
             android:id="@+id/entityName"
+            android:layout_margin="8dp"
             android:layout_height="wrap_content"
             android:inputType="text"/>
 
     <TextView android:layout_width="match_parent"
               android:gravity="center_horizontal"
+              android:textColor="@color/blue"
               android:layout_height="wrap_content"
               android:text="NIP :"/>
     <com.beardedhen.androidbootstrap.BootstrapEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:bootstrapSize="md"
+            android:layout_margin="8dp"
             android:id="@+id/entityNIP"
             android:layout_gravity="top|start"
             android:inputType="phone"
@@ -33,12 +40,14 @@
 
     <TextView android:layout_width="match_parent"
               android:gravity="center_horizontal"
+              android:textColor="@color/blue"
               android:layout_height="wrap_content"
               android:text="Adres :"/>
     <com.beardedhen.androidbootstrap.BootstrapEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:bootstrapSize="md"
+            android:layout_margin="8dp"
             android:id="@+id/entityAddress"
             android:layout_gravity="top|start"
             android:inputType="text"
@@ -48,26 +57,30 @@
     <TextView android:layout_width="match_parent"
               android:gravity="center_horizontal"
               android:layout_height="wrap_content"
+              android:textColor="@color/blue"
               android:text="Kod Pocztowy :"/>
     <com.beardedhen.androidbootstrap.BootstrapEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:bootstrapSize="md"
+            android:layout_margin="8dp"
             android:id="@+id/entityPostal"
             android:layout_gravity="top|start"
-            android:inputType="phone"
+            android:inputType="text"
             app:bootstrapBrand="danger"/>
 
 
     <TextView android:layout_width="match_parent"
               android:gravity="center_horizontal"
               android:layout_height="wrap_content"
+              android:textColor="@color/blue"
               android:text="Telefon :"/>
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:bootstrapSize="md"
+            android:layout_margin="8dp"
             android:id="@+id/entityPhone"
             android:layout_gravity="top|start"
             android:inputType="phone"
