@@ -2,11 +2,14 @@ package com.example.generatorfaktur
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -24,6 +27,9 @@ import com.example.generatorfaktur.invoiceProperties.InvoiceItem
 import kotlinx.android.synthetic.main.content_invoice1.*
 import kotlinx.android.synthetic.main.invoice_parametrs_dialog.*
 import kotlinx.android.synthetic.main.item_dialog.*
+import android.view.View.OnFocusChangeListener
+import kotlinx.android.synthetic.main.entity.*
+
 
 class InvoiceActivity : AppCompatActivity() {
 
@@ -102,8 +108,6 @@ class InvoiceActivity : AppCompatActivity() {
         choosePersonDialog("recipient")
     }
 
-
-
     //Dialog wyświetlający listę posiadanych w bazie klientów
     //Pozwala przejść do dialogu dodającego nowego klienta
     fun choosePersonDialog(who: String) {
@@ -179,7 +183,6 @@ class InvoiceActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-
     //Uruchamia dialog do wypełnienia danych klienta/sprzedającego
     fun doDialog(who: String){
         val li = LayoutInflater.from(this)
@@ -189,17 +192,77 @@ class InvoiceActivity : AppCompatActivity() {
 
         alertDialogBuilder.setView(dialog)
 
+        val entityNameEditText = dialog.findViewById<BootstrapEditText>(R.id.entityName)
+        val entityNIPEditText = dialog.findViewById<BootstrapEditText>(R.id.entityNIP)
+        val entityPhoneEditText = dialog.findViewById<BootstrapEditText>(R.id.entityPhone)
+        val entityPostalEditText = dialog.findViewById<BootstrapEditText>(R.id.entityPostal)
+        val entityAddressEditText = dialog.findViewById<BootstrapEditText>(R.id.entityAddress)
+
+        entityNameEditText.onFocusChangeListener =
+            OnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    if (entityNameEditText.text.toString().isBlank() ||
+                            entityNameEditText.text.toString().isEmpty())
+                        entityNameEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
+                    else
+                        entityNameEditText.background = ColorDrawable(Color.WHITE)
+                }
+            }
+
+        entityNIPEditText.onFocusChangeListener =
+            OnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    if (!Validator.checkNip(entityNIPEditText.text.toString()))
+                        entityNIPEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
+                    else
+                        entityNIPEditText.background = ColorDrawable(Color.WHITE)
+                }
+            }
+
+        entityPhoneEditText.onFocusChangeListener =
+            OnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    if (!Validator.isNumeric(entityPhoneEditText.text.toString()))
+                        entityPhoneEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
+                    else
+                        entityPhoneEditText.background = ColorDrawable(Color.WHITE)
+
+                }
+            }
+
+        entityPostalEditText.onFocusChangeListener =
+            OnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    if (!Validator.checkPostal(entityPostalEditText.text.toString()))
+                        entityPostalEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
+                    else
+                        entityPostalEditText.background = ColorDrawable(Color.WHITE)
+
+                }
+            }
+
+        entityAddressEditText.onFocusChangeListener =
+            OnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    if (entityAddressEditText.text.toString().isBlank() ||
+                        entityAddressEditText.text.toString().isEmpty())
+                        entityAddressEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
+                    else
+                        entityAddressEditText.background = ColorDrawable(Color.WHITE)
+
+                }
+            }
+
         alertDialogBuilder
             .setCancelable(true)
             .setPositiveButton("DODAJ") { _, _ ->
-                result.add(dialog.findViewById<BootstrapEditText>(R.id.entityName).text.toString())
-                result.add(dialog.findViewById<BootstrapEditText>(R.id.entityNIP).text.toString())
-                result.add(dialog.findViewById<BootstrapEditText>(R.id.entityAddress).text.toString())
-                result.add(dialog.findViewById<BootstrapEditText>(R.id.entityPostal).text.toString())
-                result.add(dialog.findViewById<BootstrapEditText>(R.id.entityPhone).text.toString())
+                result.add(entityNameEditText.text.toString())
+                result.add(entityNIPEditText.text.toString())
+                result.add(entityAddressEditText.text.toString())
+                result.add(entityPostalEditText.text.toString())
+                result.add(entityPhoneEditText.text.toString())
 
                 setTexts(result, who)
-
             }
 
         val alertDialog = alertDialogBuilder.create()
@@ -227,9 +290,6 @@ class InvoiceActivity : AppCompatActivity() {
             }
         }
     }
-
-
-
 
     //Odpowiada za FAB na liście itemów
     fun itemFABOnClick(view: View) {
