@@ -51,8 +51,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun customerOnClick(view: View) {
-        if(!checkIfSellerIsSet())
-            return
         val myIntent = Intent(this, EntityActivity::class.java)
         startActivityForResult(myIntent, 997)
     }
