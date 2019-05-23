@@ -29,6 +29,10 @@ internal class InvoiceNumber(context: Context) {
         editor.putLong("number", nShared)
         editor.apply()
 
-        return "$fv$y/$m/$nShared"
+        var month = m.toString()
+        if(month.length==1){
+            month="0"+month
+        }
+        return "$fv$y/$month/$nShared"
     }
 }
