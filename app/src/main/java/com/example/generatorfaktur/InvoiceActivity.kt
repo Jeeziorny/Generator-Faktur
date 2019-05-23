@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -17,6 +18,8 @@ import android.widget.RadioGroup
 import com.beardedhen.androidbootstrap.BootstrapEditText
 import com.beardedhen.androidbootstrap.TypefaceProvider
 import com.example.generatorfaktur.DBManager.BasicDBManager
+import com.example.generatorfaktur.DBManager.SellerData
+import com.example.generatorfaktur.generators.InvoiceNumber
 import com.example.generatorfaktur.invBuilder.AbstractInvcBuilder
 import com.example.generatorfaktur.invBuilder.InvcBuilder
 import com.example.generatorfaktur.invoiceProperties.Entity
@@ -24,6 +27,9 @@ import com.example.generatorfaktur.invoiceProperties.InvoiceItem
 import kotlinx.android.synthetic.main.content_invoice1.*
 import kotlinx.android.synthetic.main.invoice_parametrs_dialog.*
 import kotlinx.android.synthetic.main.item_dialog.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class InvoiceActivity : AppCompatActivity() {
 
@@ -65,21 +71,31 @@ class InvoiceActivity : AppCompatActivity() {
                 buyerPhoneText.text.toString(),
                 buyerNIPText.text.toString())
 
-            //TODO sprzedawca
-            val seller = Entity("Tomek", "Stodola", "64-600", "432432423", "")
+            val sellerData = SellerData(this)
+            val seller = Entity(
+                sellerData.getName(),
+                sellerData.getAddress(),
+                sellerData.getPostal(),
+                sellerData.getPhone(),
+                sellerData.getNip()
+            )
 
             val reicipient = Entity(
                 recipientNameText.text.toString(),
                 recipientAdressText.text.toString(),
                 recipientPostalText.text.toString(),
                 recipientPhoneText.text.toString(),
-                recipientNIPText.text.toString())
+                recipientNIPText.text.toString()
+            )
 
             builder.setBuyer(buyer).setDealer(seller).setReicipient(reicipient)
 
-            //TODO currentdate i ID
-            builder.setProperties("23-04-1004", "siema")
-            builder.setPaymentProperty("a", "22-33-4444", "c", "d")
+            //TODO currentdate
+            val invoiceID = InvoiceNumber(this)
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+            val date = sdf.format(Calendar.getInstance().time)
+
+            builder.setProperties(date, invoiceID.generate())
 
 
             PropertyDialog()
@@ -107,7 +123,7 @@ class InvoiceActivity : AppCompatActivity() {
     //Dialog wyświetlający listę posiadanych w bazie klientów
     //Pozwala przejść do dialogu dodającego nowego klienta
     fun choosePersonDialog(who: String) {
-        val builder = AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(this, R.style.FABDialog)
         if(who == "buyer") {
             builder.setTitle("Wybierz nabywcę")
         } else {
@@ -159,15 +175,24 @@ class InvoiceActivity : AppCompatActivity() {
             .setCancelable(true)
             .setPositiveButton("Zatwierdź") { _, _ ->
                 //TODO date + ID + sprzedawca
+                val sdf = SimpleDateFormat("dd-MM-yyyy")
+
                 when (dialog.findViewById<RadioGroup>(R.id.paymentGroup).checkedRadioButtonId) {
                     R.id.paymentCashButton -> {
-                        builder.setPaymentProperty("Gotówka", "22-33-4444", "a", "d")
+                        val date = sdf.format(Calendar.getInstance().time)
+                        builder.setPaymentProperty("Gotówka", date, "a", "d")
                     }
                     else -> {
-                        builder.setPaymentProperty("Przelew", "22-33-4444", "a", "d")
+                        val paymentDuration = dialog.findViewById<EditText>(R.id.paymentDurationText).text.toString()
+                        val calendar = Calendar.getInstance()
+                        if (paymentDuration != "") {
+                            calendar.add(Calendar.DATE, paymentDuration.toInt())
+                        }
+                        val date = sdf.format(calendar.time)
+                        builder.setPaymentProperty("Przelew", date, "a", "d")
                     }
                 }
-                builder.setProperties("23-04-1004", "siema")
+
                 val result = builder.generate()
 
                 val myIntent = Intent(this, PreviewActivity::class.java)
@@ -177,6 +202,19 @@ class InvoiceActivity : AppCompatActivity() {
             }
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
+        dialog.findViewById<RadioGroup>(R.id.paymentGroup).setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.paymentCashButton -> {
+                    val editText = dialog.findViewById<EditText>(R.id.paymentDurationText)
+                    editText.isEnabled = false
+                    editText.setText("")
+                }
+                else -> {
+                    val editText = dialog.findViewById<EditText>(R.id.paymentDurationText)
+                    editText.isEnabled = true
+                }
+            }
+        }
     }
 
 
@@ -243,8 +281,6 @@ class InvoiceActivity : AppCompatActivity() {
         alertDialogBuilder
             .setCancelable(true)
             .setPositiveButton("DODAJ") {  _, _ ->
-
-                //TODO add validator
 
                 itemList.add( builder.addInvoiceItem(
                     dialog.findViewById<EditText>(R.id.itemName).text.toString(),
