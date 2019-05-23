@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -11,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import com.beardedhen.androidbootstrap.TypefaceProvider
 import com.example.generatorfaktur.DBManager.AppDatabase
+import com.example.generatorfaktur.DBManager.SellerData
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         TypefaceProvider.registerDefaultIconSets()
+
 
         //APLICATION ASK FOR PERMISSION TO WORK WITH FILES IN EXTERNAS
         //TODO rozwiazanie w razie gdy uzytkownik sie nie zgodzi
@@ -35,14 +38,28 @@ class MainActivity : AppCompatActivity() {
                 REQUEST_EXTERNAL_STORAGE
             )
         }
+        checkIfSellerIsSet()
+    }
+
+    private fun checkIfSellerIsSet(): Boolean {
+        val seller = SellerData(this)
+        if (!seller.isSellerSet()) {
+            val myIntent = Intent(this, PrefsActivity::class.java)
+            startActivityForResult(myIntent, 1000)
+        }
+        return seller.isSellerSet()
     }
 
     fun customerOnClick(view: View) {
+        if(!checkIfSellerIsSet())
+            return
         val myIntent = Intent(this, EntityActivity::class.java)
         startActivityForResult(myIntent, 997)
     }
 
     fun invoiceOnClick(view: View) {
+        if(!checkIfSellerIsSet())
+            return
         val myIntent = Intent(this, InvoiceActivity::class.java)
         startActivityForResult(myIntent, 998)
 

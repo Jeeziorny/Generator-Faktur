@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import com.beardedhen.androidbootstrap.BootstrapEditText
+import com.example.generatorfaktur.DBManager.SellerData
+import com.example.generatorfaktur.invoiceProperties.Entity
 import kotlinx.android.synthetic.main.invoice_activity.*
 
 class PrefsActivity : AppCompatActivity() {
@@ -19,7 +21,6 @@ class PrefsActivity : AppCompatActivity() {
     fun dealerOnClick(view: View) {
         val li = LayoutInflater.from(this)
         val dialog = li.inflate(R.layout.fab_dialog, null)
-        val result = ArrayList<String>()
         val alertDialogBuilder = AlertDialog.Builder(this, R.style.FABDialog)
 
         alertDialogBuilder.setView(dialog)
@@ -27,28 +28,35 @@ class PrefsActivity : AppCompatActivity() {
         alertDialogBuilder
             .setCancelable(true)
             .setPositiveButton("DODAJ") { _, _ ->
-                result.add(dialog.findViewById<BootstrapEditText>(R.id.entityName).text.toString())
-                result.add(dialog.findViewById<BootstrapEditText>(R.id.entityNIP).text.toString())
-                result.add(dialog.findViewById<BootstrapEditText>(R.id.entityAddress).text.toString())
-                result.add(dialog.findViewById<BootstrapEditText>(R.id.entityPostal).text.toString())
-                result.add(dialog.findViewById<BootstrapEditText>(R.id.entityPhone).text.toString())
-                setTexts(result)
+                val entity = Entity()
+                entity.name=dialog.findViewById<BootstrapEditText>(R.id.entityName).text.toString()
+                entity.nip=dialog.findViewById<BootstrapEditText>(R.id.entityNIP).text.toString()
+                entity.address=dialog.findViewById<BootstrapEditText>(R.id.entityAddress).text.toString()
+                entity.postal=dialog.findViewById<BootstrapEditText>(R.id.entityPostal).text.toString()
+                entity.phoneNumber=dialog.findViewById<BootstrapEditText>(R.id.entityPhone).text.toString()
+
+                //TODO: pojedyńczo sprawdzić czy pola entity są ok
+                //TODO: Jeżeli tak to :
+                val seller = SellerData(this)
+                seller.setSeller(entity)
+                setTexts()
             }
 
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
     }
 
-    fun setTexts(data: ArrayList<String>) {
-
-        dealerNameText.text = "Nazwa : ${data[0]}"
-        dealerNIPText.text = "NIP : ${data[1]}"
-        dealerAdressText.text = "Adres : ${data[2]}"
-        dealerPostalText.text = "Kod pocztowy : ${data[3]}"
-        dealerPhoneText.text = "Telefon : ${data[4]}"
+    fun setTexts() {
+        val seller = SellerData(this)
+        dealerNameText.text = "Nazwa : ${seller.getName()}"
+        dealerNIPText.text = "NIP : ${seller.getNip()}"
+        dealerAdressText.text = "Adres : ${seller.getAddress()}"
+        dealerPostalText.text = "Kod pocztowy : ${seller.getPostal()}"
+        dealerPhoneText.text = "Telefon : ${seller.getPhone()}"
 
     }
 
+    //TODO: zwrócić czy dane są okej, najlepiej od razu obsłużyć prycisk cofania
     fun confirmOnClick(view: View) {
         val myIntent = Intent(this, MainActivity::class.java)
         startActivity(myIntent)
