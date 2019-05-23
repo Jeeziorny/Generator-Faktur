@@ -1,13 +1,13 @@
 package com.example.generatorfaktur.generators
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import java.util.*
 
-internal class InvoiceNumber(activity: Activity) {
+internal class InvoiceNumber(context: Context) {
     private val fv = "FV/M/"
-    private var sharedPref: SharedPreferences = activity.getPreferences(Context.MODE_PRIVATE)
+    private var sharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
 
 
     public fun generate(): String {

@@ -1,9 +1,5 @@
 package com.example.generatorfaktur
 
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -31,11 +27,80 @@ class EntityActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.entity_activity)
 
+        initDbAndList()
+        setupSearchView()
+
+        entityListView.setOnItemLongClickListener { parent, view, position, id ->
+            val dialog = getView(R.layout.dialog_long_click)
+            val alertDialogBuilder = AlertDialog.Builder(this, R.style.CustomDialog)
+
+            alertDialogBuilder.setView(dialog)
+            alertDialogBuilder.setCancelable(true)
+            val alertDialog = alertDialogBuilder.create()
+
+            dialog.findViewById<Button>(R.id.delete_button).setOnClickListener {
+                deleteEntity(entityArrayAdapter.displayData[position])
+                alertDialog.hide()
+            }
+
+            dialog.findViewById<Button>(R.id.edit_button).setOnClickListener {
+                val secDialog = getView(R.layout.fab_dialog)
+                initTextEdits(secDialog, position)
+
+                val secAlertDialogBuilder = AlertDialog.Builder(this, R.style.FABDialog)
+                secAlertDialogBuilder.setView(secDialog)
+                secAlertDialogBuilder.setCancelable(true)
+
+
+                secAlertDialogBuilder.setPositiveButton("EDYTUJ") { _, _ ->
+                    val entity = parseToEntity(secDialog)
+                    updateEntity(entity)
+                }
+
+                val secAlertDialog = secAlertDialogBuilder.create()
+                secAlertDialog.show()
+                alertDialog.hide()
+
+            }
+            alertDialog.show()
+            true
+        }
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+
+    }
+
+    private fun parseToEntity(secDialog: View): Entity {
+        val entity = Entity()
+        entity.name = secDialog.entityName.text.toString()
+        entity.address = secDialog.entityAddress.text.toString()
+        entity.nip = secDialog.entityNIP.text.toString()
+        entity.phoneNumber = secDialog.entityPhone.text.toString()
+        entity.postal = secDialog.entityPostal.text.toString()
+        return entity
+    }
+
+    private fun initTextEdits(secDialog: View, position: Int) {
+        secDialog.findViewById<BootstrapEditText>(R.id.entityNIP).setText(entityArrayAdapter.displayData[position].nip)
+        secDialog.findViewById<BootstrapEditText>(R.id.entityAddress)
+            .setText(entityArrayAdapter.displayData[position].address)
+        secDialog.findViewById<BootstrapEditText>(R.id.entityName)
+            .setText(entityArrayAdapter.displayData[position].name)
+        secDialog.findViewById<BootstrapEditText>(R.id.entityPostal)
+            .setText(entityArrayAdapter.displayData[position].postal)
+        secDialog.findViewById<BootstrapEditText>(R.id.entityPhone)
+            .setText(entityArrayAdapter.displayData[position].phoneNumber)
+        secDialog.findViewById<BootstrapEditText>(R.id.entityNIP).isEnabled = false
+    }
+
+    private fun initDbAndList() {
         database = BasicDBManager(this)
         entityArrayAdapter = EntityArrayAdapter(this, entityList)
         entityListView.adapter = entityArrayAdapter
         syncListViewWithDb()
+    }
 
+    private fun setupSearchView() {
         searchView.setIconifiedByDefault(false)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
@@ -47,74 +112,7 @@ class EntityActivity : AppCompatActivity() {
                 return true
             }
         })
-
-
-        entityListView.setOnItemLongClickListener { parent, view, position, id ->
-            val li = LayoutInflater.from(this)
-            val dialog = li.inflate(R.layout.dialog_long_click, null)
-
-
-
-            val alertDialogBuilder = AlertDialog.Builder(this, R.style.CustomDialog)
-
-
-            alertDialogBuilder.setView(dialog)
-
-            alertDialogBuilder.setCancelable(true)
-
-            val alertDialog = alertDialogBuilder.create()
-
-            alertDialog.show()
-
-            dialog.findViewById<Button>(R.id.delete_button).setOnClickListener {
-                deleteEntity(entityArrayAdapter.displayData[position])
-                alertDialog.hide()
-            }
-
-            dialog.findViewById<Button>(R.id.edit_button).setOnClickListener {
-
-
-                val secLi = LayoutInflater.from(this)
-
-                val secDialog = secLi.inflate(R.layout.fab_dialog, null)
-
-                secDialog.findViewById<BootstrapEditText>(R.id.entityNIP).setText(entityArrayAdapter.displayData[position].nip)
-                secDialog.findViewById<BootstrapEditText>(R.id.entityAddress).setText(entityArrayAdapter.displayData[position].address)
-                secDialog.findViewById<BootstrapEditText>(R.id.entityName).setText(entityArrayAdapter.displayData[position].name)
-                secDialog.findViewById<BootstrapEditText>(R.id.entityPostal).setText(entityArrayAdapter.displayData[position].postal)
-                secDialog.findViewById<BootstrapEditText>(R.id.entityPhone).setText(entityArrayAdapter.displayData[position].phoneNumber)
-                secDialog.findViewById<BootstrapEditText>(R.id.entityNIP).isEnabled = false
-
-                val secAlertDialogBuilder = AlertDialog.Builder(this, R.style.FABDialog)
-                secAlertDialogBuilder.setView(secDialog)
-                secAlertDialogBuilder.setCancelable(true)
-
-
-                secAlertDialogBuilder.setPositiveButton("EDYTUJ") { _, _ ->
-                    val entity = Entity()
-                    entity.name = secDialog.entityName.text.toString()
-                    entity.address = secDialog.entityAddress.text.toString()
-                    entity.nip = secDialog.entityNIP.text.toString()
-                    entity.phoneNumber = secDialog.entityPhone.text.toString()
-                    entity.postal = secDialog.entityPostal.text.toString()
-                    updateEntity(entity)
-                }
-
-
-
-
-                val secAlertDialog = secAlertDialogBuilder.create()
-                secAlertDialog.show()
-                alertDialog.hide()
-
-            }
-            true
-        }
-
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-
     }
-
 
 
     fun syncListViewWithDb() {
@@ -128,11 +126,8 @@ class EntityActivity : AppCompatActivity() {
     }
 
     fun fabOnClick(view: View) {
-        val li = LayoutInflater.from(this)
-        val dialog = li.inflate(R.layout.fab_dialog, null)
-
+        val dialog = getView(R.layout.fab_dialog)
         val alertDialogBuilder = AlertDialog.Builder(this, R.style.FABDialog)
-
         alertDialogBuilder.setView(dialog)
 
         alertDialogBuilder
@@ -152,6 +147,11 @@ class EntityActivity : AppCompatActivity() {
 
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
+    }
+
+    private fun getView(resource: Int): View {
+        val li = LayoutInflater.from(this)
+        return li.inflate(resource, null)
     }
 
     private fun addEntity(entity: Entity) {
