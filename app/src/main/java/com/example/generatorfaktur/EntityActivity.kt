@@ -26,11 +26,14 @@ class EntityActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.entity_activity)
+        window.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
         initDbAndList()
         setupSearchView()
 
         entityListView.setOnItemLongClickListener { parent, view, position, id ->
+
             val dialog = getView(R.layout.dialog_long_click)
             val alertDialogBuilder = AlertDialog.Builder(this, R.style.CustomDialog)
 
@@ -47,17 +50,18 @@ class EntityActivity : AppCompatActivity() {
                 val secDialog = getView(R.layout.fab_dialog)
                 initTextEdits(secDialog, position)
 
-                val secAlertDialogBuilder = AlertDialog.Builder(this, R.style.FABDialog)
+                val secAlertDialogBuilder = AlertDialog.Builder(this)
                 secAlertDialogBuilder.setView(secDialog)
                 secAlertDialogBuilder.setCancelable(true)
 
 
-                secAlertDialogBuilder.setPositiveButton("EDYTUJ") { _, _ ->
+                val secAlertDialog = secAlertDialogBuilder.create()
+
+                secDialog.findViewById<Button>(R.id.addFAB).setOnClickListener {
                     val entity = parseToEntity(secDialog)
                     updateEntity(entity)
                 }
 
-                val secAlertDialog = secAlertDialogBuilder.create()
                 secAlertDialog.show()
                 alertDialog.hide()
 
@@ -127,25 +131,25 @@ class EntityActivity : AppCompatActivity() {
 
     fun fabOnClick(view: View) {
         val dialog = getView(R.layout.fab_dialog)
-        val alertDialogBuilder = AlertDialog.Builder(this, R.style.FABDialog)
+        val alertDialogBuilder = AlertDialog.Builder(this)
         alertDialogBuilder.setView(dialog)
 
         alertDialogBuilder
             .setCancelable(true)
-            .setPositiveButton("DODAJ") { _, _ ->
-
-                val entity = Entity()
-                entity.name = dialog.entityName.text.toString()
-                entity.address = dialog.entityAddress.text.toString()
-                entity.nip = dialog.entityNIP.text.toString()
-                entity.phoneNumber = dialog.entityPhone.text.toString()
-                entity.postal = dialog.entityPostal.text.toString()
-                addEntity(entity)
-
-                entityArrayAdapter.notifyDataSetChanged()
-        }
 
         val alertDialog = alertDialogBuilder.create()
+
+        dialog.findViewById<Button>(R.id.addFAB).setOnClickListener {
+            val entity = Entity()
+            entity.name = dialog.entityName.text.toString()
+            entity.address = dialog.entityAddress.text.toString()
+            entity.nip = dialog.entityNIP.text.toString()
+            entity.phoneNumber = dialog.entityPhone.text.toString()
+            entity.postal = dialog.entityPostal.text.toString()
+            addEntity(entity)
+
+            entityArrayAdapter.notifyDataSetChanged()
+        }
         alertDialog.show()
     }
 
