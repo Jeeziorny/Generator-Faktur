@@ -33,7 +33,7 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
-                    android:text="quantity"
+                    android:text="ilosc"
                     android:id="@+id/quantityText"
                     android:layout_height="match_parent"/>
             <TextView
@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"/>
             <TextView
                     android:layout_width="wrap_content"
-                    android:text="price"
+                    android:text="cena"
                     android:id="@+id/priceText"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"/>

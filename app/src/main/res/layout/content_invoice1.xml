@@ -20,7 +20,7 @@
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             android:textSize="18sp"/>
     <TextView
-            android:text="BuyerName"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/buyerNameText"
@@ -29,7 +29,7 @@
             android:layout_marginEnd="8dp"
             app:layout_constraintHorizontal_bias="0.0"/>
     <TextView
-            android:text="buyerAdress"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/buyerAdressText" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
@@ -38,7 +38,7 @@
             android:layout_marginTop="8dp"
     />
     <TextView
-            android:text="BuyerPostal"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/buyerPostalText" app:layout_constraintStart_toEndOf="@+id/buyerAdressText"
@@ -55,7 +55,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_bias="0.0"/>
     <TextView
-            android:text="BuyerNIP"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/buyerNIPText"
@@ -73,7 +73,7 @@
             app:layout_constraintEnd_toStartOf="@+id/buyerPhoneText" android:layout_marginEnd="8dp"
             app:layout_constraintHorizontal_bias="1.0"/>
     <TextView
-            android:text="BuyerPhone"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/buyerPhoneText" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
@@ -90,7 +90,7 @@
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             android:textSize="18sp"/>
     <TextView
-            android:text="recipientName"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/recipientNameText" android:layout_marginTop="8dp"
@@ -98,7 +98,7 @@
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintHorizontal_bias="0.0"/>
     <TextView
-            android:text="RecipientAdressText"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/recipientAdressText"
@@ -107,7 +107,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_bias="0.0"/>
     <TextView
-            android:text="RecipientPostal"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/recipientPostalText" app:layout_constraintStart_toEndOf="@+id/recipientAdressText"
@@ -125,7 +125,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_bias="0.0"/>
     <TextView
-            android:text="recipientNIP"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/recipientNIPText"
@@ -134,7 +134,7 @@
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintHorizontal_bias="0.0" app:layout_constraintBottom_toBottomOf="@+id/textView19"/>
     <TextView
-            android:text="RecipientPhone"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/recipientPhoneText"
