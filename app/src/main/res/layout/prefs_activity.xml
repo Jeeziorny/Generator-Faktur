@@ -1,147 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+
+<android.support.constraint.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="1.5"
-        android:layout_height="match_parent"
-        android:padding="20dp"
-        android:background="@color/pink"
-        xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <TextView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center"
-              android:textColor="@color/blue"
-              android:textStyle="bold"
-              android:textSize="20sp"
-              android:layout_weight="3"
-              android:text="Wypełnij swoje dane :"/>
-
+        android:padding="10dp"
+        android:background="@color/pink" android:layout_height="match_parent"
+        android:layout_weight="3">
 
     <TextView
-            android:text="Nazwa :"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/blue"/>
-
-    <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:textSize="18sp"
-            android:layout_weight="2"
-            android:textAlignment="center"
-            android:id="@+id/dealerNameText" />
-
-
-    <TextView
-            android:text="NIP :"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/blue"/>
-
-
-
-    <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:textSize="18sp"
-            android:layout_weight="2"
-            android:textAlignment="center"
-            android:id="@+id/dealerNIPText" />
-
-    <TextView
-            android:text="Adres :"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/blue"/>
+            android:gravity="center"
+            android:textColor="@color/blue"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="Wypełnij swoje dane :"
+            android:id="@+id/textView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="100dp" android:layout_width="match_parent"/>
+    <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp" app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintBottom_toTopOf="@+id/button3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:background="@color/pink"
+                android:id="@+id/linearLayout">
 
 
-    <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:textSize="18sp"
-            android:layout_weight="2"
-            android:textAlignment="center"
-            android:id="@+id/dealerAdressText" />
+            <TextView
+                    android:text="Nazwa :"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blue"/>
 
-    <TextView
-            android:text="Kod Pocztowy :"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/blue" />
-
-
-    <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:textSize="18sp"
-            android:layout_weight="2"
-            android:textAlignment="center"
-            android:id="@+id/dealerPostalText" />
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:textSize="18sp"
+                    android:textAlignment="center"
+                    android:id="@+id/dealerNameText"/>
 
 
-    <TextView
-            android:text="Miasto :"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/blue" />
+            <TextView
+                    android:text="NIP :"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blue"/>
 
-    <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:textSize="18sp"
-            android:layout_weight="2"
-            android:textAlignment="center"
-            android:id="@+id/dealerCityText" />
-    <TextView
-            android:text="Nazwa Banku :"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/blue" />
 
-    <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:textSize="18sp"
-            android:layout_weight="2"
-            android:textAlignment="center"
-            android:id="@+id/dealerBankNameText" />
-    <TextView
-            android:text="Numer konta bankowego :"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/blue" />
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:textSize="18sp"
+                    android:textAlignment="center"
+                    android:id="@+id/dealerNIPText"/>
 
-    <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:textSize="18sp"
-            android:layout_weight="2"
-            android:textAlignment="center"
-            android:id="@+id/dealerBankNumberText"/>
+            <TextView
+                    android:text="Adres :"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blue"/>
 
-    <TextView
-            android:text="Telefon :"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/blue"/>
 
-    <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:textSize="18sp"
-            android:layout_weight="2"
-            android:textAlignment="center"
-            android:id="@+id/dealerPhoneText"/>
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:textSize="18sp"
+                    android:textAlignment="center"
+                    android:id="@+id/dealerAdressText"/>
+
+            <TextView
+                    android:text="Kod Pocztowy :"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blue"/>
+
+
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:textSize="18sp"
+                    android:textAlignment="center"
+                    android:id="@+id/dealerPostalText"/>
+
+
+            <TextView
+                    android:text="Miasto :"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blue"/>
+
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:textSize="18sp"
+                    android:textAlignment="center"
+                    android:id="@+id/dealerCityText"/>
+            <TextView
+                    android:text="Nazwa Banku :"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blue"/>
+
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:textSize="18sp"
+                    android:textAlignment="center"
+                    android:id="@+id/dealerBankNameText"/>
+            <TextView
+                    android:text="Numer konta bankowego :"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blue"/>
+
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:textSize="18sp"
+                    android:textAlignment="center"
+                    android:id="@+id/dealerBankNumberText"/>
+
+            <TextView
+                    android:text="Telefon :"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blue"/>
+
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:textSize="18sp"
+                    android:textAlignment="center"
+                    android:id="@+id/dealerPhoneText"/>
+        </LinearLayout>
+    </ScrollView>
 
     <Button
             android:layout_width="wrap_content"
@@ -149,9 +156,8 @@
             android:onClick="confirmOnClick"
             android:background="@color/more_blue"
             android:textColor="@color/pink"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
             android:layout_gravity="end"
-            android:layout_weight="0.5"
-            android:layout_height="wrap_content"/>
-</LinearLayout>
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/button3"/>
+</android.support.constraint.ConstraintLayout>
