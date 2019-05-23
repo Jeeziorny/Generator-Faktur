@@ -17,7 +17,6 @@ import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.widget.Button
 import android.widget.EditText
-import android.widget.RadioButton
 import android.widget.RadioGroup
 import com.beardedhen.androidbootstrap.BootstrapEditText
 import com.beardedhen.androidbootstrap.TypefaceProvider
@@ -29,8 +28,6 @@ import com.example.generatorfaktur.invBuilder.InvcBuilder
 import com.example.generatorfaktur.invoiceProperties.Entity
 import com.example.generatorfaktur.invoiceProperties.InvoiceItem
 import kotlinx.android.synthetic.main.content_invoice1.*
-import kotlinx.android.synthetic.main.invoice_parametrs_dialog.*
-import kotlinx.android.synthetic.main.item_dialog.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -53,6 +50,60 @@ class InvoiceActivity : AppCompatActivity() {
 
         itemArrayAdapter = ItemArrayAdapter(this, itemList)
         itemListView.adapter = itemArrayAdapter
+
+        itemListView.setOnItemLongClickListener { parent, view, position, id ->
+
+            val li = LayoutInflater.from(this)
+            val dialog = li.inflate(R.layout.dialog_long_click, null)
+            val alertDialogBuilder = AlertDialog.Builder(this, R.style.CustomDialog)
+            alertDialogBuilder.setView(dialog)
+            alertDialogBuilder
+                .setCancelable(true)
+            val alertDialog = alertDialogBuilder.create()
+
+            alertDialog.show()
+
+
+
+            dialog.findViewById<Button>(R.id.delete_button).setOnClickListener {
+                itemList.removeAt(position)
+                itemArrayAdapter.notifyDataSetChanged()
+                alertDialog.hide()
+            }
+
+            dialog.findViewById<Button>(R.id.edit_button).setOnClickListener {
+                val secLi = LayoutInflater.from(this)
+                val secDialog = secLi.inflate(R.layout.item_dialog, null)
+
+                val secAlertDialogBuilder = AlertDialog.Builder(this)
+
+                secAlertDialogBuilder.setView(dialog)
+
+                secAlertDialogBuilder
+                    .setCancelable(true)
+
+                val secAlertDialog = secAlertDialogBuilder.create()
+                secDialog.findViewById<Button>(R.id.addBDI).setOnClickListener {
+
+                    itemList.removeAt(position)
+                    itemList.add(
+                        position, builder.addInvoiceItem(
+                            dialog.findViewById<EditText>(R.id.itemName).text.toString(),
+                            dialog.findViewById<EditText>(R.id.itemQuantity).text.toString().toDouble(),
+                            dialog.findViewById<EditText>(R.id.itemPrice).text.toString().toDouble(),
+                            dialog.findViewById<EditText>(R.id.itemVAT).text.toString().toDouble() / 100
+                        )
+                    )
+                    itemArrayAdapter.notifyDataSetChanged()
+
+                    alertDialog.hide()
+                    secAlertDialog.show()
+                }
+            }
+            true
+        }
+
+
 
         builder = InvcBuilder(applicationContext)
 
@@ -123,7 +174,7 @@ class InvoiceActivity : AppCompatActivity() {
     //Dialog wyświetlający listę posiadanych w bazie klientów
     //Pozwala przejść do dialogu dodającego nowego klienta
     fun choosePersonDialog(who: String) {
-        val builder = AlertDialog.Builder(this, R.style.FABDialog)
+        val builder = AlertDialog.Builder(this)
         if(who == "buyer") {
             builder.setTitle("Wybierz nabywcę")
         } else {
@@ -173,34 +224,37 @@ class InvoiceActivity : AppCompatActivity() {
         alertDialogBuilder.setView(dialog)
         alertDialogBuilder
             .setCancelable(true)
-            .setPositiveButton("Zatwierdź") { _, _ ->
-                //TODO date + ID + sprzedawca
-                val sdf = SimpleDateFormat("dd-MM-yyyy")
-
-                when (dialog.findViewById<RadioGroup>(R.id.paymentGroup).checkedRadioButtonId) {
-                    R.id.paymentCashButton -> {
-                        val date = sdf.format(Calendar.getInstance().time)
-                        builder.setPaymentProperty("Gotówka", date, "a", "d")
-                    }
-                    else -> {
-                        val paymentDuration = dialog.findViewById<EditText>(R.id.paymentDurationText).text.toString()
-                        val calendar = Calendar.getInstance()
-                        if (paymentDuration != "") {
-                            calendar.add(Calendar.DATE, paymentDuration.toInt())
-                        }
-                        val date = sdf.format(calendar.time)
-                        builder.setPaymentProperty("Przelew", date, "a", "d")
-                    }
-                }
-
-                val result = builder.generate()
-
-                val myIntent = Intent(this, PreviewActivity::class.java)
-                myIntent.putExtra("HTML", result)
-                myIntent.putExtra("ID", builder.invoice.invoiceId)
-                startActivity(myIntent)
-            }
         val alertDialog = alertDialogBuilder.create()
+
+        dialog.findViewById<Button>(R.id.confirmIPD).setOnClickListener {
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+
+            when (dialog.findViewById<RadioGroup>(R.id.paymentGroup).checkedRadioButtonId) {
+                R.id.paymentCashButton -> {
+                    val date = sdf.format(Calendar.getInstance().time)
+                    builder.setPaymentProperty("Gotówka", date, "a", "d")
+                }
+                else -> {
+                    val paymentDuration = dialog.findViewById<EditText>(R.id.paymentDurationText).text.toString()
+                    val calendar = Calendar.getInstance()
+                    if (paymentDuration != "") {
+                        calendar.add(Calendar.DATE, paymentDuration.toInt())
+                    }
+                    val date = sdf.format(calendar.time)
+                    builder.setPaymentProperty("Przelew", date, "a", "d")
+                }
+            }
+
+            val result = builder.generate()
+
+            val myIntent = Intent(this, PreviewActivity::class.java)
+            myIntent.putExtra("HTML", result)
+            myIntent.putExtra("ID", builder.invoice.invoiceId)
+            startActivity(myIntent)
+        }
+
+
+
         alertDialog.show()
         dialog.findViewById<RadioGroup>(R.id.paymentGroup).setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
@@ -348,7 +402,6 @@ class InvoiceActivity : AppCompatActivity() {
         alertDialog.show()
         dialog.findViewById<Button>(R.id.addBDI).setOnClickListener {
 
-            //TODO add validator
 
             itemList.add( builder.addInvoiceItem(
                 dialog.findViewById<EditText>(R.id.itemName).text.toString(),
@@ -362,7 +415,6 @@ class InvoiceActivity : AppCompatActivity() {
         }
 
     }
-
 
 
 }
