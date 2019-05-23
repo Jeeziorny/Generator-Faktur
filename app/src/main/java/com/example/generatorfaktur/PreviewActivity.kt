@@ -1,12 +1,14 @@
 package com.example.generatorfaktur
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import com.beardedhen.androidbootstrap.TypefaceProvider
 import com.example.generatorfaktur.InvoiceUpload.PdfWriter
 import com.example.generatorfaktur.InvoiceUpload.PrintingManager
@@ -14,8 +16,8 @@ import kotlinx.android.synthetic.main.preview_activity.*
 
 class PreviewActivity : AppCompatActivity() {
 
-    //val URL = "file:///android_asset/FakturaVAT.htm"
     var HTML : String? = null
+    var ID : String? = null
     lateinit var pdfWriter : PdfWriter
     lateinit var printingManager : PrintingManager
 
@@ -43,10 +45,11 @@ class PreviewActivity : AppCompatActivity() {
 
         if (intent != null) {
             HTML = intent.getStringExtra("HTML")
-            Log.d("bbb", "olaboga")
+            ID = intent.getStringExtra("ID")
         }
 
         if(HTML == null) {
+            Toast.makeText(this, "Nie udalo sie wygenerowac faktury", Toast.LENGTH_LONG).show()
             finish()
         }
 
@@ -56,6 +59,7 @@ class PreviewActivity : AppCompatActivity() {
         pdfWriter = PdfWriter( this, "invoice.PDF", webView)
 
         TypefaceProvider.registerDefaultIconSets()
+//        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
     }
@@ -72,7 +76,8 @@ class PreviewActivity : AppCompatActivity() {
             true
         }
         R.id.action_save-> {
-            pdfWriter.copyToExternal("Invoice ${System.currentTimeMillis()}")
+            pdfWriter.copyToExternal("Invoice $ID")
+            Toast.makeText(this, "Zapisz", Toast.LENGTH_LONG).show()
             true
         }
         R.id.action_print ->{
@@ -80,6 +85,7 @@ class PreviewActivity : AppCompatActivity() {
             if(html != null) {
                 printingManager.doWebViewPrint(html)
             }
+            //Toast.makeText(this, "Drukuj", Toast.LENGTH_SHORT).show()
             true
         }
 

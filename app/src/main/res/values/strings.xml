@@ -1,4 +1,5 @@
 <resources>
     <string name="file_provider_authority" translatable="false">com.example.GeneratorFaktur.fileprovider</string>
     <string name="app_name">Generator Faktur</string>
+    <string name="title_activity_invoice1">InvoiceActivity1</string>
 </resources>

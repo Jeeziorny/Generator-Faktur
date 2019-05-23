@@ -21,10 +21,13 @@ class ItemArrayAdapter(context : Context, var data : ArrayList<InvoiceItem>) :
 
         val item = data[position]
 
+        //TODO zaokrąglanie do 2 miejsc po przecinku
         view!!.findViewById<TextView>(R.id.itemNameText).text = item.name
         view.findViewById<TextView>(R.id.quantityText).text = item.quantity.toString()
         view.findViewById<TextView>(R.id.vatText).text = item.vat.toString()
+        view.findViewById<TextView>(R.id.priceText).text = item.value.toString()
 
         return view
     }
+
 }
