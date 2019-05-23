@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -44,7 +45,6 @@ class InvoiceActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_invoice)
         TypefaceProvider.registerDefaultIconSets()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         itemArrayAdapter = ItemArrayAdapter(this, itemList)
 
@@ -296,30 +296,30 @@ class InvoiceActivity : AppCompatActivity() {
         val li = LayoutInflater.from(this)
         val dialog = li.inflate(R.layout.item_dialog, null)
 
+
         val alertDialogBuilder = AlertDialog.Builder(this)
 
         alertDialogBuilder.setView(dialog)
 
         alertDialogBuilder
             .setCancelable(true)
-            .setPositiveButton("DODAJ") {  _, _ ->
-
-                //TODO add validator
-
-                itemList.add( builder.addInvoiceItem(
-                    dialog.findViewById<EditText>(R.id.itemName).text.toString(),
-                    dialog.findViewById<EditText>(R.id.itemPrice).text.toString().toDouble(),
-                    dialog.findViewById<EditText>(R.id.itemQuantity).text.toString().toDouble(),
-                    dialog.findViewById<EditText>(R.id.itemVAT).text.toString().toDouble()/100))
-                itemArrayAdapter.notifyDataSetChanged()
-
-                Snackbar.make(view, "Dodano przedmiot.", Snackbar.LENGTH_SHORT)
-                    .setAction("Action", null).show()
-
-            }
 
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
+        dialog.findViewById<Button>(R.id.addBDI).setOnClickListener {
+
+            //TODO add validator
+
+            itemList.add( builder.addInvoiceItem(
+                dialog.findViewById<EditText>(R.id.itemName).text.toString(),
+                dialog.findViewById<EditText>(R.id.itemQuantity).text.toString().toDouble(),
+                dialog.findViewById<EditText>(R.id.itemPrice).text.toString().toDouble(),
+                dialog.findViewById<EditText>(R.id.itemVAT).text.toString().toDouble()/100))
+            itemArrayAdapter.notifyDataSetChanged()
+
+            alertDialog.hide()
+
+        }
 
     }
 

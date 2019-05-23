@@ -11,6 +11,9 @@ internal class SellerData(context: Context) {
     private val PHONE = "phone"
     private val NIP = "nip"
     private val ADDRESS = "address"
+    private val CITY = "city"
+    private val BANK_NAME = "bankName"
+    private val BANK_NUMBER = "bankNuumber"
     private val IS_SELLER_SET = "IsSellerSet"
 
     private val DEFAULT = "DEFAULT_VALUE"
@@ -36,6 +39,18 @@ internal class SellerData(context: Context) {
         setIsSellerSet(true)
     }
 
+    public  fun getCity() :String{
+        return get(CITY)
+    }
+
+    public  fun getBankName() :String{
+        return get(BANK_NAME)
+    }
+
+    public  fun getBankNumber() :String{
+        return get(BANK_NUMBER)
+    }
+
     public fun getName(): String {
         return get(NAME)
     }
@@ -58,6 +73,16 @@ internal class SellerData(context: Context) {
 
     public fun setName(value: String) {
         set(NAME, value)
+    }
+
+    public fun setCity(value : String){
+        set(CITY,value)
+    }
+    public fun setBankName(value : String){
+        set(BANK_NAME,value)
+    }
+    public fun setBankNumber(value : String){
+        set(BANK_NUMBER,value)
     }
 
     public fun setNip(value: String) {
