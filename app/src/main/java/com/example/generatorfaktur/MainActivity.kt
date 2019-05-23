@@ -45,38 +45,22 @@ class MainActivity : AppCompatActivity() {
         val seller = SellerData(this)
         if (!seller.isSellerSet()) {
             val myIntent = Intent(this, PrefsActivity::class.java)
-            startActivityForResult(myIntent, 1000)
+            startActivity(myIntent)
         }
         return seller.isSellerSet()
     }
 
     fun customerOnClick(view: View) {
         val myIntent = Intent(this, EntityActivity::class.java)
-        startActivityForResult(myIntent, 997)
+        startActivity(myIntent)
     }
 
     fun invoiceOnClick(view: View) {
         if(!checkIfSellerIsSet())
             return
         val myIntent = Intent(this, InvoiceActivity::class.java)
-        startActivityForResult(myIntent, 998)
+        startActivity(myIntent)
 
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            997 -> {
-
-            }
-            998 -> {
-
-            }
-            1000 -> {
-
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -88,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
         R.id.action_options ->{
             val myIntent = Intent(this, PrefsActivity::class.java)
-            startActivityForResult(myIntent, 1000)
+            startActivity(myIntent)
             true
         }
 
