@@ -3,6 +3,7 @@ package com.example.generatorfaktur
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.view.WindowManager
 import com.example.generatorfaktur.DBManager.SellerData
 import kotlinx.android.synthetic.main.prefs_activity.*
 
@@ -10,9 +11,11 @@ class PrefsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.prefs_activity)
+        window.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN
+        )
         setTexts()
     }
-
 
     fun confirmOnClick(view: View) {
         if (isCorrect()) {
@@ -22,6 +25,22 @@ class PrefsActivity : AppCompatActivity() {
     }
 
     private fun isCorrect(): Boolean {
+        if (dealerNameText.text.toString().isBlank())
+            return false
+        if (!Validator.checkNip(dealerNIPText.text.toString()))
+            return false
+        if (dealerAdressText.text.toString().isBlank())
+            return false
+        if (!Validator.checkPostal(dealerPostalText.text.toString()))
+            return false
+        if (!Validator.isNumeric(dealerPhoneText.text.toString()))
+            return false
+        if (dealerCityText.text.toString().isBlank())
+            return false
+        if (dealerBankNameText.text.toString().isBlank())
+            return false
+        if (!Validator.checkAccNumber(dealerBankNumberText.text.toString()))
+            return false
         return true
     }
 

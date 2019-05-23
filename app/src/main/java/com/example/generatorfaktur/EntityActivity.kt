@@ -26,17 +26,30 @@ class EntityActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.entity_activity)
+        window.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
         initDbAndList()
         setupSearchView()
 
-        entityListView.setOnItemLongClickListener { parent, view, position, id ->
-            val dialog = getView(R.layout.dialog_long_click)
-            val alertDialogBuilder = AlertDialog.Builder(this, R.style.CustomDialog)
+        val dialog = getView(R.layout.dialog_long_click)
+        val alertDialogBuilder = AlertDialog.Builder(this, R.style.CustomDialog)
+        alertDialogBuilder.setView(dialog)
+        alertDialogBuilder.setCancelable(true)
+        val alertDialog = alertDialogBuilder.create()
 
-            alertDialogBuilder.setView(dialog)
-            alertDialogBuilder.setCancelable(true)
-            val alertDialog = alertDialogBuilder.create()
+        val secDialog = getView(R.layout.fab_dialog)
+        val secAlertDialogBuilder = AlertDialog.Builder(this, R.style.FABDialog)
+        secAlertDialogBuilder.setView(secDialog)
+        secAlertDialogBuilder.setCancelable(true)
+        secAlertDialogBuilder.setPositiveButton("EDYTUJ") { _, _ ->
+            val entity = parseToEntity(secDialog)
+            updateEntity(entity)
+        }
+        val secAlertDialog = secAlertDialogBuilder.create()
+
+
+        entityListView.setOnItemLongClickListener { parent, view, position, id ->
 
             dialog.findViewById<Button>(R.id.delete_button).setOnClickListener {
                 deleteEntity(entityArrayAdapter.displayData[position])
@@ -44,29 +57,13 @@ class EntityActivity : AppCompatActivity() {
             }
 
             dialog.findViewById<Button>(R.id.edit_button).setOnClickListener {
-                val secDialog = getView(R.layout.fab_dialog)
                 initTextEdits(secDialog, position)
-
-                val secAlertDialogBuilder = AlertDialog.Builder(this, R.style.FABDialog)
-                secAlertDialogBuilder.setView(secDialog)
-                secAlertDialogBuilder.setCancelable(true)
-
-
-                secAlertDialogBuilder.setPositiveButton("EDYTUJ") { _, _ ->
-                    val entity = parseToEntity(secDialog)
-                    updateEntity(entity)
-                }
-
-                val secAlertDialog = secAlertDialogBuilder.create()
                 secAlertDialog.show()
                 alertDialog.hide()
-
             }
             alertDialog.show()
             true
         }
-
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
     }
 
