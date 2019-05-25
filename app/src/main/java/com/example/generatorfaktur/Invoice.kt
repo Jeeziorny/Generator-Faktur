@@ -2,6 +2,7 @@ package com.example.generatorfaktur
 
 import com.example.generatorfaktur.invoiceProperties.*
 import java.math.BigDecimal
+import java.text.DecimalFormat
 import java.util.*
 
 class Invoice {
@@ -25,19 +26,20 @@ class Invoice {
 
     var posIdIterator = 0
 
-    fun getProperties() : ArrayList<String> {
+    fun getProperties(): ArrayList<String> {
+        val df = DecimalFormat("#.00")
         val result = ArrayList<String>()
         result.addAll(dealer!!.getKeywords())
         result.addAll(listOf(invoiceId, currentDate))
         result.addAll(buyer!!.getKeywords())
         result.addAll(recipient!!.getKeywords())
         result.addAll(listOf(paymentForm, paymentDate, bank, accountNumber))
-        result.addAll(listOf("%.2f".format(totalNetto), "%.2f".format(totalTax), "%.2f".format(totalGross)))
-        result.add("%.2f".format(totalGross))
+        result.addAll(listOf(df.format(totalNetto), df.format(totalTax), df.format(totalGross)))
+        result.add(df.format(totalGross))
         return result
     }
 
-    fun getItemsAsArrayList() : ArrayList<Pair<String, Int>> {
+    fun getItemsAsArrayList(): ArrayList<Pair<String, Int>> {
         val result = ArrayList<Pair<String, Int>>()
         for (i in items)
             result.add(i.getAsString())
@@ -46,9 +48,9 @@ class Invoice {
 
     fun addInvoiceItem(itm: InvoiceItem) {
         itm.setItemId(posIdIterator++)
-        totalNetto += itm.value
-        totalTax += itm.value * itm.vat
-        totalGross += itm.value*(BigDecimal(1)+itm.vat)
+        totalNetto = totalNetto.add(itm.value)
+        totalTax = totalTax.add(itm.value.multiply( itm.vat))
+        totalGross =totalGross.add(itm.value.multiply(BigDecimal(1).add( itm.vat)))
         items.add(itm)
     }
 
@@ -60,9 +62,9 @@ class Invoice {
         }
         if (index != -1) {
             val temp = items.removeAt(index)
-            totalNetto =  temp.value
-            totalTax -= temp.value * temp.vat
-            totalGross -= temp.value*(BigDecimal(1) +temp.vat)
+            totalNetto =totalNetto.add(temp.value)
+            totalTax = totalTax.subtract(temp.value.multiply(temp.vat))
+            totalGross = totalGross.subtract(temp.value.multiply(BigDecimal(1).add( temp.vat)))
         }
     }
 }

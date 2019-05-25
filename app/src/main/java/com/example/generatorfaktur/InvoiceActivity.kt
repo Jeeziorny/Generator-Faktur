@@ -8,6 +8,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -26,7 +27,9 @@ import com.example.generatorfaktur.invBuilder.InvcBuilder
 import com.example.generatorfaktur.invoiceProperties.Entity
 import com.example.generatorfaktur.invoiceProperties.InvoiceItem
 import kotlinx.android.synthetic.main.content_invoice1.*
+import java.lang.Exception
 import java.math.BigDecimal
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -85,7 +88,9 @@ class InvoiceActivity : AppCompatActivity() {
                             secDialog.findViewById<EditText>(R.id.itemName).text.toString(),
                             secDialog.findViewById<EditText>(R.id.itemQuantity).text.toString().toBigDecimal(),
                             secDialog.findViewById<EditText>(R.id.itemPrice).text.toString().toBigDecimal(),
-                            secDialog.findViewById<EditText>(R.id.itemVAT).text.toString().toBigDecimal().divide(BigDecimal(100))
+                            secDialog.findViewById<EditText>(R.id.itemVAT).text.toString().toBigDecimal().divide(
+                                BigDecimal(100)
+                            )
                         )
                     )
                     itemArrayAdapter.notifyDataSetChanged()
@@ -100,10 +105,7 @@ class InvoiceActivity : AppCompatActivity() {
             true
         }
 
-
-
         builder = InvcBuilder(applicationContext)
-
 
 
     }
@@ -120,13 +122,14 @@ class InvoiceActivity : AppCompatActivity() {
                 buyerAdressText.text.toString(),
                 buyerPostalText.text.toString(),
                 buyerPhoneText.text.toString(),
-                buyerNIPText.text.toString())
+                buyerNIPText.text.toString()
+            )
 
             val sellerData = SellerData(this)
             val seller = Entity(
                 sellerData.getName(),
                 sellerData.getAddress(),
-                sellerData.getPostal(),
+                sellerData.getPostal() + " " + sellerData.getCity(),
                 sellerData.getPhone(),
                 sellerData.getNip()
             )
@@ -172,7 +175,7 @@ class InvoiceActivity : AppCompatActivity() {
     //Pozwala przejść do dialogu dodającego nowego klienta
     fun choosePersonDialog(who: String) {
         val builder = AlertDialog.Builder(this)
-        if(who == "buyer") {
+        if (who == "buyer") {
             builder.setTitle("Wybierz nabywcę")
         } else {
             builder.setTitle("Wybierz odbiorcę")
@@ -193,17 +196,17 @@ class InvoiceActivity : AppCompatActivity() {
 
         builder
             .setSingleChoiceItems(entityArrayAdapter, -1, object : DialogInterface.OnClickListener {
-            override fun onClick(dialog: DialogInterface?, which: Int) {
-                val result = ArrayList<String>()
-                result.add(entityList[which].name)
-                result.add(entityList[which].nip)
-                result.add(entityList[which].address)
-                result.add(entityList[which].postal)
-                result.add(entityList[which].phoneNumber)
-                setTexts(result, who)
-                dialog?.dismiss()
-            }
-        })
+                override fun onClick(dialog: DialogInterface?, which: Int) {
+                    val result = ArrayList<String>()
+                    result.add(entityList[which].name)
+                    result.add(entityList[which].nip)
+                    result.add(entityList[which].address)
+                    result.add(entityList[which].postal)
+                    result.add(entityList[which].phoneNumber)
+                    setTexts(result, who)
+                    dialog?.dismiss()
+                }
+            })
             .setCancelable(true)
             .setPositiveButton("NOWY") { _, _ ->
                 doDialog(who)
@@ -214,7 +217,7 @@ class InvoiceActivity : AppCompatActivity() {
     }
 
     //Dialog wybierający metodę płatności i kończący generowanie faktury
-    fun PropertyDialog () {
+    fun PropertyDialog() {
         val li = LayoutInflater.from(this)
         val dialog = li.inflate(R.layout.invoice_parametrs_dialog, null)
         val alertDialogBuilder = AlertDialog.Builder(this)
@@ -226,21 +229,21 @@ class InvoiceActivity : AppCompatActivity() {
         dialog.findViewById<Button>(R.id.confirmIPD).setOnClickListener {
             val sdf = SimpleDateFormat("dd-MM-yyyy")
             val seller = SellerData(this)
-                when (dialog.findViewById<RadioGroup>(R.id.paymentGroup).checkedRadioButtonId) {
-                    R.id.paymentCashButton -> {
-                        val date = sdf.format(Calendar.getInstance().time)
-                        builder.setPaymentProperty("Gotówka", date, seller.getBankName(), seller.getBankNumber())
-                    }
-                    else -> {
-                        val paymentDuration = dialog.findViewById<EditText>(R.id.paymentDurationText).text.toString()
-                        val calendar = Calendar.getInstance()
-                        if (paymentDuration != "") {
-                            calendar.add(Calendar.DATE, paymentDuration.toInt())
-                        }
-                        val date = sdf.format(calendar.time)
-                        builder.setPaymentProperty("Przelew", date, seller.getBankName(), seller.getBankNumber())
-                    }
+            when (dialog.findViewById<RadioGroup>(R.id.paymentGroup).checkedRadioButtonId) {
+                R.id.paymentCashButton -> {
+                    val date = sdf.format(Calendar.getInstance().time)
+                    builder.setPaymentProperty("Gotówka", date, seller.getBankName(), seller.getBankNumber())
                 }
+                else -> {
+                    val paymentDuration = dialog.findViewById<EditText>(R.id.paymentDurationText).text.toString()
+                    val calendar = Calendar.getInstance()
+                    if (paymentDuration != "") {
+                        calendar.add(Calendar.DATE, paymentDuration.toInt())
+                    }
+                    val date = sdf.format(calendar.time)
+                    builder.setPaymentProperty("Przelew", date, seller.getBankName(), seller.getBankNumber())
+                }
+            }
 
             val result = builder.generate()
 
@@ -270,7 +273,7 @@ class InvoiceActivity : AppCompatActivity() {
 
 
     //Uruchamia dialog do wypełnienia danych klienta/sprzedającego
-    fun doDialog(who: String){
+    fun doDialog(who: String) {
         val li = LayoutInflater.from(this)
         val dialog = li.inflate(R.layout.fab_dialog, null)
         val result = ArrayList<String>()
@@ -287,8 +290,8 @@ class InvoiceActivity : AppCompatActivity() {
         entityNameEditText.onFocusChangeListener =
             OnFocusChangeListener { v, hasFocus ->
                 if (!hasFocus) {
-                    if (entityNameEditText.text.toString().isBlank() ||
-                            entityNameEditText.text.toString().isEmpty())
+                    if (entityNameEditText.text.toString().isBlank()
+                    )
                         entityNameEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
                     else
                         entityNameEditText.background = ColorDrawable(Color.WHITE)
@@ -330,8 +333,8 @@ class InvoiceActivity : AppCompatActivity() {
         entityAddressEditText.onFocusChangeListener =
             OnFocusChangeListener { v, hasFocus ->
                 if (!hasFocus) {
-                    if (entityAddressEditText.text.toString().isBlank() ||
-                        entityAddressEditText.text.toString().isEmpty())
+                    if (entityAddressEditText.text.toString().isBlank()
+                    )
                         entityAddressEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
                     else
                         entityAddressEditText.background = ColorDrawable(Color.WHITE)
@@ -378,7 +381,7 @@ class InvoiceActivity : AppCompatActivity() {
                 buyerNIPText.text = data[1]
                 buyerAdressText.text = data[2]
                 buyerPostalText.text = data[3]
-                buyerPhoneText.text =data[4]
+                buyerPhoneText.text = data[4]
             }
         }
     }
@@ -403,17 +406,23 @@ class InvoiceActivity : AppCompatActivity() {
             val itemQuantity = dialog.findViewById<EditText>(R.id.itemQuantity).text.toString()
             val itemPrice = dialog.findViewById<EditText>(R.id.itemPrice).text.toString()
             val itemVAT = dialog.findViewById<EditText>(R.id.itemVAT).text.toString()
-            if(itemName != "" && itemQuantity != "" && itemPrice !="" && itemVAT != "") {
+            if (itemName.isNotBlank() && itemQuantity.isNotBlank() && itemPrice.isNotBlank()
+                && itemVAT.isNotBlank() && !itemVAT.contains('.')
+            ) {
 
-                itemList.add(
-                    builder.addInvoiceItem(
-                        itemName,
-                        itemQuantity.toBigDecimal(),
-                        itemPrice.toBigDecimal(),
-                        itemVAT.toBigDecimal().divide(BigDecimal(100))
+                try {
+                    itemList.add(
+                        builder.addInvoiceItem(
+                            itemName,
+                            itemQuantity.toBigDecimal(),
+                            itemPrice.toBigDecimal(),
+                            itemVAT.toBigDecimal().divide(BigDecimal(100))
+                        )
                     )
-                )
-                itemArrayAdapter.notifyDataSetChanged()
+                    itemArrayAdapter.notifyDataSetChanged()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
 
             alertDialog.dismiss()
@@ -430,10 +439,10 @@ class InvoiceActivity : AppCompatActivity() {
     private fun initTextEdits(secDialog: View, position: Int) {
         secDialog.findViewById<EditText>(R.id.itemName).setText(itemList[position].name)
         secDialog.findViewById<EditText>(R.id.itemPrice)
-            .setText("#.00".format(itemList[position].baseValue))
+            .setText(DecimalFormat("#.00").format(itemList[position].baseValue))
         secDialog.findViewById<EditText>(R.id.itemQuantity)
-            .setText("#.00".format(itemList[position].quantity))
+            .setText(DecimalFormat("#.00").format(itemList[position].quantity))
         secDialog.findViewById<EditText>(R.id.itemVAT)
-            .setText(itemList[position].vat.times(BigDecimal(100)).toInt().toString())
+            .setText(DecimalFormat("#").format(itemList[position].vat.multiply(BigDecimal(100))))
     }
 }

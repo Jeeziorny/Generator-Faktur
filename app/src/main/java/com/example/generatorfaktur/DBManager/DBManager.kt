@@ -8,5 +8,4 @@ interface DBManager {
     fun updateEntity(entity: Entity)
     fun getAllEntity(): List<Entity>
 
-    //TODO: Wypelnia swietlon xD
 }

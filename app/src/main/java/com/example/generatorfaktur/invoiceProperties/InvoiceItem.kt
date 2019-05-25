@@ -14,7 +14,7 @@ class InvoiceItem (
 ) {
 
     fun setValue() {
-        value = quantity * baseValue
+        value = quantity.multiply( baseValue)
     }
 
     fun setItemId(id: Int) {
@@ -30,7 +30,7 @@ class InvoiceItem (
         val q = df.format(quantity)
         val b = df.format(baseValue)
         val v = df.format(value)
-        val t = vat.times(BigDecimal(100))
+        val t = DecimalFormat("#").format(vat.multiply(BigDecimal(100)))
         val g = df.format(grossValue)
         return Pair("$newName;$q;$b;$v;$t%;$g", height)
     }

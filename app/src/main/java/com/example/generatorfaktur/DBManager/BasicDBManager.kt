@@ -10,7 +10,6 @@ class BasicDBManager(private val context: Context) : DBManager {
     }
 
     override fun addEntity(entity: Entity) {
-
         AsyncTask.execute {
             val database = AppDatabase.getDatabase(context)
             database.entityDao().insertEntity(entity)
@@ -18,7 +17,6 @@ class BasicDBManager(private val context: Context) : DBManager {
     }
 
     override fun deleteEntity(entity: Entity) {
-
         AsyncTask.execute {
             val database = AppDatabase.getDatabase(context)
             database.entityDao().deleteEntity(entity)

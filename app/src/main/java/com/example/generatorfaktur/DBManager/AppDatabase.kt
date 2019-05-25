@@ -14,20 +14,28 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun entityDao(): EntityDAO
 
     companion object {
+
+        // Instance of AppDatabase
         var instance: AppDatabase? = null
 
+
+        // Returns instance of database
         fun getDatabase(context: Context) : AppDatabase {
+
+            // Fragment from Singleton pattern
             if (instance == null) {
                 synchronized(this) {
                     if (instance == null) {
                         try {
+
+                            //Create an Instance
                             instance = Room.databaseBuilder(
                                 context,
                                 AppDatabase::class.java,
                                 "database.db"
                             ).build()
                         } catch (e: Exception) {
-                            Log.i("invoice", e.message)
+                            e.printStackTrace()
                         }
                     }
                 }
