@@ -9,6 +9,13 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 
+
+/**
+ * Assistent which let print invoice.
+ * Use own WebView.
+ *
+ * @param context Context needed to create WebView
+ */
 class PrintingManager (private val context: Context){
     private val webView: WebView
 
@@ -19,18 +26,30 @@ class PrintingManager (private val context: Context){
 
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?) = false
 
-            //RUNS WHEN NEW PAGE IS OPENED
+            //RUNS ALWAYS WHEN WEBVIEW FINISHED LOAD HTML
+            //THATS WHY NEED OWN WEBVIEW
             override fun onPageFinished(view: WebView?, url: String?) {
-                Log.i(TAG, "page finished loading $url")
+                //PRINT
                 createWebPrintJob(view!!)
             }
         }
     }
 
+    /**
+     * Loads new HTML String to WebView
+     * Runs onPageFinished
+     *
+     * @param html Invoice saved as HTML
+     */
     fun doWebViewPrint(html: String) {
         webView.loadData(html, "text/html", "UTF-8")
     }
 
+    /**
+     * Create PrintManager from PRINT_SERVICE
+     * Runs new Activity
+     *
+     */
     private fun createWebPrintJob(webView: WebView) {
 
         //Get a PrintManager instance
