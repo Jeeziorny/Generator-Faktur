@@ -1,5 +1,6 @@
 package com.example.generatorfaktur
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -25,22 +26,38 @@ class PrefsActivity : AppCompatActivity() {
     }
 
     private fun isCorrect(): Boolean {
-        if (dealerNameText.text.toString().isBlank())
+        if (dealerNameText.text.toString().isBlank()) {
+            showInformDialog("Wprowadzona nazwa jest niepoprawna !")
             return false
-        if (!Validator.checkNip(dealerNIPText.text.toString()))
+        }
+        if (!Validator.checkNip(dealerNIPText.text.toString())) {
+            showInformDialog("Wprowadzony nip jest niepoprawny !")
             return false
-        if (dealerAdressText.text.toString().isBlank())
+        }
+        if (dealerAdressText.text.toString().isBlank()) {
+            showInformDialog("Wprowadzony adres jest niepoprawny !")
             return false
-        if (!Validator.checkPostal(dealerPostalText.text.toString()))
+        }
+        if (!Validator.checkPostal(dealerPostalText.text.toString())) {
+            showInformDialog("Wprowadzony kod pocztowy jest niepoprawny !")
             return false
-        if (!Validator.isNumeric(dealerPhoneText.text.toString()))
+        }
+        if (dealerCityText.text.toString().isBlank()) {
+            showInformDialog("Wprowadzona nazwa miasta jest niepoprawna !")
             return false
-        if (dealerCityText.text.toString().isBlank())
+        }
+        if (dealerBankNameText.text.toString().isBlank()) {
+            showInformDialog("Wprowadzona nazwa banku jest niepoprawna !")
             return false
-        if (dealerBankNameText.text.toString().isBlank())
+        }
+        if (!Validator.checkAccNumber(dealerBankNumberText.text.toString())) {
+            showInformDialog("Wprowadzony numer konta bankowego jest niepoprawny !")
             return false
-        if (!Validator.checkAccNumber(dealerBankNumberText.text.toString()))
+        }
+        if (!Validator.isNumeric(dealerPhoneText.text.toString())) {
+            showInformDialog("Wprowadzony numer telefonu jest niepoprawny !")
             return false
+        }
         return true
     }
 
@@ -55,6 +72,13 @@ class PrefsActivity : AppCompatActivity() {
         seller.setBankName(dealerBankNameText.text.toString())
         seller.setBankNumber(dealerBankNumberText.text.toString())
         seller.setIsSellerSet(true)
+    }
+
+    private fun showInformDialog(message : String){
+        val alert = AlertDialog.Builder(this)
+        alert.setMessage(message)
+        alert.setCancelable(true)
+        alert.show()
     }
 
     private fun setTexts() {

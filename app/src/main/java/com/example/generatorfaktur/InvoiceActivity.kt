@@ -224,22 +224,22 @@ class InvoiceActivity : AppCompatActivity() {
 
         dialog.findViewById<Button>(R.id.confirmIPD).setOnClickListener {
             val sdf = SimpleDateFormat("dd-MM-yyyy")
-
-            when (dialog.findViewById<RadioGroup>(R.id.paymentGroup).checkedRadioButtonId) {
-                R.id.paymentCashButton -> {
-                    val date = sdf.format(Calendar.getInstance().time)
-                    builder.setPaymentProperty("Gotówka", date, "a", "d")
-                }
-                else -> {
-                    val paymentDuration = dialog.findViewById<EditText>(R.id.paymentDurationText).text.toString()
-                    val calendar = Calendar.getInstance()
-                    if (paymentDuration != "") {
-                        calendar.add(Calendar.DATE, paymentDuration.toInt())
+            val seller = SellerData(this)
+                when (dialog.findViewById<RadioGroup>(R.id.paymentGroup).checkedRadioButtonId) {
+                    R.id.paymentCashButton -> {
+                        val date = sdf.format(Calendar.getInstance().time)
+                        builder.setPaymentProperty("Gotówka", date, seller.getBankName(), seller.getBankNumber())
                     }
-                    val date = sdf.format(calendar.time)
-                    builder.setPaymentProperty("Przelew", date, "a", "d")
+                    else -> {
+                        val paymentDuration = dialog.findViewById<EditText>(R.id.paymentDurationText).text.toString()
+                        val calendar = Calendar.getInstance()
+                        if (paymentDuration != "") {
+                            calendar.add(Calendar.DATE, paymentDuration.toInt())
+                        }
+                        val date = sdf.format(calendar.time)
+                        builder.setPaymentProperty("Przelew", date, seller.getBankName(), seller.getBankNumber())
+                    }
                 }
-            }
 
             val result = builder.generate()
 
@@ -398,13 +398,22 @@ class InvoiceActivity : AppCompatActivity() {
         alertDialog.show()
         dialog.findViewById<Button>(R.id.addBDI).setOnClickListener {
 
+            val itemName = dialog.findViewById<EditText>(R.id.itemName).text.toString()
+            val itemQuantity = dialog.findViewById<EditText>(R.id.itemQuantity).text.toString()
+            val itemPrice = dialog.findViewById<EditText>(R.id.itemPrice).text.toString()
+            val itemVAT = dialog.findViewById<EditText>(R.id.itemVAT).text.toString()
+            if(itemName != "" && itemQuantity != "" && itemPrice !="" && itemVAT != "") {
 
-            itemList.add( builder.addInvoiceItem(
-                dialog.findViewById<EditText>(R.id.itemName).text.toString(),
-                dialog.findViewById<EditText>(R.id.itemQuantity).text.toString().toDouble(),
-                dialog.findViewById<EditText>(R.id.itemPrice).text.toString().toDouble(),
-                dialog.findViewById<EditText>(R.id.itemVAT).text.toString().toDouble()/100))
-            itemArrayAdapter.notifyDataSetChanged()
+                itemList.add(
+                    builder.addInvoiceItem(
+                        itemName,
+                        itemQuantity.toDouble(),
+                        itemPrice.toDouble(),
+                        itemVAT.toDouble() / 100
+                    )
+                )
+                itemArrayAdapter.notifyDataSetChanged()
+            }
 
             alertDialog.dismiss()
 

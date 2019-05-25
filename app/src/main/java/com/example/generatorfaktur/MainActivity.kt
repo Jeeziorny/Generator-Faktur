@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
                 REQUEST_EXTERNAL_STORAGE
             )
         }
-        checkIfSellerIsSet()
     }
 
     private fun checkIfSellerIsSet(): Boolean {
