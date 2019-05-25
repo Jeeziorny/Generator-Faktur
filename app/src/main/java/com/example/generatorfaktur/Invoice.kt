@@ -62,7 +62,7 @@ class Invoice {
         }
         if (index != -1) {
             val temp = items.removeAt(index)
-            totalNetto =totalNetto.add(temp.value)
+            totalNetto =totalNetto.subtract(temp.value)
             totalTax = totalTax.subtract(temp.value.multiply(temp.vat))
             totalGross = totalGross.subtract(temp.value.multiply(BigDecimal(1).add( temp.vat)))
         }

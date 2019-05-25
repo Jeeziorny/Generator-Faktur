@@ -14,7 +14,7 @@
             android:paddingStart="100dp"
             android:textColor="@color/blue"
             android:gravity="center_horizontal"
-            android:text="Nazwa :"/>
+            android:text="@string/usr_name_label"/>
     <com.beardedhen.androidbootstrap.BootstrapEditText
             android:layout_width="match_parent"
             android:id="@+id/entityName"
@@ -26,7 +26,7 @@
               android:gravity="center_horizontal"
               android:textColor="@color/blue"
               android:layout_height="wrap_content"
-              android:text="NIP :"/>
+              android:text="@string/usr_nip_label"/>
     <com.beardedhen.androidbootstrap.BootstrapEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
               android:gravity="center_horizontal"
               android:textColor="@color/blue"
               android:layout_height="wrap_content"
-              android:text="Adres :"/>
+              android:text="@string/usr_addr_label"/>
     <com.beardedhen.androidbootstrap.BootstrapEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
               android:gravity="center_horizontal"
               android:layout_height="wrap_content"
               android:textColor="@color/blue"
-              android:text="Kod Pocztowy :"/>
+              android:text="@string/usr_postal_label"/>
     <com.beardedhen.androidbootstrap.BootstrapEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,12 +69,27 @@
             android:inputType="text"
             app:bootstrapBrand="danger"/>
 
+    <TextView android:layout_width="match_parent"
+              android:gravity="center_horizontal"
+              android:layout_height="wrap_content"
+              android:textColor="@color/blue"
+              android:text="@string/usr_postal_city_label"/>
+    <com.beardedhen.androidbootstrap.BootstrapEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:bootstrapSize="md"
+            android:layout_margin="8dp"
+            android:id="@+id/entityCityPostal"
+            android:layout_gravity="top|start"
+            android:inputType="text"
+            app:bootstrapBrand="danger"/>
+
 
     <TextView android:layout_width="match_parent"
               android:gravity="center_horizontal"
               android:layout_height="wrap_content"
               android:textColor="@color/blue"
-              android:text="Telefon :"/>
+              android:text="@string/usr_phone_num_label"/>
 
     <com.beardedhen.androidbootstrap.BootstrapEditText
             android:layout_width="match_parent"
@@ -89,7 +104,7 @@
     <Button android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="DODAJ"
+            android:text="@string/confirm_add_item_label"
             android:textColor="@color/pink"
             android:id="@+id/addFAB"
             android:background="@color/blue"

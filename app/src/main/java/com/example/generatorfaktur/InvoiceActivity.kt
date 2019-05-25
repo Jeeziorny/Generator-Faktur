@@ -281,15 +281,25 @@ class InvoiceActivity : AppCompatActivity() {
 
         alertDialogBuilder.setView(dialog)
 
+        //I've defined vals for faster access
         val entityNameEditText = dialog.findViewById<BootstrapEditText>(R.id.entityName)
         val entityNIPEditText = dialog.findViewById<BootstrapEditText>(R.id.entityNIP)
         val entityPhoneEditText = dialog.findViewById<BootstrapEditText>(R.id.entityPhone)
         val entityPostalEditText = dialog.findViewById<BootstrapEditText>(R.id.entityPostal)
         val entityAddressEditText = dialog.findViewById<BootstrapEditText>(R.id.entityAddress)
+        val entityCityPostalEditText = dialog.findViewById<BootstrapEditText>(R.id.entityCityPostal)
 
+        /*
+        while focus on another textField, this lambda changes background
+        on red if input was incorrect, on white if opposite.
+
+        It sticks to each editText on this dialog.
+         */
         entityNameEditText.onFocusChangeListener =
-            OnFocusChangeListener { v, hasFocus ->
+            OnFocusChangeListener { _, hasFocus ->
+                //hasFocus get false when losing focus
                 if (!hasFocus) {
+                    //validation for blank input (e.g. only white characters)
                     if (entityNameEditText.text.toString().isBlank()
                     )
                         entityNameEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
@@ -342,7 +352,17 @@ class InvoiceActivity : AppCompatActivity() {
                 }
             }
 
+        entityCityPostalEditText.onFocusChangeListener =
+            OnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    if (entityCityPostalEditText.text.toString().isBlank()
+                    )
+                        entityCityPostalEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
+                    else
+                        entityCityPostalEditText.background = ColorDrawable(Color.WHITE)
 
+                }
+            }
 
         alertDialogBuilder
             .setCancelable(true)
@@ -354,7 +374,7 @@ class InvoiceActivity : AppCompatActivity() {
             result.add(entityNameEditText.text.toString())
             result.add(entityNIPEditText.text.toString())
             result.add(entityAddressEditText.text.toString())
-            result.add(entityPostalEditText.text.toString())
+            result.add(entityPostalEditText.text.toString() + " " + entityCityPostalEditText.text.toString())
             result.add(entityPhoneEditText.text.toString())
 
             setTexts(result, who)

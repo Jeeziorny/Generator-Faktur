@@ -12,7 +12,7 @@
         tools:showIn="@layout/activity_invoice"
         tools:context=".InvoiceActivity">
     <TextView
-            android:text="Nabywca"
+            android:text="@string/buyer_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/buyerText" android:layout_marginTop="8dp"
@@ -46,7 +46,7 @@
             app:layout_constraintTop_toTopOf="@+id/buyerAdressText"
             app:layout_constraintHorizontal_bias="1.0"/>
     <TextView
-            android:text="NIP:"
+            android:text="@string/nip_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView11"
@@ -64,7 +64,7 @@
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintHorizontal_bias="0.0"/>
     <TextView
-            android:text="Tel.:"
+            android:text="@string/phone_num_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView13"
@@ -81,7 +81,7 @@
             app:layout_constraintStart_toEndOf="@+id/buyerNIPText" android:layout_marginStart="8dp"
             app:layout_constraintHorizontal_bias="1.0"/>
     <TextView
-            android:text="Odbiorca"
+            android:text="@string/recipient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView15"
@@ -116,7 +116,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/recipientAdressText" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintHorizontal_bias="1.0"/>
     <TextView
-            android:text="NIP:"
+            android:text="@string/nip_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView19"
@@ -143,7 +143,7 @@
             android:layout_marginEnd="8dp" app:layout_constraintStart_toEndOf="@+id/recipientNIPText"
             android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="1.0"/>
     <TextView
-            android:text="Tel.:"
+            android:text="@string/phone_num_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView22" app:layout_constraintEnd_toStartOf="@+id/recipientPhoneText"
@@ -162,7 +162,7 @@
             android:id="@+id/itemListView"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
     <TextView
-            android:text="Towar/Usługa"
+            android:text="@string/invoice_content_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView23"

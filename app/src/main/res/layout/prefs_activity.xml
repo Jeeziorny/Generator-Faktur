@@ -14,7 +14,7 @@
             android:textColor="@color/blue"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:text="Wypełnij swoje dane :"
+            android:text="@string/set_info_label"
             android:id="@+id/textView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
 
 
             <TextView
-                    android:text="Nazwa :"
+                    android:text="@string/usr_name_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"/>
@@ -49,7 +49,7 @@
 
 
             <TextView
-                    android:text="NIP :"
+                    android:text="@string/usr_nip_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"/>
@@ -64,7 +64,7 @@
                     android:id="@+id/dealerNIPText"/>
 
             <TextView
-                    android:text="Adres :"
+                    android:text="@string/usr_addr_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"/>
@@ -79,7 +79,7 @@
                     android:id="@+id/dealerAdressText"/>
 
             <TextView
-                    android:text="Kod Pocztowy :"
+                    android:text="@string/usr_postal_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"/>
@@ -88,14 +88,14 @@
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
+                    android:inputType="text"
                     android:textSize="18sp"
                     android:textAlignment="center"
                     android:id="@+id/dealerPostalText"/>
 
 
             <TextView
-                    android:text="Miasto :"
+                    android:text="@string/usr_postal_city_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"/>
@@ -108,7 +108,7 @@
                     android:textAlignment="center"
                     android:id="@+id/dealerCityText"/>
             <TextView
-                    android:text="Nazwa Banku :"
+                    android:text="@string/usr_bank_name_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"/>
@@ -121,7 +121,7 @@
                     android:textAlignment="center"
                     android:id="@+id/dealerBankNameText"/>
             <TextView
-                    android:text="Numer konta bankowego :"
+                    android:text="@string/usr_account_num_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"/>
@@ -135,7 +135,7 @@
                     android:id="@+id/dealerBankNumberText"/>
 
             <TextView
-                    android:text="Telefon :"
+                    android:text="@string/usr_phone_num_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"/>
@@ -152,7 +152,7 @@
 
     <Button
             android:layout_width="wrap_content"
-            android:text="ZATWIERDŹ"
+            android:text="@string/confirm_button_label"
             android:onClick="confirmOnClick"
             android:background="@color/more_blue"
             android:textColor="@color/pink"

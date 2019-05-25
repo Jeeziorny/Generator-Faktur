@@ -9,7 +9,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:textSize="30sp"
-            android:text="Dodaj pozycję"
+            android:text="@string/add_item_label"
             android:paddingLeft="40dp"
             android:paddingTop="0dp"
             android:paddingRight="40dp"
@@ -20,7 +20,7 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/itemName"
-            android:hint="Nazwa"
+            android:hint="@string/name_label"
             style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense"
             android:textAlignment="center"/>
     <EditText
@@ -30,7 +30,7 @@
             android:ems="10"
             android:id="@+id/itemPrice"
             style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense"
-            android:hint="Cena netto" android:textAlignment="center"/>
+            android:hint="@string/netto_val_label" android:textAlignment="center"/>
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,21 +38,21 @@
             android:ems="10"
             android:id="@+id/itemQuantity"
             style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense"
-            android:hint="Ilość" android:textAlignment="center"/>
+            android:hint="@string/quantity_itm_label" android:textAlignment="center"/>
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:ems="10"
             android:id="@+id/itemVAT"
-            android:hint="VAT (%)"
+            android:hint="@string/tax_item_label"
             style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense"
             android:textAlignment="center"/>
     <Button
             android:layout_width="wrap_content"
             android:layout_gravity="end"
             android:background="@color/blue"
-            android:text="DODAJ"
+            android:text="@string/confirm_add_item_label"
             android:id="@+id/addBDI"
             android:layout_margin="3dp"
             android:layout_height="wrap_content"/>

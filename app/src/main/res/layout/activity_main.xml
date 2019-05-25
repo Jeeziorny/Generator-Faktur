@@ -25,7 +25,7 @@
 
         <Button android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="KLIENCI"
+                android:text="@string/customers_btn_label"
                 android:textSize="20sp"
                 android:onClick="customerOnClick"
                 android:layout_marginTop="8dp"
@@ -38,7 +38,7 @@
 
         <Button android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="wystaw fakturę"
+                android:text="@string/invoice_request_btn_label"
                 android:textSize="20sp"
                 android:onClick="invoiceOnClick"
                 android:paddingStart="50dp"

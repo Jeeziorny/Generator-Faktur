@@ -8,7 +8,7 @@
 
     <Button
             android:layout_width="match_parent"
-            android:text="EDYTUJ"
+            android:text="@string/edit_request_label"
             android:textColor="@color/pink"
             android:id="@+id/edit_button"
             android:textSize="20sp"
@@ -20,7 +20,7 @@
 
     <Button
             android:layout_width="match_parent"
-            android:text="USUŃ"
+            android:text="@string/remove_request_label"
             android:background="@color/blue"
             android:textColor="@color/pink"
             android:id="@+id/delete_button"

@@ -45,7 +45,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NIP: "
+                android:text="@string/nip_label"
                 android:textStyle="bold"/>
         <TextView
                 android:text="entityNIP"
@@ -56,7 +56,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tel: "
+                android:text="@string/phone_num_label"
                 android:textStyle="bold"/>
         <TextView
                 android:text="entityPhone"

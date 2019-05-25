@@ -2,4 +2,35 @@
     <string name="file_provider_authority" translatable="false">com.example.GeneratorFaktur.fileprovider</string>
     <string name="app_name">Generator Faktur</string>
     <string name="title_activity_invoice1">InvoiceActivity1</string>
+    <string name="customers_btn_label">KLIENCI</string>
+    <string name="invoice_request_btn_label">WYSTAW FAKTURĘ</string>
+    <string name="buyer_label">Nabywca</string>
+    <string name="nip_label">NIP: </string>
+    <string name="phone_num_label">Tel.: </string>
+    <string name="recipient">Odbiorca: </string>
+    <string name="invoice_content_label">Towar/Usługa</string>
+    <string name="edit_request_label">EDYTUJ</string>
+    <string name="remove_request_label">USUŃ</string>
+    <string name="quantity_label">Ilość: </string>
+    <string name="price_label">Cena: </string>
+    <string name="tax_label">VAT: </string>
+    <string name="cash_request_label">Płatność gotówką</string>
+    <string name="transfer_request_label">Płatność przelewem</string>
+    <string name="payment_date_label">Termin przelewu (dni)</string>
+    <string name="confirm_button_label">ZATWIERDŹ</string>
+    <string name="add_item_label">Dodaj pozycję</string>
+    <string name="name_label">Nazwa</string>
+    <string name="netto_val_label">Cena netto</string>
+    <string name="quantity_itm_label">Ilość</string>
+    <string name="tax_item_label">VAT (%)</string>
+    <string name="confirm_add_item_label">DODAJ</string>
+    <string name="set_info_label">Wypełnij swoje dane: </string>
+    <string name="usr_name_label">Nazwa: </string>
+    <string name="usr_nip_label">NIP: </string>
+    <string name="usr_addr_label">Adres: </string>
+    <string name="usr_postal_label">Kod Pocztowy: </string>
+    <string name="usr_postal_city_label">Miasto: </string>
+    <string name="usr_bank_name_label">Nazwa Banku: </string>
+    <string name="usr_account_num_label">Numer konta bankowego: </string>
+    <string name="usr_phone_num_label">Telefon: </string>
 </resources>

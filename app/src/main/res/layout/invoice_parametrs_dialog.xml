@@ -14,12 +14,12 @@
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             android:id="@+id/paymentGroup">
         <RadioButton
-                android:text="Płatoność gotówką"
+                android:text="@string/cash_request_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/paymentCashButton" android:checked="false"/>
         <RadioButton
-                android:text="Płatość przelewem"
+                android:text="@string/transfer_request_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/paymentTransferButton" android:checked="true"/>
@@ -31,13 +31,13 @@
             android:ems="10"
             android:id="@+id/paymentDurationText"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:hint="Termin przelwu (dni)"
+            android:hint="@string/payment_date_label"
             app:layout_constraintTop_toBottomOf="@+id/paymentGroup" android:layout_marginTop="8dp"
             android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent" android:editable="true"/>
 
     <Button
             android:layout_width="wrap_content"
-            android:text="ZATWIERDŹ"
+            android:text="@string/confirm_button_label"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@color/blue"

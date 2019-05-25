@@ -1,5 +1,7 @@
 package com.example.generatorfaktur
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -121,7 +123,6 @@ class EntityActivity : AppCompatActivity() {
         })
     }
 
-
     fun syncListViewWithDb() {
         AsyncTask.execute {
             entityList.clear()
@@ -137,6 +138,82 @@ class EntityActivity : AppCompatActivity() {
         val alertDialogBuilder = AlertDialog.Builder(this)
         alertDialogBuilder.setView(dialog)
 
+        val entityNameEditText = dialog.findViewById<BootstrapEditText>(R.id.entityName)
+        val entityNIPEditText = dialog.findViewById<BootstrapEditText>(R.id.entityNIP)
+        val entityPhoneEditText = dialog.findViewById<BootstrapEditText>(R.id.entityPhone)
+        val entityPostalEditText = dialog.findViewById<BootstrapEditText>(R.id.entityPostal)
+        val entityAddressEditText = dialog.findViewById<BootstrapEditText>(R.id.entityAddress)
+        val entityCityPostalEditText = dialog.findViewById<BootstrapEditText>(R.id.entityCityPostal)
+
+
+        //for better understanding of this methoods please check InvoiceActivity class, doDialog methood.
+        entityNameEditText.onFocusChangeListener =
+            View.OnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    if (entityNameEditText.text.toString().isBlank()
+                    )
+                        entityNameEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
+                    else
+                        entityNameEditText.background = ColorDrawable(Color.WHITE)
+                }
+            }
+
+        entityNIPEditText.onFocusChangeListener =
+            View.OnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    if (!Validator.checkNip(entityNIPEditText.text.toString()))
+                        entityNIPEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
+                    else
+                        entityNIPEditText.background = ColorDrawable(Color.WHITE)
+                }
+            }
+
+        entityPhoneEditText.onFocusChangeListener =
+            View.OnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    if (!Validator.isNumeric(entityPhoneEditText.text.toString()))
+                        entityPhoneEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
+                    else
+                        entityPhoneEditText.background = ColorDrawable(Color.WHITE)
+
+                }
+            }
+
+        entityPostalEditText.onFocusChangeListener =
+            View.OnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    if (!Validator.checkPostal(entityPostalEditText.text.toString()))
+                        entityPostalEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
+                    else
+                        entityPostalEditText.background = ColorDrawable(Color.WHITE)
+
+                }
+            }
+
+        entityAddressEditText.onFocusChangeListener =
+            View.OnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    if (entityAddressEditText.text.toString().isBlank()
+                    )
+                        entityAddressEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
+                    else
+                        entityAddressEditText.background = ColorDrawable(Color.WHITE)
+
+                }
+            }
+
+        entityCityPostalEditText.onFocusChangeListener =
+            View.OnFocusChangeListener { v, hasFocus ->
+                if (!hasFocus) {
+                    if (entityCityPostalEditText.text.toString().isBlank()
+                    )
+                        entityCityPostalEditText.background = ColorDrawable(Color.rgb(255, 125, 127))
+                    else
+                        entityCityPostalEditText.background = ColorDrawable(Color.WHITE)
+
+                }
+            }
+
         alertDialogBuilder
             .setCancelable(true)
 
@@ -148,7 +225,7 @@ class EntityActivity : AppCompatActivity() {
             entity.address = dialog.entityAddress.text.toString()
             entity.nip = dialog.entityNIP.text.toString()
             entity.phoneNumber = dialog.entityPhone.text.toString()
-            entity.postal = dialog.entityPostal.text.toString()
+            entity.postal = dialog.entityPostal.text.toString() + " " + entityCityPostalEditText.text.toString()
             addEntity(entity)
 
             entityArrayAdapter.notifyDataSetChanged()
@@ -156,6 +233,8 @@ class EntityActivity : AppCompatActivity() {
         }
         alertDialog.show()
     }
+
+    //podaj nip
 
     private fun getView(resource: Int): View {
         val li = LayoutInflater.from(this)

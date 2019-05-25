@@ -26,7 +26,7 @@
                       android:layout_height="wrap_content"
                       android:orientation="horizontal">
             <TextView
-                    android:text="Ilość :"
+                    android:text="@string/quantity_label"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -37,7 +37,7 @@
                     android:id="@+id/quantityText"
                     android:layout_height="match_parent"/>
             <TextView
-                    android:text="Cena :"
+                    android:text="@string/price_label"
                     android:layout_width="wrap_content"
                     android:textStyle="bold"
                     android:layout_height="wrap_content"/>
@@ -57,7 +57,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="VAT : "
+                android:text="@string/tax_label"
                 android:textStyle="bold"/>
         <TextView
                 android:text="VAT"
