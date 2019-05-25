@@ -24,8 +24,12 @@ class Invoice {
     var totalTax = BigDecimal(0)
     var totalGross = BigDecimal(0)
 
+    //it is used in setting invoice item Id
     var posIdIterator = 0
 
+    /**
+     * returns all properties as ArrayList
+     */
     fun getProperties(): ArrayList<String> {
         val df = DecimalFormat("#.00")
         val result = ArrayList<String>()
@@ -39,6 +43,9 @@ class Invoice {
         return result
     }
 
+    /**
+     * returns all items as ArrayList
+     */
     fun getItemsAsArrayList(): ArrayList<Pair<String, Int>> {
         val result = ArrayList<Pair<String, Int>>()
         for (i in items)
@@ -61,6 +68,7 @@ class Invoice {
                 index = i
         }
         if (index != -1) {
+            //when removing subtract value from total, tax and gross.
             val temp = items.removeAt(index)
             totalNetto =totalNetto.subtract(temp.value)
             totalTax = totalTax.subtract(temp.value.multiply(temp.vat))

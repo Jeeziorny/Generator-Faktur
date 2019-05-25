@@ -23,6 +23,9 @@ class Entity (
 ) : Parcelable{
     constructor() : this("","","","","")
 
+    /**
+     * returns properties of object as ArrayList
+     */
     fun getKeywords() : ArrayList<String> {
         val result = ArrayList<String>()
         result.addAll(listOf(name, address, postal, nip))

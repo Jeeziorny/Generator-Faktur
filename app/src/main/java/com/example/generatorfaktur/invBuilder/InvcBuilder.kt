@@ -13,10 +13,16 @@ class InvcBuilder(context: Context) : AbstractInvcBuilder(context) {
     }
 
     override fun addInvoiceItem(name: String, q: BigDecimal, netto: BigDecimal, vat: BigDecimal): InvoiceItem {
+        //value is equal to price per item on invoice multiplied by quantity
+        //gross value is equal to value with tax
+        //
+        //for now id of item is equal to 0. It changes when added to invoice
         val invoiceItem = InvoiceItem(name, q, netto, netto*q, vat, (netto*q)*(BigDecimal(1)+vat), 0)
         invoice.addInvoiceItem(invoiceItem)
         return invoiceItem
     }
+
+    //podaj nip
 
     override fun setPaymentProperty(
         paymentForm: String,

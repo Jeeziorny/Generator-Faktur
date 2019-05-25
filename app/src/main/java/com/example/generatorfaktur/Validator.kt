@@ -3,24 +3,28 @@ package com.example.generatorfaktur
 class Validator {
     companion object {
 
+        /**
+         * returns if String conzist of digits
+         */
         fun isNumeric(name: String): Boolean {
             return name.matches("[0-9]+".toRegex())
         }
 
         fun checkNip(n: String): Boolean {
-            //Kontrola dlugosci
+            //check if nip contains correct number of digits
             if (n.length != 10)
                 return false
 
             if (!isNumeric(n))
                 return false
 
-            //cyfra kontrolna
+            //for better understanding of validation algorithm check this link:
+            //https://pl.wikipedia.org/wiki/NIP#Znaczenie_numeru
             val controlWeights = listOf(6, 5, 7, 2, 3, 4, 5, 6, 7)
             var controlSum = 0
             var iterator = 0
-            var a = 0
-            var b = 0
+            var a: Int
+            var b: Int
             for (i in 0..8) {
                 a = n[i].toInt() - '0'.toInt()
                 b = controlWeights[iterator]
@@ -33,7 +37,10 @@ class Validator {
             return true
         }
 
-        //sprawdza format ##-###
+        /**
+         * checks for format ##-###,
+         * where # must be a digit.
+         */
         fun checkPostal(p: String): Boolean {
             if (p.length != 6)
                 return false
@@ -50,13 +57,13 @@ class Validator {
             return true
         }
 
-        //nazwa krotsza niz 4 linijki na fakturze
         fun checkProductName(n: String): Boolean {
             if (n.isEmpty() || n.length > 27 * 4)
                 return false
             return true
         }
 
+        //Checks account number
         fun checkAccNumber(an: String): Boolean {
             if (an.length != 26)
                 return false
