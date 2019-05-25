@@ -6,10 +6,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -41,65 +39,63 @@ class InvoiceActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         setContentView(R.layout.activity_invoice)
+
         TypefaceProvider.registerDefaultIconSets()
-
         itemArrayAdapter = ItemArrayAdapter(this, itemList)
-
         itemArrayAdapter = ItemArrayAdapter(this, itemList)
         itemListView.adapter = itemArrayAdapter
 
         itemListView.setOnItemLongClickListener { parent, view, position, id ->
 
-            val li = LayoutInflater.from(this)
-            val dialog = li.inflate(R.layout.dialog_long_click, null)
+            val dialog = getView(R.layout.dialog_long_click)
             val alertDialogBuilder = AlertDialog.Builder(this, R.style.CustomDialog)
+
             alertDialogBuilder.setView(dialog)
-            alertDialogBuilder
-                .setCancelable(true)
+            alertDialogBuilder.setCancelable(true)
+
             val alertDialog = alertDialogBuilder.create()
 
-            alertDialog.show()
-
-
-
             dialog.findViewById<Button>(R.id.delete_button).setOnClickListener {
+                builder.removeItem(position)
                 itemList.removeAt(position)
                 itemArrayAdapter.notifyDataSetChanged()
-                alertDialog.hide()
+                alertDialog.dismiss()
             }
 
             dialog.findViewById<Button>(R.id.edit_button).setOnClickListener {
-                val secLi = LayoutInflater.from(this)
-                val secDialog = secLi.inflate(R.layout.item_dialog, null)
-
+                val secDialog = getView(R.layout.item_dialog)
+                initTextEdits(secDialog, position)
                 val secAlertDialogBuilder = AlertDialog.Builder(this)
 
-                secAlertDialogBuilder.setView(dialog)
-
-                secAlertDialogBuilder
-                    .setCancelable(true)
+                secAlertDialogBuilder.setView(secDialog)
+                secAlertDialogBuilder.setCancelable(true)
 
                 val secAlertDialog = secAlertDialogBuilder.create()
+
                 secDialog.findViewById<Button>(R.id.addBDI).setOnClickListener {
 
+                    builder.removeItem(position)
                     itemList.removeAt(position)
+
                     itemList.add(
-                        position, builder.addInvoiceItem(
-                            dialog.findViewById<EditText>(R.id.itemName).text.toString(),
-                            dialog.findViewById<EditText>(R.id.itemQuantity).text.toString().toDouble(),
-                            dialog.findViewById<EditText>(R.id.itemPrice).text.toString().toDouble(),
-                            dialog.findViewById<EditText>(R.id.itemVAT).text.toString().toDouble() / 100
+                        position,
+                        builder.addInvoiceItem(
+                            secDialog.findViewById<EditText>(R.id.itemName).text.toString(),
+                            secDialog.findViewById<EditText>(R.id.itemQuantity).text.toString().toDouble(),
+                            secDialog.findViewById<EditText>(R.id.itemPrice).text.toString().toDouble(),
+                            secDialog.findViewById<EditText>(R.id.itemVAT).text.toString().toDouble() / 100
                         )
                     )
                     itemArrayAdapter.notifyDataSetChanged()
 
-                    alertDialog.hide()
-                    secAlertDialog.show()
+                    secAlertDialog.dismiss()
+                    alertDialog.dismiss()
+
                 }
+                secAlertDialog.show()
             }
+            alertDialog.show()
             true
         }
 
@@ -359,7 +355,7 @@ class InvoiceActivity : AppCompatActivity() {
 
             setTexts(result, who)
 
-            alertDialog.hide()
+            alertDialog.dismiss()
         }
         alertDialog.show()
     }
@@ -410,11 +406,24 @@ class InvoiceActivity : AppCompatActivity() {
                 dialog.findViewById<EditText>(R.id.itemVAT).text.toString().toDouble()/100))
             itemArrayAdapter.notifyDataSetChanged()
 
-            alertDialog.hide()
+            alertDialog.dismiss()
 
         }
 
     }
 
+    private fun getView(resource: Int): View {
+        val li = LayoutInflater.from(this)
+        return li.inflate(resource, null)
+    }
 
+    private fun initTextEdits(secDialog: View, position: Int) {
+        secDialog.findViewById<EditText>(R.id.itemName).setText(itemList[position].name)
+        secDialog.findViewById<EditText>(R.id.itemPrice)
+            .setText(itemList[position].baseValue.toString())
+        secDialog.findViewById<EditText>(R.id.itemQuantity)
+            .setText(itemList[position].quantity.toString())
+        secDialog.findViewById<EditText>(R.id.itemVAT)
+            .setText(((itemList[position].vat * 100).toInt()).toString())
+    }
 }

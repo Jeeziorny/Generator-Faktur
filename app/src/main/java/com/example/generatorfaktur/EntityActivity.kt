@@ -39,11 +39,12 @@ class EntityActivity : AppCompatActivity() {
 
             alertDialogBuilder.setView(dialog)
             alertDialogBuilder.setCancelable(true)
+
             val alertDialog = alertDialogBuilder.create()
 
             dialog.findViewById<Button>(R.id.delete_button).setOnClickListener {
                 deleteEntity(entityArrayAdapter.displayData[position])
-                alertDialog.hide()
+                alertDialog.dismiss()
             }
 
             dialog.findViewById<Button>(R.id.edit_button).setOnClickListener {
@@ -60,10 +61,12 @@ class EntityActivity : AppCompatActivity() {
                 secDialog.findViewById<Button>(R.id.addFAB).setOnClickListener {
                     val entity = parseToEntity(secDialog)
                     updateEntity(entity)
+
+                    secAlertDialog.dismiss()
+                    alertDialog.dismiss()
                 }
 
                 secAlertDialog.show()
-                alertDialog.hide()
 
             }
             alertDialog.show()
@@ -149,6 +152,7 @@ class EntityActivity : AppCompatActivity() {
             addEntity(entity)
 
             entityArrayAdapter.notifyDataSetChanged()
+            alertDialog.dismiss()
         }
         alertDialog.show()
     }

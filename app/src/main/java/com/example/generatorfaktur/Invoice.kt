@@ -53,7 +53,7 @@ class Invoice {
 
     fun removeInvoiceItem(id: Int) {
         var index = -1
-        for (i in 0..items.size) {
+        for (i in 0 until items.size) {
             if (id == items[i].id)
                 index = i
         }
