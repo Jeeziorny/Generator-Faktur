@@ -42,9 +42,9 @@ class InvoiceItem (
         val q = df.format(quantity)
         val b = df.format(baseValue)
         val v = df.format(value)
-        val t = DecimalFormat("#").format(vat.multiply(BigDecimal(100)))
+        val t = DecimalFormat("#%").format(vat)
         val g = df.format(grossValue)
-        return Pair("$newName;$q;$b;$v;$t%;$g", height)
+        return Pair("$newName;$q;$b;$v;$t;$g", height)
     }
 
     /**
