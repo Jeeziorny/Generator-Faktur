@@ -3,6 +3,7 @@ package com.example.generatorfaktur.invBuilder
 import android.content.Context
 import com.example.generatorfaktur.invoiceProperties.Entity
 import com.example.generatorfaktur.invoiceProperties.InvoiceItem
+import java.math.BigDecimal
 
 class InvcBuilder(context: Context) : AbstractInvcBuilder(context) {
 
@@ -11,8 +12,8 @@ class InvcBuilder(context: Context) : AbstractInvcBuilder(context) {
         return this
     }
 
-    override fun addInvoiceItem(name: String, q: Double, netto: Double, vat: Double): InvoiceItem {
-        val invoiceItem = InvoiceItem(name, q, netto, netto*q, vat, (netto*q)*(1+vat), 0)
+    override fun addInvoiceItem(name: String, q: BigDecimal, netto: BigDecimal, vat: BigDecimal): InvoiceItem {
+        val invoiceItem = InvoiceItem(name, q, netto, netto*q, vat, (netto*q)*(BigDecimal(1)+vat), 0)
         invoice.addInvoiceItem(invoiceItem)
         return invoiceItem
     }

@@ -1,12 +1,15 @@
 package com.example.generatorfaktur.invoiceProperties
 
+import java.math.BigDecimal
+import java.text.DecimalFormat
+
 class InvoiceItem (
     val name: String,
-    val quantity: Double,
-    val baseValue: Double,
-    var value: Double,
-    val vat: Double,
-    var grossValue: Double,
+    val quantity: BigDecimal,
+    val baseValue: BigDecimal,
+    var value: BigDecimal,
+    val vat: BigDecimal,
+    var grossValue: BigDecimal,
     var id: Int
 ) {
 
@@ -23,11 +26,12 @@ class InvoiceItem (
         val p = insertPeriodically(name, "<br>", 27)
         val newName = p.first
         val height = p.second
-        val q = "%.2f".format(quantity)
-        val b = "%.2f".format(baseValue)
-        val v = "%.2f".format(value)
-        val t = (vat*100).toInt()
-        val g = "%.2f".format(grossValue)
+        val df = DecimalFormat("#.00")
+        val q = df.format(quantity)
+        val b = df.format(baseValue)
+        val v = df.format(value)
+        val t = vat.times(BigDecimal(100))
+        val g = df.format(grossValue)
         return Pair("$newName;$q;$b;$v;$t%;$g", height)
     }
 

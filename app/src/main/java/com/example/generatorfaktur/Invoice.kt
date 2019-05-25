@@ -1,6 +1,7 @@
 package com.example.generatorfaktur
 
 import com.example.generatorfaktur.invoiceProperties.*
+import java.math.BigDecimal
 import java.util.*
 
 class Invoice {
@@ -18,9 +19,9 @@ class Invoice {
     var bank = ""
     var accountNumber = ""
 
-    var totalNetto = 0.0
-    var totalTax = 0.0
-    var totalGross = 0.0
+    var totalNetto = BigDecimal(0)
+    var totalTax = BigDecimal(0)
+    var totalGross = BigDecimal(0)
 
     var posIdIterator = 0
 
@@ -47,7 +48,7 @@ class Invoice {
         itm.setItemId(posIdIterator++)
         totalNetto += itm.value
         totalTax += itm.value * itm.vat
-        totalGross += itm.value*(1+itm.vat)
+        totalGross += itm.value*(BigDecimal(1)+itm.vat)
         items.add(itm)
     }
 
@@ -59,9 +60,9 @@ class Invoice {
         }
         if (index != -1) {
             val temp = items.removeAt(index)
-            totalNetto -= temp.value
+            totalNetto =  temp.value
             totalTax -= temp.value * temp.vat
-            totalGross -= temp.value*(1+temp.vat)
+            totalGross -= temp.value*(BigDecimal(1) +temp.vat)
         }
     }
 }

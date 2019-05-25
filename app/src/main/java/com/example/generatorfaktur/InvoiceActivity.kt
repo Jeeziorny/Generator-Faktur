@@ -26,6 +26,7 @@ import com.example.generatorfaktur.invBuilder.InvcBuilder
 import com.example.generatorfaktur.invoiceProperties.Entity
 import com.example.generatorfaktur.invoiceProperties.InvoiceItem
 import kotlinx.android.synthetic.main.content_invoice1.*
+import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -82,9 +83,9 @@ class InvoiceActivity : AppCompatActivity() {
                         position,
                         builder.addInvoiceItem(
                             secDialog.findViewById<EditText>(R.id.itemName).text.toString(),
-                            secDialog.findViewById<EditText>(R.id.itemQuantity).text.toString().toDouble(),
-                            secDialog.findViewById<EditText>(R.id.itemPrice).text.toString().toDouble(),
-                            secDialog.findViewById<EditText>(R.id.itemVAT).text.toString().toDouble() / 100
+                            secDialog.findViewById<EditText>(R.id.itemQuantity).text.toString().toBigDecimal(),
+                            secDialog.findViewById<EditText>(R.id.itemPrice).text.toString().toBigDecimal(),
+                            secDialog.findViewById<EditText>(R.id.itemVAT).text.toString().toBigDecimal().divide(BigDecimal(100))
                         )
                     )
                     itemArrayAdapter.notifyDataSetChanged()
@@ -407,9 +408,9 @@ class InvoiceActivity : AppCompatActivity() {
                 itemList.add(
                     builder.addInvoiceItem(
                         itemName,
-                        itemQuantity.toDouble(),
-                        itemPrice.toDouble(),
-                        itemVAT.toDouble() / 100
+                        itemQuantity.toBigDecimal(),
+                        itemPrice.toBigDecimal(),
+                        itemVAT.toBigDecimal().divide(BigDecimal(100))
                     )
                 )
                 itemArrayAdapter.notifyDataSetChanged()
@@ -429,10 +430,10 @@ class InvoiceActivity : AppCompatActivity() {
     private fun initTextEdits(secDialog: View, position: Int) {
         secDialog.findViewById<EditText>(R.id.itemName).setText(itemList[position].name)
         secDialog.findViewById<EditText>(R.id.itemPrice)
-            .setText(itemList[position].baseValue.toString())
+            .setText("#.00".format(itemList[position].baseValue))
         secDialog.findViewById<EditText>(R.id.itemQuantity)
-            .setText(itemList[position].quantity.toString())
+            .setText("#.00".format(itemList[position].quantity))
         secDialog.findViewById<EditText>(R.id.itemVAT)
-            .setText(((itemList[position].vat * 100).toInt()).toString())
+            .setText(itemList[position].vat.times(BigDecimal(100)).toInt().toString())
     }
 }
