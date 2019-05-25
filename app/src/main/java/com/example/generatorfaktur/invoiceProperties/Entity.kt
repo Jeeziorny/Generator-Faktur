@@ -19,7 +19,6 @@ class Entity (
     @NonNull
     @ColumnInfo(name = "phoneNumber") var phoneNumber: String,
     @NonNull
-    @PrimaryKey
     @ColumnInfo(name = "nip") var nip: String
 ) : Parcelable{
     constructor() : this("","","","","")
@@ -29,4 +28,8 @@ class Entity (
         result.addAll(listOf(name, address, postal, nip))
         return result
     }
+
+    @NonNull
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id") var id =0L
 }

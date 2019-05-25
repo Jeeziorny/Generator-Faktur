@@ -9,7 +9,7 @@ import com.example.generatorfaktur.invoiceProperties.Entity
 import java.lang.Exception
 
 
-@Database(entities = [(Entity::class)], version = 1)
+@Database(entities = [(Entity::class)], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun entityDao(): EntityDAO
 
@@ -33,7 +33,8 @@ abstract class AppDatabase : RoomDatabase() {
                                 context,
                                 AppDatabase::class.java,
                                 "database.db"
-                            ).build()
+                            ).fallbackToDestructiveMigration()
+                                .build()
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
