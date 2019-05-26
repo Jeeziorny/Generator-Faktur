@@ -9,7 +9,7 @@ import com.example.generatorfaktur.invoiceProperties.Entity
 // using SharedPreferences.
 internal class SellerData(context: Context) {
 
-    // Keys :
+    /** Keys : **/
     private val NAME = "name"
     private val POSTAL = "postal"
     private val PHONE = "phone"
@@ -20,19 +20,19 @@ internal class SellerData(context: Context) {
     private val BANK_NUMBER = "bankNuumber"
     private val IS_SELLER_SET = "IsSellerSet"
 
-    // Default returned value
+    /** Default returned value **/
     private val DEFAULT = "DEFAULT_VALUE"
 
-    // Instace of SharedPreferences
+    /** Instace of SharedPreferences **/
     private var sharedPref: SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
 
-    // Check if Seller's data were set
+    /** Check if Seller's data were set **/
     public fun isSellerSet(): Boolean{
         return sharedPref.getBoolean(IS_SELLER_SET, false)
     }
 
-    // Set true when seller data are correct.
+    /** Set true when seller data are correct. **/
     public fun setIsSellerSet(isSet : Boolean){
         val edit = sharedPref.edit()
         edit.putBoolean(IS_SELLER_SET,isSet)
@@ -102,12 +102,12 @@ internal class SellerData(context: Context) {
         set(ADDRESS, value)
     }
 
-    // Getter form SharedPreferences
+    /** Getter form SharedPreferences **/
     public fun get(tag: String): String {
         return sharedPref.getString(tag, DEFAULT)!!
     }
 
-    // Setter to SharedPreferences
+    /** Setter to SharedPreferences **/
     private fun set(tag: String, s: String) {
         val edit = sharedPref.edit()
         edit.putString(tag, s)

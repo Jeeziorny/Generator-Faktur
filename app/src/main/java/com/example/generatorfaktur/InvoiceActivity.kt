@@ -1,5 +1,6 @@
 package com.example.generatorfaktur
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
@@ -8,7 +9,6 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.content_invoice1.*
 import java.lang.Exception
 import java.math.BigDecimal
 import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -115,6 +116,7 @@ class InvoiceActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_create -> {
             val buyer = Entity(
@@ -217,6 +219,7 @@ class InvoiceActivity : AppCompatActivity() {
     }
 
     //Dialog wybierający metodę płatności i kończący generowanie faktury
+    @SuppressLint("InflateParams", "SimpleDateFormat")
     fun PropertyDialog() {
         val li = LayoutInflater.from(this)
         val dialog = li.inflate(R.layout.invoice_parametrs_dialog, null)
@@ -273,6 +276,7 @@ class InvoiceActivity : AppCompatActivity() {
 
 
     //Uruchamia dialog do wypełnienia danych klienta/sprzedającego
+    @SuppressLint("InflateParams")
     fun doDialog(who: String) {
         val li = LayoutInflater.from(this)
         val dialog = li.inflate(R.layout.fab_dialog, null)
@@ -407,6 +411,7 @@ class InvoiceActivity : AppCompatActivity() {
     }
 
     //Odpowiada za FAB na liście itemów
+    @SuppressLint("InflateParams")
     fun itemFABOnClick(view: View) {
         val li = LayoutInflater.from(this)
         val dialog = li.inflate(R.layout.item_dialog, null)
@@ -457,12 +462,14 @@ class InvoiceActivity : AppCompatActivity() {
     }
 
     private fun initTextEdits(secDialog: View, position: Int) {
+        val symbols = DecimalFormatSymbols(Locale.getDefault())
+        symbols.decimalSeparator = '.'
         secDialog.findViewById<EditText>(R.id.itemName).setText(itemList[position].name)
         secDialog.findViewById<EditText>(R.id.itemPrice)
-            .setText(DecimalFormat("#.00").format(itemList[position].baseValue))
+            .setText(DecimalFormat("#.0",symbols).format(itemList[position].baseValue))
         secDialog.findViewById<EditText>(R.id.itemQuantity)
-            .setText(DecimalFormat("#.00").format(itemList[position].quantity))
+            .setText(DecimalFormat("#.00",symbols).format(itemList[position].quantity))
         secDialog.findViewById<EditText>(R.id.itemVAT)
-            .setText(DecimalFormat("#").format(itemList[position].vat.multiply(BigDecimal(100))))
+            .setText(DecimalFormat("#",symbols).format(itemList[position].vat.multiply(BigDecimal(100))))
     }
 }

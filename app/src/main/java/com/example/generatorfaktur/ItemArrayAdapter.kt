@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.generatorfaktur.invoiceProperties.InvoiceItem
-import java.math.BigDecimal
 import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.*
 
 class ItemArrayAdapter(context : Context, var data : ArrayList<InvoiceItem>) :
     ArrayAdapter<InvoiceItem>(context, R.layout.invoice_item, data){
@@ -25,7 +26,9 @@ class ItemArrayAdapter(context : Context, var data : ArrayList<InvoiceItem>) :
 
         //TODO zaokrąglanie do 2 miejsc po przecinku
 
-        val df = DecimalFormat("#.00")
+        val symbols = DecimalFormatSymbols(Locale.getDefault())
+        symbols.decimalSeparator = '.'
+        val df = DecimalFormat("#.00",symbols)
         view!!.findViewById<TextView>(R.id.itemNameText).text = item.name
         view.findViewById<TextView>(R.id.quantityText).text = df.format(item.quantity)
         view.findViewById<TextView>(R.id.vatText).text = DecimalFormat("#%").format(item.vat)

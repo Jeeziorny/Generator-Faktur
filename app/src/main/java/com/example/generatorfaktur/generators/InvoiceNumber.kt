@@ -9,7 +9,7 @@ internal class InvoiceNumber(context: Context) {
     private val fv = "FV/M/"
     private var sharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
 
-
+    /** Method generate a unique invoice number **/
     public fun generate(): String {
         val yShared = sharedPref.getInt("year", -1)
         val mShared = sharedPref.getInt("month", -1)
