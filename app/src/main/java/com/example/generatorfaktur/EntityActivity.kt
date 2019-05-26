@@ -21,6 +21,7 @@ import java.util.*
 
 class EntityActivity : AppCompatActivity() {
 
+    /** list with customers in database */
     private var entityList = ArrayList<Entity>()
     private lateinit var entityArrayAdapter: EntityArrayAdapter
     private lateinit var database: DBManager
@@ -34,6 +35,7 @@ class EntityActivity : AppCompatActivity() {
         initDbAndList()
         setupSearchView()
 
+        /** function to create dialog for long click event(at customers list) */
         entityListView.setOnItemLongClickListener { parent, view, position, id ->
 
             val dialog = getView(R.layout.dialog_long_click)
@@ -44,11 +46,17 @@ class EntityActivity : AppCompatActivity() {
 
             val alertDialog = alertDialogBuilder.create()
 
+            /** button "delete" handling in dialog
+             * it deletes chosen customer from database and customers list
+             * */
             dialog.findViewById<Button>(R.id.delete_button).setOnClickListener {
                 deleteEntity(entityArrayAdapter.displayData[position])
                 alertDialog.dismiss()
             }
 
+            /** button "edit" handling in dialog
+             * it creates dialog, to change data about chosen customer
+             * */
             dialog.findViewById<Button>(R.id.edit_button).setOnClickListener {
                 val secDialog = getView(R.layout.fab_dialog)
                 initTextEdits(secDialog, position)
@@ -60,6 +68,9 @@ class EntityActivity : AppCompatActivity() {
 
                 val secAlertDialog = secAlertDialogBuilder.create()
 
+                /** button "add" handling
+                 * it updates customer's data in database and customers list
+                 * */
                 secDialog.findViewById<Button>(R.id.addFAB).setOnClickListener {
                     val entity = parseToEntity(secDialog)
                     updateEntity(entity)
@@ -79,6 +90,7 @@ class EntityActivity : AppCompatActivity() {
 
     }
 
+    /** parsing data from text fields in dialog to Entity object */
     private fun parseToEntity(secDialog: View): Entity {
         val entity = Entity()
         entity.name = secDialog.entityName.text.toString()
@@ -89,6 +101,7 @@ class EntityActivity : AppCompatActivity() {
         return entity
     }
 
+    /** filling edit texts when user clicks "edit" button in dialog */
     private fun initTextEdits(secDialog: View, position: Int) {
         secDialog.findViewById<BootstrapEditText>(R.id.entityNIP).setText(entityArrayAdapter.displayData[position].nip)
         secDialog.findViewById<BootstrapEditText>(R.id.entityAddress)
@@ -133,6 +146,9 @@ class EntityActivity : AppCompatActivity() {
         }
     }
 
+    /** Floating Action Button handling
+     * it creates the dialog to add a new customer
+     * */
     fun fabOnClick(view: View) {
         val dialog = getView(R.layout.fab_dialog)
         val alertDialogBuilder = AlertDialog.Builder(this)
@@ -219,6 +235,9 @@ class EntityActivity : AppCompatActivity() {
 
         val alertDialog = alertDialogBuilder.create()
 
+        /** "add" button handling in dialog
+         * it adds a new customer to the data base and customers list
+         * */
         dialog.findViewById<Button>(R.id.addFAB).setOnClickListener {
             val entity = Entity()
             entity.name = dialog.entityName.text.toString()

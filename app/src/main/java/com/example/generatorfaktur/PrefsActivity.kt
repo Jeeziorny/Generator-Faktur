@@ -18,6 +18,7 @@ class PrefsActivity : AppCompatActivity() {
         setTexts()
     }
 
+    /** button "confirm" handling */
     fun confirmOnClick(view: View) {
         if (isCorrect()) {
             saveData()
@@ -25,6 +26,7 @@ class PrefsActivity : AppCompatActivity() {
         }
     }
 
+    /** function which check if data are correct */
     private fun isCorrect(): Boolean {
         if (dealerNameText.text.toString().isBlank()) {
             showInformDialog("Wprowadzona nazwa jest niepoprawna !")

@@ -68,6 +68,7 @@ class PreviewActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    /** handling toolbar buttons */
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_share -> {
             pdfWriter.uploadFile()

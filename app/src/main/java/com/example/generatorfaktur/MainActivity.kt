@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /** function checking if user has filled out his data  */
     private fun checkIfSellerIsSet(): Boolean {
         val seller = SellerData(this)
         if (!seller.isSellerSet()) {
@@ -48,11 +49,13 @@ class MainActivity : AppCompatActivity() {
         return seller.isSellerSet()
     }
 
+    /** button "customers" handling*/
     fun customerOnClick(view: View) {
         val myIntent = Intent(this, EntityActivity::class.java)
         startActivity(myIntent)
     }
 
+    /** button "create invoice" handling */
     fun invoiceOnClick(view: View) {
         if(!checkIfSellerIsSet())
             return
@@ -66,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    /** handling toolbar buttons */
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
 
         R.id.action_options ->{

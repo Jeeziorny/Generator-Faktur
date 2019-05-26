@@ -48,9 +48,9 @@ class InvoiceActivity : AppCompatActivity() {
 
         TypefaceProvider.registerDefaultIconSets()
         itemArrayAdapter = ItemArrayAdapter(this, itemList)
-        itemArrayAdapter = ItemArrayAdapter(this, itemList)
         itemListView.adapter = itemArrayAdapter
 
+        /** function to create dialog for long click event(at items list) */
         itemListView.setOnItemLongClickListener { parent, view, position, id ->
 
             val dialog = getView(R.layout.dialog_long_click)
@@ -61,6 +61,9 @@ class InvoiceActivity : AppCompatActivity() {
 
             val alertDialog = alertDialogBuilder.create()
 
+            /** button "delete" handling in dialog
+             * it deletes chosen item from items list
+             * */
             dialog.findViewById<Button>(R.id.delete_button).setOnClickListener {
                 builder.removeItem(position)
                 itemList.removeAt(position)
@@ -68,6 +71,9 @@ class InvoiceActivity : AppCompatActivity() {
                 alertDialog.dismiss()
             }
 
+            /** button "edit" handling in dialog
+             * it creates dialog, to change data about chosen item
+             * */
             dialog.findViewById<Button>(R.id.edit_button).setOnClickListener {
                 val secDialog = getView(R.layout.item_dialog)
                 initTextEdits(secDialog, position)
@@ -78,6 +84,9 @@ class InvoiceActivity : AppCompatActivity() {
 
                 val secAlertDialog = secAlertDialogBuilder.create()
 
+                /** button "add" handling
+                 * it updates item's data in items list
+                 * */
                 secDialog.findViewById<Button>(R.id.addBDI).setOnClickListener {
 
                     builder.removeItem(position)
@@ -116,6 +125,7 @@ class InvoiceActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    /** handling toolbar buttons */
     @SuppressLint("SimpleDateFormat")
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_create -> {
@@ -165,10 +175,12 @@ class InvoiceActivity : AppCompatActivity() {
         }
     }
 
+    /** button "buyer" handling*/
     fun buyerOnClick(view: View) {
         choosePersonDialog("buyer")
     }
 
+    /** button "recipient" handling*/
     fun recipientOnClick(view: View) {
         choosePersonDialog("recipient")
     }
@@ -410,7 +422,7 @@ class InvoiceActivity : AppCompatActivity() {
         }
     }
 
-    //Odpowiada za FAB na liście itemów
+    /** Floating Action Bar handler */
     @SuppressLint("InflateParams")
     fun itemFABOnClick(view: View) {
         val li = LayoutInflater.from(this)
@@ -461,6 +473,7 @@ class InvoiceActivity : AppCompatActivity() {
         return li.inflate(resource, null)
     }
 
+    /** filling edit texts when user clicks "edit" button in dialog */
     private fun initTextEdits(secDialog: View, position: Int) {
         val symbols = DecimalFormatSymbols(Locale.getDefault())
         symbols.decimalSeparator = '.'
